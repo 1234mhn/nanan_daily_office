@@ -165,9 +165,9 @@
 
 ## 🔴🔴🔴 铁律：AI/ML 内容专属 portfolio（2026.7.30 重申）
 - AI/ML 的学习笔记（知识卡片、代码、理论）只放 portfolio：
-  - 知识卡片 → `obsidian_nanan_portfolio/📚 理论知识/`
-  - 算法代码 → `obsidian_nanan_portfolio/🔬 实操/`
-  - GitHub → `github.com/1234mhn/obsidian_nanan_portfolio`
+  - 知识卡片 → `nanan_profile/📚 理论知识/`
+  - 算法代码 → `nanan_profile/🔬 实操/`
+  - GitHub → `github.com/1234mhn/nanan_profile`
 - ❌ 绝不放进 Obsidian 复利知识库（`知识库/`）
 - ❌ 绝不放进主工作区 GitHub（`openclaw` 仓库）
 - 2026.7.30 因重复犯此错被用户严厉批评，绝不再犯

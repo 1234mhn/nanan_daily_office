@@ -242,7 +242,7 @@ description: "知识回炉重造：AI/ML内容睡前复盘。费曼教学+间隔
     {
       "topic": "线性回归",
       "domain": "AI/ML",
-      "path": "obsidian_nanan_portfolio/📚 理论知识/监督学习/回归算法/线性回归.md",
+      "path": "nanan_profile/📚 理论知识/监督学习/回归算法/线性回归.md",
       "level": "L2",
       "reviewCount": 2,
       "lastReview": "2026-06-27",

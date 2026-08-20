@@ -23,7 +23,7 @@
 
 ## 🎓 学生/用户综合档案
 - 语言学习者（英语+韩语）+ 知识体系构建者；叫我「楠楠大管家」。
-- Obsidian 复利库：`/root/obsidian_nanan_compound_library`（=workspace 下同名，软链）。portfolio：`/root/.openclaw/workspace/obsidian_nanan_portfolio`。
+- Obsidian 复利库：`/root/obsidian_nanan_compound_library`（=workspace 下同名，软链）。portfolio：`/root/.openclaw/workspace/nanan_profile`。
 - 读研方向：医学+AI（医疗大模型/多模态），软工硕士研0。就业规划存 portfolio「就业相关」。
 
 ---
@@ -57,8 +57,13 @@
 ## 📝 笔记新规则（2026.8.1）
 - 笔记先**用户给理解 → 我整理/修正/补全**，我不当生成者。
 
+## 🔨 「锻造」= 造知识卡片存读书笔记（2026.8.20 用户定稿）
+- 用户说**「锻造」** → 用 knowledge-card-forging 流程，把用户给的读书理解/内容做成**知识卡片**，存进复利库 `知识库/读书笔记/`（KC-BOOK-序号-主题.md 格式，序号接现有最大）。
+- 已有编号到 KC-BOOK-011，下张从 KC-BOOK-012 起。
+- 触发词：锻造 / 炼一张卡 / 知识卡片 / 造卡 / KC。
+
 ## 🔴 AI/ML 专属 portfolio 铁律（2026.7.30）
-- AI/ML 学习笔记（卡片/代码/理论）只放 `obsidian_nanan_portfolio`（知识卡片→📚理论知识/、代码→🔬实操/、GitHub=1234mhn/obsidian_nanan_portfolio）。绝不放进复利知识库或主工作区GitHub。
+- AI/ML 学习笔记（卡片/代码/理论）只放 `nanan_profile`（知识卡片→📚理论知识/、代码→🔬实操/、GitHub=1234mhn/nanan_profile）。绝不放进复利知识库或主工作区GitHub。
 
 ---
 
