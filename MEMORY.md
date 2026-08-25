@@ -71,6 +71,7 @@
 - 韩语课程页：https://nannan2026.cn/korean/
 - 飞书课时记录表：`.../base/DIOvb4JoLa6oTisvKHGcCCEjnvh?table=tblghqAgibgaResT`
 - 飞书学生成长日记：`.../base/DIOvb4JoLa6oTisvKHGcCCEjnvh?table=tblFsRNfrvrTncCG`
+- **飞书语言复习库**(独立Base)：`WB0VbhEupaelo7s9N33cloWAnTh`= https://ccns9ymqjve1.feishu.cn/base/WB0VbhEupaelo7s9N33cloWAnTh ；韩语复习表`tblJVehXt5dTYHKG`、英语复习表`tblIW8fmeJTvLhg2`；间隔1/3/5/7/14/30/60/90/180天；用于每天外语内容→复利库→飞书复习表→cron每日推送复习；详见 memory/2026-08-25.md
 - 加课SOP：`SOP集合/SOP-韩语课程更新流程.md`
 - 课程模板：`/www/korean_course/课程模板_lesson30.html`
 
