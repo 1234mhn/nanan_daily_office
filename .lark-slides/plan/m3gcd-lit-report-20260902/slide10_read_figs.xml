@@ -1,0 +1,84 @@
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p10-read-figs">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="118">
+      <fill><fillColor color="rgb(95,158,120)"/></fill>
+      <border color="rgb(95,158,120)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="460" height="30">
+      <content textType="caption" color="rgb(95,158,120)" bold="true">
+        <p>干货 B · 元技能 — 读科研图表三件套</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="880" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>给汇报现场加专业度的“看图方法”，都能对到 M3GCD</p>
+      </content>
+    </shape>
+    <line startX="64" startY="162" endX="896" endY="162">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 卡1 t-SNE -->
+    <shape type="rect" topLeftX="58" topLeftY="180" width="844" height="96" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <whiteboard topLeftX="76" topLeftY="196" width="120" height="64">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="16" font-size="12" font-weight="bold" fill="rgba(100,116,139,1)">t-SNE 示意</text>
+        <circle cx="12" cy="46" r="7" fill="rgba(13,108,112,0.9)"/><circle cx="34" cy="40" r="7" fill="rgba(13,108,112,0.9)"/><circle cx="24" cy="60" r="7" fill="rgba(13,108,112,0.9)"/><circle cx="46" cy="52" r="7" fill="rgba(13,108,112,0.9)"/>
+        <circle cx="90" cy="34" r="7" fill="rgba(224,150,28,0.9)"/><circle cx="108" cy="44" r="7" fill="rgba(224,150,28,0.9)"/><circle cx="98" cy="58" r="7" fill="rgba(224,150,28,0.9)"/>
+      </svg>
+    </whiteboard>
+    <shape type="text" topLeftX="216" topLeftY="192" width="660" height="76">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.4">
+        <p><strong>读 t-SNE：</strong>高维特征压进 2D，每点 = 一个病例，颜色 = 标签/类别。① 同色“成团且干净”= 分得好；② 不同色交叉缠绕 = 该处易错；③ 只要看相对聚散，别把坐标轴当绝对距离。</p>
+      </content>
+    </shape>
+
+    <!-- 卡2 ± -->
+    <shape type="rect" topLeftX="58" topLeftY="288" width="844" height="96" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <whiteboard topLeftX="76" topLeftY="302" width="120" height="64">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="16" font-size="12" font-weight="bold" fill="rgba(100,116,139,1)">87.1 ± 0.4</text>
+        <text x="0" y="40" font-size="11" fill="rgba(100,116,139,1)">越小的 ± 越稳</text>
+        <text x="0" y="58" font-size="11" fill="rgba(100,116,139,1)">± 重叠 ≠ 显著差</text>
+      </svg>
+    </whiteboard>
+    <shape type="text" topLeftX="216" topLeftY="300" width="660" height="76">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.4">
+        <p><strong>读表里的 “87.1 ± 0.4”：</strong>± 是标准差/多次跑动波动，越小=越稳。比较方法 A、B 时，若 A± 与 B± 区间重叠，二者差距未必统计显著 —— 别只看谁平均分高就下结论。</p>
+      </content>
+    </shape>
+
+    <!-- 卡3 模态组合 -->
+    <shape type="rect" topLeftX="58" topLeftY="396" width="844" height="96" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <whiteboard topLeftX="76" topLeftY="410" width="120" height="64">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <text x="0" y="16" font-size="12" font-weight="bold" fill="rgba(100,116,139,1)">模态行</text>
+        <rect x="0" y="26" width="30" height="14" rx="2" fill="rgba(13,108,112,0.8)"/><text x="36" y="38" font-size="10" fill="rgba(60,80,92,1)">时图</text>
+        <rect x="62" y="26" width="30" height="14" rx="2" fill="rgba(88,124,160,0.8)"/><text x="98" y="38" font-size="10" fill="rgba(60,80,92,1)">文</text>
+        <rect x="0" y="46" width="70" height="14" rx="2" fill="rgba(224,150,28,0.85)"/><text x="76" y="58" font-size="10" fill="rgba(60,80,92,1)">图+文</text>
+      </svg>
+    </whiteboard>
+    <shape type="text" topLeftX="216" topLeftY="408" width="660" height="76">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.4">
+        <p><strong>读模态组合：</strong>主表常给 “只用图 / 只用文 / 图文都用” 三行。检验方法在单模态上是否退化、融合是否有真增益。→ M3GCD 印证：纯文本单用并不比纯图像差，医学文本语义更丰富。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页10 · 干货B（元技能）：给汇报做能力背书的三招。①t-SNE 只看聚散不成团即分不好；②带 ± 的数字波动常识，别只看均值就欢呼；③很多表都藏了『模态那几行』，单模态退化要警惕。讲到 M3GCD 时就顺势点出它“文本单用不下于图像”的结论正是从第③条读出。—— 这一页是向导师展示我读图不只看亮点、还会挑毛病。</p>
+    </content>
+  </note>
+</slide>

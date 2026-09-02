@@ -1,0 +1,102 @@
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p3-overview">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <!-- 左侧主色 motif 竖条 -->
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="118">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="360" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>CORE · 一句话核心</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="760" height="60">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>图+文成对 → 已知类分清、未知类自动长出</p>
+      </content>
+    </shape>
+    <line startX="64" startY="168" endX="896" endY="168">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 中段：一句话说明 -->
+    <shape type="rect" topLeftX="58" topLeftY="180" width="844" height="46" rx="6">
+      <fill><fillColor color="rgb(233,242,242)"/></fill>
+      <border color="rgb(202,224,224)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="188" width="812" height="32">
+      <content textType="body" color="rgb(28,58,74)" bold="true">
+        <p>M3GCD：用 图像 + 临床文本 配对，同时识别已知疾病并自动发现未知新类 —— 全程无需预设类别数。</p>
+      </content>
+    </shape>
+
+    <!-- 架构流程图：Mermaid -->
+    <whiteboard topLeftX="90" topLeftY="246" width="780" height="176">
+      <mermaid>
+        <![CDATA[
+          flowchart LR
+            A["图像 +\n临床文本"] --> B["DEF\n动态专家融合"]
+            B --> C["LEB\n局部专家平衡"]
+            C --> D["CD\n类别扩散"]
+            D --> E["输出\n已知类 + 新类"]
+            E --> F["无需预设 K\n动态估计类别"]
+        ]]>
+      </mermaid>
+    </whiteboard>
+
+    <!-- 模块三色 legend -->
+    <shape type="rect" topLeftX="58" topLeftY="436" width="260" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="76" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="100" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>DEF</strong> 动态分配图文权重</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="352" topLeftY="436" width="260" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="370" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(88,124,160)"/></fill>
+      <border color="rgb(88,124,160)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="394" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>LEB</strong> 无标签下局部校准</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="646" topLeftY="436" width="256" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="664" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(224,150,28)"/></fill>
+      <border color="rgb(224,150,28)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="688" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>CD</strong> 自动增减类别数</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="498" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>先立抓手：三大模块 DEF→LEB→CD 先把名字建立起来，后面逐块展开。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页3 · 方法总览：这就是全篇抓手——输入图像+临床文本配对，DEF 先解决『图文谁的权重大』，LEB 再在无标签下防住少数派信号被吞，CD 最后自动决定有几类病。我们逐块拆开讲。</p>
+    </content>
+  </note>
+</slide>

@@ -1,0 +1,110 @@
+{
+  "presentation_goal": "向导师与课题组做 M3GCD 论文的口头文献汇报：快速讲清这篇 TMI 医学图像分类 GCD 论文的问题、方法框架、关键结果，并以“会读消融表、会读科研图表”的元技能视角讲得更扎实，展示研0的阅读方法与批判思维。",
+  "audience": "导师与医学+AI课题组师兄师姐（懂 GCD/医学影像背景，需要脉络清晰、方法落地、结论审慎，并看重阅读方法学）。",
+  "deck_version": "加料版·12页（在原精简版基础上 +消融导读/读图表方法 2 页干货，把可借鉴思维并入小结）",
+  "theme_style": "医学+AI 学术汇报；浅色内容底 + 医用深青主色与琥珀强调色；统一左侧竖条 motif，封面/结尾用同系渐变呼应。",
+  "visual_system": {
+    "background_strategy": "内容页统一浅底 rgb(247,249,250)；封面与小结结尾页用深青→深海军蓝渐变(linear-gradient.rgba 停靠点)。",
+    "motif": "每页左上 8px 青色竖条 + 标题下分隔细线；模块类/结论类信息用圆角白卡片承载；强调数字一律琥珀色；新增加料页(消融/读图表)沿用同 motif 但以“方法学角标”card 标识，仍属同一套设计。",
+    "color_roles": {
+      "primary": "teal rgb(13,108,112) —— 标题、结构条、卡片主框，约占65%",
+      "secondary": "navy rgb(28,58,74) —— 副标题、正文深字、模块区隔",
+      "accent": "amber rgb(224,150,28) —— 关键数字/核心结论/one-liner",
+      "module": "DEF 青 rgb(13,108,112) / LEB 蓝紫 rgb(88,124,160) / CD 琥珀 rgb(224,150,28) 区分",
+      "method_meta": "消融/读图干货页用岩绿 rgb(95,158,120) 角标，标注“元技能”以别于正文模块"
+    }
+  },
+  "typography_constraints": {
+    "title_max_lines": 2,
+    "body_max_lines_per_box": 3,
+    "footer_max_lines": 1,
+    "long_text_handling": "痛点/模块/思考都拆成短卡片或分组短点，长说明移入演讲者备注。"
+  },
+  "slides_added_note": "以下为12页最终结构：p7 为非模块的新增干货页A(消融导读)；p9 保留损失；p10 为主体结果；p11 为新增干货页B(读科研图表-并入模态组合)；p12 小结已并入C(可借鉴科研思维)；原批判页前移至 p10 之后。",
+  "slides": [
+    {
+      "page": 1, "title": "封面 · M3GCD 文献汇报", "layout_type": "title-cover", "text_density": "low",
+      "key_message": "研0阶段给导师的第一次文献汇报：读懂一篇 TMI 顶刊（医学多模态 GCD）的方法与结论。",
+      "visual_focus": "深青渐变左区主标题 + 右侧半透明叠圆装饰；琥珀短竖条强调；下方署名出处。",
+      "asset_need": {"asset_type": "none", "purpose": "封面视觉由质感渐变+抽象圆装饰承担", "fallback_if_missing": "深青渐变左区+右侧堆叠半透明圆点。"},
+      "note": "开场词见 speaker_note。"
+    },
+    {
+      "page": 2, "title": "论文在解决什么问题", "layout_type": "comparison", "text_density": "medium",
+      "key_message": "医学 GCD 的三个真实痛点：忽略图文之间的文本、图文重要度动态变化、未知类别数难预设。",
+      "visual_focus": "三张并排编号白卡片，各自顶部色条+大编号01/02/03区分。",
+      "asset_need": {"asset_type": "icon", "purpose": "编号大数字+色条已足够，不依赖外部图标", "fallback_if_missing": "大数字01/02/03 + 顶部色条。"},
+      "note": "把问题上台阶：不是普通图像分类，而是图像+文本、动态模态、未知类别数三重挑战。"
+    },
+    {
+      "page": 3, "title": "一句话核心 · 方法总览 DEF→LEB→CD", "layout_type": "architecture-diagram", "text_density": "medium",
+      "key_message": "M3GCD 用图像+临床文本配对，同时识别已知类并自动发现未知类，无需预设类别数；三大模块 DEF→LEB→CD。",
+      "visual_focus": "Mermaid 横向流程图：输入图文对 → DEF 动态专家融合 → LEB 局部专家平衡 → CD 类别扩散 → 输出已知+新类，配三模块单行色块与图例。",
+      "asset_need": {"asset_type": "architecture_diagram", "purpose": "一图看懂三段式流水线与输出", "fallback_if_missing": "Mermaid flowchart LR：Pair→DEF→LEB→CD→已知+未知类。"},
+      "note": "台词锚点：这个方法的抓手就是『图+文一起用、无需预设K、还能找出新病』。"
+    },
+    {
+      "page": 4, "title": "模块一 · DEF 动态专家融合", "layout_type": "process-flow", "text_density": "medium",
+      "key_message": "DEF 用 MoE+路由器给每个病例的动态分配图像/文本权重：这例该多看图像还是报告，由数据说了算。",
+      "visual_focus": "Mermaid 小流程：图/文 → 双专家 → 路由器(按病例) → 加权融合 → 单表达；左侧三张竖排小卡(是什么/怎么做/一句话)。",
+      "asset_need": {"asset_type": "flow_diagram", "purpose": "示意多专家路由加权的跨模态动态权重", "fallback_if_missing": "Mermaid flowchart LR 图/文→路由→加权融合。"},
+      "note": "跟导师互动点：不是固定 concat，是让网络学『此刻该信谁』。"
+    },
+    {
+      "page": 5, "title": "模块二 · LEB 局部专家平衡", "layout_type": "two-column", "text_density": "medium",
+      "key_message": "LEB 无标签下用邻居内聚度+邻居熵评估单模态可靠度，防止融合吞掉占比小却关键的单模态信号。",
+      "visual_focus": "左右对照卡片：左『朴素加权的隐患』警示色 vs 右『LEB 按局部可靠度再平衡』主色。",
+      "asset_need": {"asset_type": "infographic", "purpose": "对照『平均会掩盖少数派信号 vs LEB 局部校准』", "fallback_if_missing": "左右两块标题卡+关键词标签，左警示右主色。"},
+      "note": "精妙点：没有标签怎么判断哪个模态更可信？答：看局部邻域一致性。"
+    },
+    {
+      "page": 6, "title": "模块三 · CD 类别扩散", "layout_type": "process-flow", "text_density": "medium",
+      "key_message": "CD 用 Metropolis-Hastings 分裂-合并自动增减类别数，让模型自己回答『到底有几类病』而不需要预设。",
+      "visual_focus": "Mermaid 决策树：当前簇 → 提议分裂/提议合并 → MH 接受(改K)/拒绝(保留)。",
+      "asset_need": {"asset_type": "flow_diagram", "purpose": "可视化分裂-合并如何自动涌现合理类别数", "fallback_if_missing": "Mermaid flowchart TD 决策树。"},
+      "note": "回应痛点3：K 不再靠拍脑袋。"
+    },
+    {
+      "page": 7, "title": "【干货A · 元技能】怎么读 M3GCD 的消融表", "layout_type": "two-column", "text_density": "medium",
+      "key_message": "消融=把方法零件逐个拆掉看掉分：去掉谁掉分最多=谁最不可替代最关键；M3GCD 逐模块摘除 DEF/LEB/CD 验证各自贡献。",
+      "visual_focus": "左列『读消融三步法』三张编号卡；右列『对到 M3GCD』卡片：拆 DEF/LEB/CD 各自掉分→判断哪块是主贡献，可辅一张小 Mermaid 取舍示意。",
+      "asset_need": {"asset_type": "flow_diagram", "purpose": "左右呼应：方法论↔论文实证", "fallback_if_missing": "左侧三步编号卡+右侧三行对照（移除组件→趋势→判断）。"},
+      "note": "这句是给导师看的元技能信号：汇报人不是只报数字，而是真的懂『为什么做消融、怎么看消融结果』。"
+    },
+    {
+      "page": 8, "title": "损失函数（三模块是如何被训练的）", "layout_type": "big-number", "text_density": "medium",
+      "key_message": "L = L_align + λ1·L_sim + λ2·L_ent：对齐聚类软标签、保持全局-局部权重一致、熵正则防坍缩。",
+      "visual_focus": "顶部深色公式条 + 下方三条等宽说明卡(对齐/一致/熵正则)。",
+      "asset_need": {"asset_type": "none", "purpose": "公式即主视觉，配三条小卡", "fallback_if_missing": "深色公式条+右下三项说明卡。"},
+      "note": "串起模块设计：每个 loss 对应堵住一种失败模式。"
+    },
+    {
+      "page": 9, "title": "主结果 & 模态维度", "layout_type": "comparison", "text_density": "high",
+      "key_message": "三数据集(PatchGastric/MIMIC-CXR/MM-Retina)相对最强基线 GET 全类平均准确率 +3.5%/+4.1%/+4.7%；并提示读主表要盯『只用图/只用文/图文都用』三行——结论是纯文本单用并不比纯图像差。",
+      "visual_focus": "SVG 3×2 分组对比柱（M3GCD vs GET）+ 琥珀提升幅标注；右侧关键观察卡『模态那几行怎么读』。",
+      "asset_need": {"asset_type": "chart", "purpose": "一屏看懂相对提升 + 模态行观察", "fallback_if_missing": "SVG 分组建柱并标注+3.5/+4.1/+4.7。"},
+      "note": "呼应干货B页，此处把『哪几行是模态对比』点出来。"
+    },
+    {
+      "page": 10, "title": "【干货B · 元技能】怎么读科研图表", "layout_type": "two-column", "text_density": "medium",
+      "key_message": "三件套阅读器：①t-SNE 高维特征压2D，每点一病例、颜色=类别，同色成团清晰=分得好；②±小数的标准差：±越小越稳，两方法±重叠则差距未必显著；③表格要读『模态组合』维度=图/文/图文并用。皆呼应 M3GCD 结论。",
+      "visual_focus": "上中下三张横向方法卡：t-SNE 示意 / ±含义 / 模态组合维度；每卡左侧小图标区。",
+      "asset_need": {"asset_type": "none+flow", "purpose": "三张方法卡+一张 t-SNE 彩色点示意(svg小圆点)即可", "fallback_if_missing": "三段卡片+一枚同色成团/异色混杂的svg小点阵示意。"},
+      "note": "这三招能让汇报『读图不只看到亮点，还会挑毛病』。"
+    },
+    {
+      "page": 11, "title": "批判性思考（我的反思）", "layout_type": "two-column", "text_density": "medium",
+      "key_message": "方法好坏看场景：自动发现新病在已知两类筛查价值有限、依赖真实配对报告、算力贵、缺消融稳定性细节。",
+      "visual_focus": "左列审思要点(3条带风险标记) / 右列遗留疑问(3条问号标记)，红/琥珀强调限定。",
+      "asset_need": {"asset_type": "icon", "purpose": "⚠/？用文字符号+色块即可", "fallback_if_missing": "圆形容器内文字符号 ⚠/？ 与色块兜底。"},
+      "note": "展示研0不是背书：能指出场景依赖、数据依赖、算力与可信度短板并抛问题供导师互动。"
+    },
+    {
+      "page": 12, "title": "小结 · 可借鉴的科研思维 · 下一步", "layout_type": "conclusion", "text_density": "low",
+      "key_message": "学到：看图+读报告优于单看图(模态互补)、无标签/GCD实用、顶刊『问题→动机→模块→消融→对比』结构可学、消融是硬功夫；下一步：待定是否复现/哪篇/对接脑部CT。",
+      "visual_focus": "深青渐变呼应封面；中央 one-liner『把报告当第二模态，把消融当基本功』+ 下方『4条可借鉴』短卡 + 底部3条待定下一步卡。",
+      "asset_need": {"asset_type": "none", "purpose": "结论页以一句主张+4条借鉴卡+3条下一步卡收束", "fallback_if_missing": "同封面渐变背板+居中小结句+借鉴卡+待定下一步卡。"},
+      "note": "把 C 的可借鉴思维并入此页，收束全文。"
+    }
+  ]
+}

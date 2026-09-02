@@ -1,0 +1,25 @@
+{
+  "presentation_goal": "向导师与课题组做 M3GCD 论文的口头文献汇报（精简 9 页版）：讲清这篇 IEEE TMI 医学图像分类 GCD 论文的问题、方法框架、关键结果与我的批判小结。",
+  "deck_version": "精简 9 页版（用户最终拍板，回退自 12 页加料版：不加独立方法学页；消融/t-SNE/± 等读图要点已并入实验页演讲者备注一句）",
+  "audience": "导师与医学+AI课题组（懂 GCD/医学影像，需脉络清晰、方法落地、结论审慎）。",
+  "visual_system": {
+    "background_strategy": "内容页统一浅底 rgb(247,249,250)；封面/小结渐变呼应（rgba 停靠点）。",
+    "motif": "每页左上 8px 青色竖条 + 标题下分隔线；卡片/公式条承载重点；强调数字琥珀。",
+    "color_roles": {
+      "primary": "teal rgb(13,108,112)", "secondary": "navy rgb(28,58,74)",
+      "accent": "amber rgb(224,150,28)", "module": "DEF 青 / LEB 蓝紫(88,124,160) / CD 琥珀(224,150,28)"
+    }
+  },
+  "slides_total_planned": 9,
+  "slides": [
+    {"page":1,"title":"封面 · M3GCD 文献汇报","file":"slide01_cover.xml"},
+    {"page":2,"title":"论文在解决什么问题（背景三痛点）","file":"slide02_problem.xml"},
+    {"page":3,"title":"一句话核心 · 方法总览 DEF→LEB→CD","file":"slide03_overview.xml"},
+    {"page":4,"title":"模块一 · DEF 动态专家融合","file":"slide04_def.xml"},
+    {"page":5,"title":"模块二 · LEB 局部专家平衡","file":"slide05_leb.xml"},
+    {"page":6,"title":"模块三 · CD 类别扩散","file":"slide06_cd.xml"},
+    {"page":7,"title":"损失函数（三模块优化目标）","file":"slide08_loss.xml"},
+    {"page":8,"title":"实验结果（读表备注并入备注）","file":"slide09_results.xml"},
+    {"page":9,"title":"批判思考 + 小结（合并尾页）","file":"p9_tail_merged.xml"}
+  ]
+}

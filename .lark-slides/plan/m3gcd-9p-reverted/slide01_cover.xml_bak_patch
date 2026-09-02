@@ -1,0 +1,49 @@
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="cover">
+  <style>
+    <fill><fillColor color="linear-gradient(135deg,rgba(9,55,60,1) 0%,rgba(13,108,112,1) 58%,rgba(22,48,64,1) 100%)"/></fill>
+  </style>
+  <data>
+    <!-- 右侧抽象叠圆装饰 -->
+    <whiteboard width="340" height="340" topLeftX="590" topLeftY="60">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="130" fill="rgba(255,255,255,0.05)"/>
+        <circle cx="60" cy="60" r="96" fill="rgba(255,255,255,0.06)"/>
+        <circle cx="60" cy="60" r="62" fill="rgba(230,166,54,0.10)"/>
+        <circle cx="300" cy="250" r="46" fill="rgba(255,255,255,0.07)"/>
+        <circle cx="200" cy="290" r="18" fill="rgba(230,166,54,0.20)"/>
+        <circle cx="80" cy="200" r="10" fill="rgba(255,255,255,0.10)"/>
+      </svg>
+    </whiteboard>
+    <!-- 上方小标签 -->
+    <shape type="text" topLeftX="70" topLeftY="64" width="430" height="34">
+      <content textType="caption" fontSize="22" color="rgba(255,255,255,0.75)">
+        <p>📄 LITERATURE REPORT · PAPER WALK-THROUGH</p>
+      </content>
+    </shape>
+    <!-- 主标题 -->
+    <shape type="text" topLeftX="66" topLeftY="150" width="560" height="130">
+      <content textType="title" color="rgb(255,255,255)" bold="true" lineSpacing="multiple:1.1">
+        <p>M3GCD 文献汇报</p>
+      </content>
+    </shape>
+    <!-- 副标题/署名 -->
+    <shape type="text" topLeftX="70" topLeftY="300" width="560" height="120">
+      <content textType="body" color="rgba(255,255,255,0.90)" lineSpacing="multiple:1.4">
+        <p>题　：“Leveraging Image-text Pairs for Generalized Category Discovery in Medical Image Classification”</p>
+        <p>出　：<strong>IEEE TMI 2026</strong> · Wei Feng 等（Monash + 清华长庚 + Airdoc）</p>
+        <p>汇报：<strong>楠楠</strong>（研0 · 医学 + AI 方向）</p>
+        <p>日期：2026-09 · 小组会</p>
+      </content>
+    </shape>
+    <!-- 琥珀强调竖条 -->
+    <shape type="rect" topLeftX="66" topLeftY="150" width="6" height="110">
+      <fill><fillColor color="rgb(230,166,54)"/></fill>
+      <border color="rgb(230,166,54)" width="1"/>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>开场：大家好，我今天汇报题目是 M3GCD，一篇发表在 TMI 2026（IEEE 医学影像顶刊）的论文。我把它读成了"先看懂方法、再批判方法"，请大家多指正。</p>
+    </content>
+  </note>
+</slide>

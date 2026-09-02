@@ -1,0 +1,92 @@
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p8-loss">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="110">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="400" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>OBJECTIVE · 三模块怎么被训练</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="840" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>损失函数：一个总目标，三个子项各堵一个失败模式</p>
+      </content>
+    </shape>
+    <line startX="64" startY="162" endX="896" endY="162">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 公式大条 -->
+    <shape type="rect" topLeftX="58" topLeftY="184" width="844" height="96" rx="8">
+      <fill><fillColor color="rgb(22,58,74)"/></fill>
+      <border color="rgb(22,58,74)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="120" topLeftY="204" width="720" height="60">
+      <content textType="sub-headline" color="rgb(255,255,255)" bold="true" lineSpacing="multiple:1.1">
+        <p>L total = L<em>align</em> + λ₁·L<em>sim</em> + λ₂·L<em>ent</em></p>
+      </content>
+    </shape>
+
+    <!-- 三张说明卡 -->
+    <shape type="rect" topLeftX="58" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(13,108,112)">
+        <p>① L_align 对齐</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>让预测与聚类得来的软标签对齐 —— 把“要分到哪类”这件事约束住。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="346" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="364" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(88,124,160)">
+        <p>② L_sim 一致性</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="364" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>约束“全局权重”与“局部权重”保持一致 —— 防止 DEF 动态分配自相矛盾。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="634" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="652" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(150,100,20)">
+        <p>③ L_ent 熵正则</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="652" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>避免坍缩 / 均匀糊在一类 —— 保证类别分配既不退化成单类、也不分散无意义。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>读法建议：把每个 L 对应到“防止哪种失败”，loss 就不再是一串公式。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页8 · 损失：L_align 定“往哪里归”，L_sim 防模块打架，L_ent 防退化。讲的时候给导师看这三个子项其实是把前面 DEF/LEB/CD 的三重设计串成同一个可优化目标。</p>
+    </content>
+  </note>
+</slide>

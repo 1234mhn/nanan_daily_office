@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation xmlns="http://www.larkoffice.com/sml/2.0" width="960" height="540"><title>M3GCD 文献汇报（精简 9 页版）</title><slide xmlns="http://www.larkoffice.com/sml/2.0" id="cover">
+  <style>
+    <fill><fillColor color="linear-gradient(135deg,rgba(9,55,60,1) 0%,rgba(13,108,112,1) 58%,rgba(22,48,64,1) 100%)"/></fill>
+  </style>
+  <data>
+    <!-- 右侧抽象叠圆装饰 -->
+    <whiteboard width="340" height="340" topLeftX="590" topLeftY="60">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="130" fill="rgba(255,255,255,0.05)"/>
+        <circle cx="60" cy="60" r="96" fill="rgba(255,255,255,0.06)"/>
+        <circle cx="60" cy="60" r="62" fill="rgba(230,166,54,0.10)"/>
+        <circle cx="300" cy="250" r="46" fill="rgba(255,255,255,0.07)"/>
+        <circle cx="200" cy="290" r="18" fill="rgba(230,166,54,0.20)"/>
+        <circle cx="80" cy="200" r="10" fill="rgba(255,255,255,0.10)"/>
+      </svg>
+    </whiteboard>
+    <!-- 上方小标签 -->
+    <shape type="text" topLeftX="70" topLeftY="64" width="430" height="34">
+      <content textType="caption" fontSize="22" color="rgba(255,255,255,0.75)">
+        <p>📄 LITERATURE REPORT · PAPER WALK-THROUGH</p>
+      </content>
+    </shape>
+    <!-- 主标题 -->
+    <shape type="text" topLeftX="66" topLeftY="150" width="560" height="130">
+      <content textType="title" color="rgb(255,255,255)" bold="true" lineSpacing="multiple:1.1">
+        <p>M3GCD 文献汇报</p>
+      </content>
+    </shape>
+    <!-- 副标题/署名 -->
+    <shape type="text" topLeftX="70" topLeftY="300" width="560" height="120">
+      <content textType="body" color="rgba(255,255,255,0.90)" lineSpacing="multiple:1.4">
+        <p>题　：“Leveraging Image-text Pairs for Generalized Category Discovery in Medical Image Classification”</p>
+        <p>出　：<strong>IEEE TMI 2026</strong> · Wei Feng 等（Monash + 清华长庚 + Airdoc）</p>
+        <p>汇报：<strong>楠楠</strong>（研0 · 医学 + AI 方向）</p>
+        <p>日期：2026-09 · 小组会</p>
+      </content>
+    </shape>
+    <!-- 琥珀强调竖条 -->
+    <shape type="rect" topLeftX="66" topLeftY="150" width="6" height="110">
+      <fill><fillColor color="rgb(230,166,54)"/></fill>
+      <border color="rgb(230,166,54)" width="1"/>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>开场：大家好，我今天汇报题目是 M3GCD，一篇发表在 TMI 2026（IEEE 医学影像顶刊）的论文。我把它读成了"先看懂方法、再批判方法"，请大家多指正。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p1-bg">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <!-- 左侧主色 motif 竖条 -->
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="120">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <!-- 章节标签 -->
+    <shape type="text" topLeftX="66" topLeftY="60" width="340" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>BACKGROUND · 论文在解决什么问题</p>
+      </content>
+    </shape>
+    <!-- 页面主标题 -->
+    <shape type="text" topLeftX="64" topLeftY="96" width="600" height="66">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>为什么说“医学图像 GCD 没那么简单”？</p>
+      </content>
+    </shape>
+    <line startX="64" startY="172" endX="896" endY="172">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 痛点01 卡片：忽略文本 -->
+    <shape type="rect" topLeftX="58" topLeftY="210" width="258" height="272">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="2"/>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="210" width="258" height="14">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="218" width="60" height="60">
+      <content textType="sub-headline" color="rgb(230,166,54)" bold="true">
+        <p>01</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="286" width="220" height="40">
+      <content textType="body" bold="true" color="rgb(28,58,74)">
+        <p>只用图，忽略文字</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="330" width="220" height="130">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>现有大多 GCD 只用图像模态，忽略医学里大量有价值的文本（临床报告、诊断描述）。</p>
+      </content>
+    </shape>
+
+    <!-- 痛点02 卡片：图文重要度动态变化 -->
+    <shape type="rect" topLeftX="352" topLeftY="210" width="256" height="272">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="2"/>
+    </shape>
+    <shape type="rect" topLeftX="352" topLeftY="210" width="256" height="14">
+      <fill><fillColor color="rgb(88,124,160)"/></fill>
+      <border color="rgb(88,124,160)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="372" topLeftY="218" width="60" height="60">
+      <content textType="sub-headline" color="rgb(88,124,160)" bold="true">
+        <p>02</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="372" topLeftY="286" width="222" height="40">
+      <content textType="body" bold="true" color="rgb(28,58,74)">
+        <p>图文重要度动态变</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="372" topLeftY="330" width="222" height="130">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>病例之间图文重要度动态变化：有的看图即辨，有的必须靠报告才能定性。</p>
+      </content>
+    </shape>
+
+    <!-- 痛点03 卡片：预设类别数不现实 -->
+    <shape type="rect" topLeftX="646" topLeftY="210" width="256" height="272">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="2"/>
+    </shape>
+    <shape type="rect" topLeftX="646" topLeftY="210" width="256" height="14">
+      <fill><fillColor color="rgb(224,150,28)"/></fill>
+      <border color="rgb(224,150,28)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="666" topLeftY="218" width="60" height="60">
+      <content textType="sub-headline" color="rgb(224,150,28)" bold="true">
+        <p>03</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="666" topLeftY="286" width="222" height="40">
+      <content textType="body" bold="true" color="rgb(28,58,74)">
+        <p>预设类别数不现实</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="666" topLeftY="330" width="222" height="130">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>传统方法需预设“未知类别数”，但真实医学场景下这个数是拍脑袋也估不准的。</p>
+      </content>
+    </shape>
+
+    <!-- 底部提示条 -->
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="28">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>关键词：GCD = Generalized Category Discovery（泛化类别发现）</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页1 · 讲问题三步走：1) GCD 大家多只喂图像；2) 但是医学病例里图文重要度在变；3) 而且类别数要预设，现实做不到。所以这是一道"图像+文本、动态模态、未知类别数"的硬题。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p3-overview">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <!-- 左侧主色 motif 竖条 -->
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="118">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="360" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>CORE · 一句话核心</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="760" height="60">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>图+文成对 → 已知类分清、未知类自动长出</p>
+      </content>
+    </shape>
+    <line startX="64" startY="168" endX="896" endY="168">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 中段：一句话说明 -->
+    <shape type="rect" topLeftX="58" topLeftY="180" width="844" height="46" rx="6">
+      <fill><fillColor color="rgb(233,242,242)"/></fill>
+      <border color="rgb(202,224,224)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="188" width="812" height="32">
+      <content textType="body" color="rgb(28,58,74)" bold="true">
+        <p>M3GCD：用 图像 + 临床文本 配对，同时识别已知疾病并自动发现未知新类 —— 全程无需预设类别数。</p>
+      </content>
+    </shape>
+
+    <!-- 架构流程图：Mermaid -->
+    <whiteboard topLeftX="90" topLeftY="246" width="780" height="176">
+      <mermaid>
+        <![CDATA[
+          flowchart LR
+            A["图像 +\n临床文本"] --> B["DEF\n动态专家融合"]
+            B --> C["LEB\n局部专家平衡"]
+            C --> D["CD\n类别扩散"]
+            D --> E["输出\n已知类 + 新类"]
+            E --> F["无需预设 K\n动态估计类别"]
+        ]]>
+      </mermaid>
+    </whiteboard>
+
+    <!-- 模块三色 legend -->
+    <shape type="rect" topLeftX="58" topLeftY="436" width="260" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="76" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="100" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>DEF</strong> 动态分配图文权重</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="352" topLeftY="436" width="260" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="370" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(88,124,160)"/></fill>
+      <border color="rgb(88,124,160)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="394" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>LEB</strong> 无标签下局部校准</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="646" topLeftY="436" width="256" height="54" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="664" topLeftY="450" width="14" height="26">
+      <fill><fillColor color="rgb(224,150,28)"/></fill>
+      <border color="rgb(224,150,28)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="688" topLeftY="448" width="200" height="40">
+      <content textType="caption" color="rgb(60,80,92)">
+        <p><strong>CD</strong> 自动增减类别数</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="498" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>先立抓手：三大模块 DEF→LEB→CD 先把名字建立起来，后面逐块展开。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页3 · 方法总览：这就是全篇抓手——输入图像+临床文本配对，DEF 先解决『图文谁的权重大』，LEB 再在无标签下防住少数派信号被吞，CD 最后自动决定有几类病。我们逐块拆开讲。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p4-def">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="110">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="400" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>MODULE 1 · 动态专家融合</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="820" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>DEF = Dynamic Expert Fusion · 每个病例的图文权重由数据动态决定</p>
+      </content>
+    </shape>
+    <line startX="64" startY="160" endX="896" endY="160">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 左列三张竖排卡 -->
+    <shape type="rect" topLeftX="58" topLeftY="186" width="420" height="100" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="196" width="380" height="30">
+      <content textType="body" bold="true" color="rgb(13,108,112)">
+        <p>是什么：把图文各当一个“专家”</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="230" width="384" height="44">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.3">
+        <p>图像分支与文本分支是两个专家，不再硬性拼一块（concat）。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="58" topLeftY="298" width="420" height="100" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="298" width="6" height="100">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="82" topLeftY="308" width="360" height="30">
+      <content textType="body" bold="true" color="rgb(13,108,112)">
+        <p>怎么做：MoE + 路由器动态加权</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="82" topLeftY="342" width="376" height="44">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.3">
+        <p>路由器(router)看当前病例特征，决定图像 vs 文本各占多少权重再融合。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="58" topLeftY="410" width="420" height="76" rx="6">
+      <fill><fillColor color="rgb(240,246,242)"/></fill>
+      <border color="rgb(190,212,198)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="418" width="380" height="28">
+      <content textType="body" bold="true" color="rgb(69,122,92)">
+        <p>一句话：让模型学会“这例该多看图像还是报告”</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="444" width="384" height="36">
+      <content textType="caption" color="rgb(69,122,92)" lineSpacing="multiple:1.3">
+        <p>解法痛点1：弱化“只喂图”的旧习惯，把文本请回对话。</p>
+      </content>
+    </shape>
+
+    <!-- 右列：加权融合流程图 -->
+    <whiteboard topLeftX="520" topLeftY="196" width="400" height="300">
+      <mermaid>
+        <![CDATA[
+          flowchart TD
+            I[图像分支 Image] --> R{Router 路由器<br/>看病例定权重}
+            T[文本分支 Text] --> R
+            R --> W[动态加权融合]
+            W --> F[单一联合表达]
+            F --> L[进入聚类头部]
+        ]]>
+      </mermaid>
+    </whiteboard>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页4 · DEF：核心是『动态』二字——同一套网络，这例主要靠图像，那例主要靠报告，由路由器按当前病例动态分配，而不是把所有病例都当同一种图文配比。可反问：固定1:1加权为什么不是最优？因为病例间图文信息量不等。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p5-leb">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="110">
+      <fill><fillColor color="rgb(88,124,160)"/></fill>
+      <border color="rgb(88,124,160)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="400" height="30">
+      <content textType="caption" color="rgb(88,124,160)" bold="true">
+        <p>MODULE 2 · 局部专家平衡</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="830" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>LEB = Local Expert Balancing · 无标签下怎么判断“该更信哪个模态”？</p>
+      </content>
+    </shape>
+    <line startX="64" startY="160" endX="896" endY="160">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 左列：朴素加权的隐患 -->
+    <shape type="text" topLeftX="58" topLeftY="178" width="400" height="30">
+      <content textType="body" bold="true" color="rgb(150,80,72)">
+        <p>⚠ 朴素加权/平均的隐患</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="216" width="420" height="130" rx="6">
+      <fill><fillColor color="rgb(253,242,240)"/></fill>
+      <border color="rgb(231,199,194)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="230" width="382" height="104" color="rgb(60,80,92)">
+      <content textType="body" lineSpacing="multiple:1.4">
+        <p>做完 DEF 后若只把图/文简单平均或全局一个权重，会掩盖“占比小但对这一簇内的病例才关键”的单模态信号——融合把少数派优势稀释了。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="58" topLeftY="360" width="400" height="30">
+      <content textType="body" bold="true" color="rgb(150,80,72)">
+        <p>关键词</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="396" width="420" height="86" rx="6">
+      <fill><fillColor color="rgb(252,232,228)"/></fill>
+      <border color="rgb(231,199,194)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="408" width="384" height="64">
+      <content textType="body" color="rgb(120,60,52)" lineSpacing="multiple:1.35">
+        <p>全局平均 → 让“局部”优势被抹平<br/>被吞的单模态 = 本可救回的信息</p>
+      </content>
+    </shape>
+
+    <!-- 右列：LEB 机制 -->
+    <shape type="text" topLeftX="520" topLeftY="178" width="400" height="30">
+      <content textType="body" bold="true" color="rgb(13,108,112)">
+        <p>✓ LEB：按局部可靠度再平衡</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="520" topLeftY="216" width="388" height="130" rx="6">
+      <fill><fillColor color="rgb(240,247,247)"/></fill>
+      <border color="rgb(202,224,224)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="540" topLeftY="230" width="352" height="104" color="rgb(60,80,92)">
+      <content textType="body" lineSpacing="multiple:1.4">
+        <p>无标签环境下，用「邻居内聚度 + 邻居熵」评估每个模态在局部邻域的可靠度；对更可靠的那个模态加重，防止融合吞掉它。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="520" topLeftY="360" width="388" height="122" rx="6">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="540" topLeftY="372" width="352" height="100">
+      <content textType="body" color="rgb(255,255,255)" lineSpacing="multiple:1.35">
+        <p><strong>怎么没标签还打分：</strong> 看邻居靠不靠拢（内聚）与判断是否摇摆（熵）。越一致越可信 → 动态给该模态更高局部权重。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>回应痛点2：图文重要度动态变化 → 在“无监督”里用一致性信号做局部仲裁。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页5 · LEB：精妙在『没标签』三个字。判别式融合最怕少数派单模态优势被全局平均稀释；LEB 用邻居内聚+邻居熵做局部可靠度仲裁，给更可信模态加权。可跟导师讨论：熵越低是否总代表越可靠？边界情形在哪？</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p6-cd">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="110">
+      <fill><fillColor color="rgb(224,150,28)"/></fill>
+      <border color="rgb(224,150,28)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="400" height="30">
+      <content textType="caption" color="rgb(224,150,28)" bold="true">
+        <p>MODULE 3 · 类别扩散</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="830" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>CD = Category Diffusion · 让模型自己回答“到底有几类病”</p>
+      </content>
+    </shape>
+    <line startX="64" startY="160" endX="896" endY="160">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 左列竖排卡 -->
+    <shape type="rect" topLeftX="58" topLeftY="186" width="400" height="92" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="196" width="360" height="28">
+      <content textType="body" bold="true" color="rgb(150,100,20)">
+        <p>痛点：未知类别数 K 没法预设</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="228" width="364" height="44">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.3">
+        <p>现实医学场景里“有几类新病”无法预先拍板。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="58" topLeftY="290" width="400" height="92" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="300" width="360" height="28">
+      <content textType="body" bold="true" color="rgb(150,100,20)">
+        <p>做法：Metropolis-Hastings 分裂-合并</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="332" width="364" height="44">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.3">
+        <p>随机“提议加/减类别”，按接受率保留，用类似扩散的方式改 K。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="58" topLeftY="394" width="400" height="88" rx="6">
+      <fill><fillColor color="rgb(251,244,232)"/></fill>
+      <border color="rgb(226,205,168)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="78" topLeftY="404" width="364" height="72">
+      <content textType="body" color="rgb(130,92,32)" lineSpacing="multiple:1.35">
+        <p><strong>一句话：</strong>不依赖拍脑袋的 K，按数据自己“长出 / 合并”类别→可稳健估计潜在疾病数（论文称估计 K 仅轻微掉点）。</p>
+      </content>
+    </shape>
+
+    <!-- 右列：Mermaid 决策示意 -->
+    <whiteboard topLeftX="500" topLeftY="196" width="420" height="300">
+      <mermaid>
+        <![CDATA[
+          flowchart TD
+            C[当前簇分配] --> P{随机提议}
+            P -->|分裂 split| S[一簇拆成子簇]
+            P -->|合并 merge| M[两簇并成父簇]
+            S --> A{MH 接受?}
+            M --> A
+            A -->|接受| K[更新类别数 K]
+            A -->|拒绝| R[维持原结构]
+        ]]>
+      </mermaid>
+    </whiteboard>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页6 · CD：回应痛点3。先给开集发现一个不靠预设 K 的机制，类别怎么加怎么减交给『分裂-合并采样的接受率』去自适应。MCMC 采样出类别结构 —— 这也是后续读图时要验证“它估出的 K 对不对、临床认不认”。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p8-loss">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="110">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="400" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>OBJECTIVE · 三模块怎么被训练</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="840" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>损失函数：一个总目标，三个子项各堵一个失败模式</p>
+      </content>
+    </shape>
+    <line startX="64" startY="162" endX="896" endY="162">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 公式大条 -->
+    <shape type="rect" topLeftX="58" topLeftY="184" width="844" height="96" rx="8">
+      <fill><fillColor color="rgb(22,58,74)"/></fill>
+      <border color="rgb(22,58,74)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="120" topLeftY="204" width="720" height="60">
+      <content textType="sub-headline" color="rgb(255,255,255)" bold="true" lineSpacing="multiple:1.1">
+        <p>L total = L<em>align</em> + λ₁·L<em>sim</em> + λ₂·L<em>ent</em></p>
+      </content>
+    </shape>
+
+    <!-- 三张说明卡 -->
+    <shape type="rect" topLeftX="58" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(13,108,112)">
+        <p>① L_align 对齐</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>让预测与聚类得来的软标签对齐 —— 把“要分到哪类”这件事约束住。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="346" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="364" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(88,124,160)">
+        <p>② L_sim 一致性</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="364" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>约束“全局权重”与“局部权重”保持一致 —— 防止 DEF 动态分配自相矛盾。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="634" topLeftY="316" width="268" height="160" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="652" topLeftY="328" width="232" height="30" bold="true">
+      <content textType="body" color="rgb(150,100,20)">
+        <p>③ L_ent 熵正则</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="652" topLeftY="362" width="234" height="100">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.35">
+        <p>避免坍缩 / 均匀糊在一类 —— 保证类别分配既不退化成单类、也不分散无意义。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>读法建议：把每个 L 对应到“防止哪种失败”，loss 就不再是一串公式。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页8 · 损失：L_align 定“往哪里归”，L_sim 防模块打架，L_ent 防退化。讲的时候给导师看这三个子项其实是把前面 DEF/LEB/CD 的三重设计串成同一个可优化目标。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p9-results">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="118">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="420" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>RESULTS · 主结果 + 要看懂的“模态维度”</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="860" height="58">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>三个数据集相对最强基线 GET：全类平均准确率全面提升</p>
+      </content>
+    </shape>
+    <line startX="64" startY="164" endX="896" endY="164">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 左：增益条 SVG (相对 GET 的 All 类提升) -->
+    <whiteboard topLeftX="58" topLeftY="186" width="520" height="300">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <line x1="140" y1="10" x2="140" y2="250" stroke="rgba(189,202,207,1)" stroke-width="1"/>
+        <text x="128" y="20" text-anchor="end" font-size="12" fill="rgba(100,116,139,1)">vs GET</text>
+        <rect x="140" y="30" width="194" height="34" rx="3" fill="rgba(13,108,112,0.9)"/>
+        <text x="150" y="38" font-size="14" fill="rgba(255,255,255,1)">PatchGastric 胃腺癌</text>
+        <text x="150" y="80" font-size="15" font-weight="bold" fill="rgba(224,150,28,1)">+3.5%</text>
+        <line x1="140" y1="100" x2="140" y2="102" />
+        <rect x="140" y="110" width="227" height="34" rx="3" fill="rgba(13,108,112,0.9)"/>
+        <text x="150" y="118" font-size="14" fill="rgba(255,255,255,1)">MIMIC-CXR  胸片</text>
+        <text x="150" y="160" font-size="15" font-weight="bold" fill="rgba(224,150,28,1)">+4.1%</text>
+        <rect x="140" y="180" width="260" height="34" rx="3" fill="rgba(13,108,112,0.95)"/>
+        <text x="150" y="188" font-size="14" fill="rgba(255,255,255,1)">MM-Retina   私眼底</text>
+        <text x="150" y="230" font-size="15" font-weight="bold" fill="rgba(224,150,28,1)">+4.7%</text>
+      </svg>
+    </whiteboard>
+
+    <!-- 右：怎么读主表 - 模态维度卡 -->
+    <shape type="text" topLeftX="600" topLeftY="188" width="330" height="28">
+      <content textType="body" bold="true" color="rgb(28,58,74)">
+        <p>读主结果表：盯“模态那几行”</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="600" topLeftY="222" width="336" height="150" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="620" topLeftY="232" width="300" height="130">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.4">
+        <p>① 只用图像（图单列）<br/>② 只用文本（文单列）<br/>③ 图像+文本都用（多模行）<br/><br/><strong>关键观察：</strong>纯文本单用往往不比纯图像差 —— 医学里的报告文字信息量很足。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="600" topLeftY="390" width="336" height="92" rx="6">
+      <fill><fillColor color="rgb(251,244,232)"/></fill>
+      <border color="rgb(226,205,168)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="620" topLeftY="400" width="300" height="72">
+      <content textType="body" color="rgb(130,92,32)" lineSpacing="multiple:1.35">
+        <p><strong>口径：</strong>All 类平均准确率（含已知+发现的新类）；本页统一为相对最强基线 GET 的提升。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>给导师的值：不只背提升数字，还会解释为什么“文单列经常不下于图单列”。</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页8 · 主结果：以相对 GET 的提升画增益条，方便一屏看清量级。读表备注(不单开页)：①带 ± 的是标准差/多次波动，±越小越稳，比较两方法先看 ± 有无重叠、未必只看均值；②t-SNE 看图只看“同色是否成团”的分明度；③主表列 图单行/文单行/多模行，这里最反直觉又最值得讲的是『纯文本单用往往不输纯图像』，背后是医学报告的高语义密度——这是贯穿全文、最能引导师讨论的点。</p>
+    </content>
+  </note>
+</slide>
+
+<slide xmlns="http://www.larkoffice.com/sml/2.0" id="p9-critique-summary">
+  <style>
+    <fill><fillColor color="rgb(247,249,250)"/></fill>
+  </style>
+  <data>
+    <shape type="rect" topLeftX="40" topLeftY="60" width="8" height="116">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="66" topLeftY="60" width="420" height="30">
+      <content textType="caption" color="rgb(13,108,112)" bold="true">
+        <p>CRITIQUE &amp; SUMMARY · 批判思考 + 小结</p>
+      </content>
+    </shape>
+    <shape type="text" topLeftX="64" topLeftY="96" width="860" height="56">
+      <content textType="headline" color="rgb(28,58,74)" bold="true">
+        <p>方法好坏分场景 · 我读到的与我要留意的</p>
+      </content>
+    </shape>
+    <line startX="64" startY="162" endX="896" endY="162">
+      <border color="rgb(213,224,229)" width="2"/>
+    </line>
+
+    <!-- 左：批判要点（压缩到3条） -->
+    <shape type="text" topLeftX="58" topLeftY="178" width="400" height="28">
+      <content textType="body" bold="true" color="rgb(150,80,72)">
+        <p>⚠ 审思（我不照单全收的地方）</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="212" width="420" height="70" rx="6">
+      <fill><fillColor color="rgb(253,242,240)"/></fill>
+      <border color="rgb(231,199,194)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="222" width="386" height="50">
+      <content textType="body" color="rgb(120,60,52)" lineSpacing="multiple:1.3">
+        <p>① 场景依赖：自动“发现新病”在只分两类已知病时价值有限，甚至可能误拆。</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="292" width="420" height="70" rx="6">
+      <fill><fillColor color="rgb(253,242,240)"/></fill>
+      <border color="rgb(231,199,194)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="302" width="386" height="50">
+      <content textType="body" color="rgb(120,60,52)" lineSpacing="multiple:1.3">
+        <p>② 数据依赖：依赖真实配对的临床报告；没有这数据，框架根基就软。</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="58" topLeftY="372" width="420" height="70" rx="6">
+      <fill><fillColor color="rgb(253,242,240)"/></fill>
+      <border color="rgb(231,199,194)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="76" topLeftY="382" width="386" height="50">
+      <content textType="body" color="rgb(120,60,52)" lineSpacing="multiple:1.3">
+        <p>③ 成本可信：8×RTX 4090、200 epochs 算力贵；消融稳定性细节可再补。</p>
+      </content>
+    </shape>
+
+    <!-- 右：小结一句 + 学到 -->
+    <shape type="text" topLeftX="520" topLeftY="178" width="400" height="28">
+      <content textType="body" bold="true" color="rgb(13,108,112)">
+        <p>✓ 小结：这篇带给我什么</p>
+      </content>
+    </shape>
+    <shape type="rect" topLeftX="520" topLeftY="212" width="388" height="118" rx="6">
+      <fill><fillColor color="rgb(13,108,112)"/></fill>
+      <border color="rgb(13,108,112)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="540" topLeftY="224" width="348" height="96">
+      <content textType="body" color="rgb(255,255,255)" lineSpacing="multiple:1.45">
+        <p>“把报告当第二模态，把消融当基本功” —— 模态互补可说医学里看图+读报告常优于单看图；无标签/GCD 思路适配现实医学少标签的环境。</p>
+      </content>
+    </shape>
+
+    <shape type="rect" topLeftX="520" topLeftY="340" width="388" height="102" rx="6">
+      <fill><fillColor color="rgb(255,255,255)"/></fill>
+      <border color="rgb(202,218,221)" width="1"/>
+    </shape>
+    <shape type="text" topLeftX="540" topLeftY="350" width="348" height="82">
+      <content textType="body" color="rgb(60,80,92)" lineSpacing="multiple:1.4">
+        <p><strong>下一步（待定）：</strong><br/>是否复现 M3GCD / 下篇读哪篇顶刊 /<br/>能否接到我的脑部 CT 项目（文本当第二模态）。</p>
+      </content>
+    </shape>
+
+    <shape type="text" topLeftX="56" topLeftY="500" width="848" height="26">
+      <content textType="caption" color="rgb(126,146,158)">
+        <p>谢谢聆听 · 欢迎指正 · 汇报人：楠楠（研0 · 医学 + AI 方向）</p>
+      </content>
+    </shape>
+  </data>
+  <note>
+    <content textType="body">
+      <p>页9 · 批判+小结合一：左三条审思（场景/数据/算力）不照单全收；右一句主张+带出模态互补与无标签的普适启发，并给三条待定下一步。收尾留接口给导师参与：这套自动发现新类，要满足什么条件才敢进临床？</p>
+    </content>
+  </note>
+</slide>
+</presentation>
