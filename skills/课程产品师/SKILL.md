@@ -28,6 +28,7 @@ trigger: 加第X课 | 第X课起:止 | 做第X课复利笔记
 
 **Step 1：截视频** — COS桶`korean-video-1433876150`找`S01E{nn}...mkv` → 数据万象CI精密切片(H264+AAC 1080p) → 命名`scene{集}_{课}_{开始}-{结束}.mp4` → 存回COS拿链接。禁用ffmpeg远程seek和本地下载。
   - 🔴 **HDR原片(2160p HDR10)必须正确转SDR**（第51课教训：参数错→画面偏暗发灰+人物肤色发绿，被用户打回返工）。CI参数若默认无法转对，务确保成品**色彩元数据为 bt709/bt709/bt709**；用ffmpeg流截时显式带色域链：`-vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,scale=1920:1080"`。**转完抽查像素**（亮度avg<100或绿色明显高于红=没转对），别抓完就交。
+  - 🔴 **暖色观感定稿（2026.9.9 第50课，用户认可，以后一律照此）**：若转SDR后暖色(肤色/红橙)仍**过于饱和/太亮**(冷色正常) → 用**全局降饱和 saturation≈0.88、不动亮度**即可收敛，用户认可此观感，**别去搞复杂HDR调参/压高光**。人眼验收优先，勿只信统计(易漏判暖色过艳)。只改出问题那课对应视频对象(同URL覆盖上传勿动页面)，覆盖前备份live版。
 
 **Step 2：提字幕** — `mkvextract tracks source.mkv {轨道}:subtitles.srt` 提取韩语SRT
 
