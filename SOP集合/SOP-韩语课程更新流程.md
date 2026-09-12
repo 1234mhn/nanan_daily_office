@@ -106,6 +106,44 @@ ffmpeg -ss 起止时间 -to 结束时间 -i "签名URL" \
 
 ---
 
+## 💰 流量省钱铁律（2026.9.12 订 · 治「几百块账单」）
+
+> 🔴 **背景**：COS 外网下行约 0.5 元/GB，整集原片约 9GB。**每次从签名URL远程截取，ffmpeg 实际会读大量数据（往往接近整集）→ 一次截取≈4.5元**。做几十次加课就烧掉几百块。存储反而几乎不花钱（1.73GB≈2毛/月）。
+
+**1. 一次拉原片，连截多段（最重要）**
+- ❌ 禁止：一集里为每个课号单独 generate 一个签名URL 单独截一次
+- ✅ 正确：同一集原片**只生成 1 个签名URL，一次 ffmpeg 命令用 `-ss/-to` 连续截多个片段**，或在一个 ffmpeg 进程里多输出
+
+```bash
+# ✅ 一次签名URL，一条命令截多段（同一集）
+URL=$(node cos_node.mjs sign-url --key "原片路径" --expires 7200 | jq -r .url)
+for spec in "l51:2339:2521" "l52:2530:2703" "l53:2813:2924"; do
+  IFS=':' read -r name ss to <<< "$spec"
+  ffmpeg -ss $ss -to $to -i "$URL" -map 0:v -map 0:a:0 \
+    -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,format=yuv420p,scale=1920:1080" \
+    -c:v libx264 -crf 22 -preset fast -c:a aac -b:a 192k \
+    /tmp/ep5_lesson$name.mp4 -y
+done
+```
+
+**2. 同集多次操作合并到同一次开工**
+- 用户一次给同一集的多个课号 → 一次做完，别分几天反复拉
+
+**3. 截取用 `-ss` 放在 `-i` 之前**
+- 前置 `-ss` 可让 ffmpeg 快速 seek，减少实际读取的数据量（比放在 `-i` 后省流量）
+
+**4. 字幕提取也别远程重复拉**
+- 优先本地 MKV + mkvextract（见步骤③），避免为提字幕再拉一次原片
+- 若必须远程，**复用同一个签名URL**，不要重新生成、不要重复拉
+
+**5. 已切好的片段不要反复下载回本地校验**
+- 校验用 `head` 看 size/etag 即可，不需要 download 整个文件
+
+**6. 加课收尾记一笔流量**
+- 汇报时写清：本次操作了哪几集原片、生成了几个签名URL、截了几段 → 便于复盘找出浪费点
+
+---
+
 ### ③ 提取台词（优先本地MKV + mkvextract，秒级完成）
 
 **🎯 首选：本地MKV精简版 + mkvextract（几秒搞定）**
