@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雅思口语闯关练习</title>
+    <style>
+        /* ========== 全局样式 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            min-height: calc(100vh - 40px);
+        }
+
+        /* ========== 顶部导航栏 ========== */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .progress-container {
+            flex: 1;
+            max-width: 400px;
+            min-width: 200px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 12px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* ========== 地图页面 ========== */
+        .map-view {
+            padding: 32px;
+        }
+
+        .topic-section {
+            margin-bottom: 48px;
+        }
+
+        .topic-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .level-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .level-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .level-card:hover {
+            border-color: #667eea;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+
+        .level-card.locked {
+            background: #f9fafb;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .level-card.locked:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #e5e7eb;
+        }
+
+        .level-card.completed {
+            border-color: #22c55e;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        .level-card.current {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .level-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .level-status {
+            font-size: 24px;
+        }
+
+        .level-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .level-subtitle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* ========== 关卡页面 ========== */
+        .quest-view {
+            padding: 32px;
+            display: none;
+        }
+
+        .quest-view.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f3f4f6;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 24px;
+        }
+
+        .back-button:hover {
+            background: #e5e7eb;
+        }
+
+        .quest-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border-left: 4px solid #667eea;
+        }
+
+        .part-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .question-en {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .question-zh {
+            font-size: 16px;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* ========== 折叠区域 ========== */
+        .collapsible-section {
+            margin-bottom: 24px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            background: #f9fafb;
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #374151;
+            transition: background 0.2s;
+        }
+
+        .collapsible-header:hover {
+            background: #f3f4f6;
+        }
+
+        .collapsible-header .icon {
+            transition: transform 0.3s;
+            font-size: 20px;
+        }
+
+        .collapsible-section.open .collapsible-header .icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .collapsible-section.open .collapsible-content {
+            max-height: 2000px;
+        }
+
+        .collapsible-inner {
+            padding: 20px;
+            background: white;
+        }
+
+        .ideas-list {
+            list-style: none;
+        }
+
+        .ideas-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .ideas-list li:last-child {
+            border-bottom: none;
+        }
+
+        .ideas-list .bullet {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .idea-content {
+            flex: 1;
+        }
+
+        .idea-en {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .idea-zh {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .sample-text {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .sample-en {
+            color: #1f2937;
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+
+        .sample-zh {
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 16px;
+        }
+
+        /* ========== 计时器 ========== */
+        .timer-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: #92400e;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 16px;
+        }
+
+        .timer-display.warning {
+            color: #dc2626;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .timer-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timer-button.primary {
+            background: #92400e;
+            color: white;
+        }
+
+        .timer-button.primary:hover {
+            background: #78350f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(146, 64, 14, 0.3);
+        }
+
+        .timer-button.secondary {
+            background: white;
+            color: #92400e;
+            border: 2px solid #92400e;
+        }
+
+        .timer-button.secondary:hover {
+            background: #fef3c7;
+        }
+
+        .timer-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ========== 录音区域 ========== */
+        .recording-section {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .recording-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+            margin-bottom: 16px;
+        }
+
+        .recording-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 24px rgba(59, 130, 246, 0.4);
+        }
+
+        .recording-button.recording {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            animation: recording-pulse 1.5s infinite;
+        }
+
+        @keyframes recording-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .recording-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e40af;
+            margin-top: 12px;
+        }
+
+        .audio-player {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        /* ========== 自评按钮 ========== */
+        .complete-section {
+            text-align: center;
+            padding: 32px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 12px;
+            border: 2px dashed #22c55e;
+        }
+
+        .complete-button {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+        }
+
+        .complete-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(34, 197, 94, 0.4);
+        }
+
+        .complete-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .map-view, .quest-view {
+                padding: 20px;
+            }
+
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-en {
+                font-size: 20px;
+            }
+
+            .timer-display {
+                font-size: 36px;
+            }
+
+            .progress-container {
+                width: 100%;
+            }
+        }
+
+        /* ========== 工具类 ========== */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部导航 -->
+        <div class="header">
+            <h1>🎯 雅思口语闯关练习</h1>
+            <div class="progress-container">
+                <div class="progress-text" id="progressText">已通过 0 / 24 关</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 地图页面 -->
+        <div class="map-view" id="mapView">
+            <!-- 通过 JavaScript 动态生成 -->
+        </div>
+
+        <!-- 关卡页面 -->
+        <div class="quest-view" id="questView">
+            <button class="back-button" onclick="showMap()">← 返回地图</button>
+
+            <div class="quest-header">
+                <div class="part-badge" id="questPartBadge">Part 1</div>
+                <div class="question-en" id="questQuestionEn"></div>
+                <div class="question-zh" id="questQuestionZh"></div>
+            </div>
+
+            <!-- 提示词折叠区 -->
+            <div class="collapsible-section" id="ideasSection">
+                <div class="collapsible-header" onclick="toggleCollapsible('ideasSection')">
+                    <span>💡 提示词与思路 (Ideas & Keywords)</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-inner">
+                        <ul class="ideas-list" id="ideasList"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计时器 -->
+            <div class="timer-section">
+                <div class="timer-label" id="timerLabel">准备时间</div>
+                <div class="timer-display" id="timerDisplay">00:30</div>
+                <div class="timer-controls">
+                    <button class="timer-button primary" id="timerStartBtn" onclick="startTimer()">开始计时</button>
+                    <button class="timer-button secondary" id="timerResetBtn" onclick="resetTimer()">重置</button>
+                </div>
+            </div>
+
+            <!-- 录音区 -->
+            <div class="recording-section">
+                <button class="recording-button" id="recordBtn" onclick="toggleRecording()">🎤</button>
+                <div class="recording-label" id="recordLabel">点击开始录音</div>
+                <div class="audio-player" id="audioPlayerContainer"></div>
+            </div>
+
+            <!-- 示范答案折叠区 -->
+            <div class="collapsible-section" id="sampleSection">
+                <div class="collapsible-header" onclick="toggleCollapsible('sampleSection')">
+                    <span>📖 示范答案 (Sample Answer)</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <div class="collapsible-inner">
+                        <div class="sample-text">
+                            <div class="sample-en" id="sampleEn"></div>
+                            <div class="sample-zh" id="sampleZh"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 自评过关 -->
+            <div class="complete-section">
+                <button class="complete-button" onclick="completeQuest()">✅ 我练熟了 → 过关</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ========================================================================
+           如何加新题：
+           1. 在下方 questData 数组中添加新的主题对象
+           2. 每个主题包含：title（标题）、titleEn（英文标题）、part（Part类型）、levels（关卡数组）
+           3. 每个关卡包含：
+              - question_en: 英文题目
+              - question_zh: 中文翻译
+              - type: 'Part1' | 'Part2' | 'Part3'
+              - ideas: 思路数组，每项包含 en（英文）和 zh（中文）
+              - sample_en: 英文示范答案
+              - sample_zh: 中文翻译
+           4. 保存后刷新浏览器即可
+        ======================================================================== */
+
+        // ========== 数据定义 ==========
+        const questData = [
+            // 主题 1: Daily Life & Hometown
+            {
+                title: "日常与家乡",
+                titleEn: "Daily Life & Hometown",
+                part: "Part 1",
+                levels: [
+                    {
+                        question_en: "Can you describe your hometown?",
+                        question_zh: "你能描述一下你的家乡吗？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Location & geography", zh: "地理位置" },
+                            { en: "Population size (big city / small town)", zh: "人口规模（大城市/小镇）" },
+                            { en: "Famous for... (food, scenery, history)", zh: "以…闻名（美食、风景、历史）" },
+                            { en: "Personal feelings about it", zh: "个人感受" }
+                        ],
+                        sample_en: "I'm from Chengdu, which is located in southwestern China. It's a large city with over 20 million people. Chengdu is famous for its spicy hotpot and, of course, the giant pandas. The city has a relaxed vibe—people enjoy drinking tea in parks and playing mahjong. I really love the food culture there, and I feel proud to be from such a vibrant place.",
+                        sample_zh: "我来自成都，位于中国西南部。这是一个拥有超过2000万人口的大城市。成都以麻辣火锅和大熊猫闻名。这座城市氛围悠闲——人们喜欢在公园喝茶、打麻将。我非常喜欢那里的饮食文化，我为来自这样一个充满活力的地方感到自豪。"
+                    },
+                    {
+                        question_en: "What is your daily routine like?",
+                        question_zh: "你的日常作息是怎样的？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Morning routine (wake up time, breakfast)", zh: "早晨（起床时间、早餐）" },
+                            { en: "Work or study schedule", zh: "工作或学习时间表" },
+                            { en: "Evening activities", zh: "晚间活动" },
+                            { en: "Bedtime", zh: "就寝时间" }
+                        ],
+                        sample_en: "On weekdays, I usually wake up around 7 a.m. and have a quick breakfast—usually coffee and toast. Then I head to work, where I teach English until about 5 p.m. After work, I might go to the gym or catch up with friends. I try to be in bed by 11 p.m. so I get enough rest. Weekends are much more flexible—I like to sleep in a bit!",
+                        sample_zh: "工作日我通常早上7点起床，快速吃个早餐——通常是咖啡和吐司。然后去上班，教英语一直到下午5点左右。下班后，我可能会去健身房或和朋友聚会。我尽量在晚上11点前睡觉以保证充足休息。周末就灵活多了——我喜欢多睡一会儿！"
+                    },
+                    {
+                        question_en: "Do you live in a house or an apartment?",
+                        question_zh: "你住在房子还是公寓？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Type of accommodation", zh: "住所类型" },
+                            { en: "Location (city center, suburb)", zh: "位置（市中心、郊区）" },
+                            { en: "Favorite room or feature", zh: "最喜欢的房间或特点" },
+                            { en: "Pros and cons", zh: "优缺点" }
+                        ],
+                        sample_en: "I live in an apartment in the city center. It's not very big—just a one-bedroom place—but it's really convenient because everything I need is nearby, like supermarkets and subway stations. My favorite part is the balcony where I can enjoy my morning coffee. The only downside is that it can be a bit noisy sometimes, especially on weekends.",
+                        sample_zh: "我住在市中心的一套公寓里。不是很大——只有一间卧室——但非常方便,因为我需要的一切都在附近,比如超市和地铁站。我最喜欢的部分是阳台,我可以在那里享受早晨的咖啡。唯一的缺点是有时会有点吵,特别是在周末。"
+                    },
+                    {
+                        question_en: "How do you usually spend your weekends?",
+                        question_zh: "你通常怎么度过周末？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Relax at home vs. go out", zh: "在家放松 vs. 外出" },
+                            { en: "Hobbies or sports", zh: "爱好或运动" },
+                            { en: "Social activities with friends/family", zh: "与朋友/家人的社交活动" },
+                            { en: "Catch up on sleep or errands", zh: "补觉或做家务" }
+                        ],
+                        sample_en: "On weekends, I like to have a balance between relaxing and being productive. Saturday mornings, I often go for a run in the park. In the afternoon, I might meet up with friends for brunch or go shopping. Sundays are usually more laid-back—I catch up on reading, watch movies, or prepare lessons for the coming week. It's important for me to recharge before Monday comes around.",
+                        sample_zh: "周末我喜欢在放松和高效之间找到平衡。周六早上,我经常去公园跑步。下午,我可能会和朋友一起吃早午餐或去购物。周日通常更悠闲——我会读书、看电影,或为下周的课程做准备。在周一到来之前充电对我来说很重要。"
+                    }
+                ]
+            },
+            // 主题 2: Food & Restaurant
+            {
+                title: "饮食",
+                titleEn: "Food & Restaurant",
+                part: "Part 1",
+                levels: [
+                    {
+                        question_en: "What is your favorite type of food?",
+                        question_zh: "你最喜欢什么类型的食物？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Cuisine type (Chinese, Italian, Japanese, etc.)", zh: "菜系（中餐、意大利、日本等）" },
+                            { en: "Specific dishes you love", zh: "具体喜欢的菜" },
+                            { en: "Why you like it (taste, memories)", zh: "为什么喜欢（味道、回忆）" },
+                            { en: "How often you eat it", zh: "多久吃一次" }
+                        ],
+                        sample_en: "I'm a huge fan of Korean food, especially Korean BBQ and kimchi stew. I love the bold, spicy flavors and the interactive experience of grilling meat at the table. It reminds me of fun dinners with friends. I try to have Korean food at least once a week—it's my comfort food!",
+                        sample_zh: "我非常喜欢韩国菜,尤其是韩式烤肉和泡菜汤。我喜欢那种大胆、辛辣的味道,以及在桌上烤肉的互动体验。它让我想起和朋友们愉快的晚餐时光。我尽量每周至少吃一次韩国菜——这是我的安慰食物！"
+                    },
+                    {
+                        question_en: "Do you like cooking? Why or why not?",
+                        question_zh: "你喜欢做饭吗？为什么？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Yes: enjoy the creative process, healthier", zh: "是：享受创作过程、更健康" },
+                            { en: "No: time-consuming, prefer eating out", zh: "否：耗时、更喜欢外出就餐" },
+                            { en: "Skill level (beginner, confident)", zh: "技能水平（新手、自信）" },
+                            { en: "Favorite dishes to cook", zh: "最喜欢做的菜" }
+                        ],
+                        sample_en: "I do enjoy cooking, but I'm not a professional chef by any means! I find it relaxing to prepare a meal after a long day—it's like a form of meditation. Plus, cooking at home is healthier and more economical. I'm pretty confident with simple dishes like pasta, stir-fries, and salads. Lately, I've been experimenting with baking bread, which is challenging but rewarding.",
+                        sample_zh: "我确实喜欢做饭,但我绝不是专业厨师！忙碌一天后准备一顿饭让我感到放松——这就像一种冥想。而且,在家做饭更健康、更经济。我对简单的菜肴很有信心,比如意大利面、炒菜和沙拉。最近,我一直在尝试烤面包,虽然有挑战但很有成就感。"
+                    },
+                    {
+                        question_en: "Do you prefer eating at home or eating out?",
+                        question_zh: "你更喜欢在家吃还是外出就餐？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "At home: cozy, cheaper, control over ingredients", zh: "在家：舒适、更便宜、能控制食材" },
+                            { en: "Eating out: variety, social experience, no cleanup", zh: "外出：多样性、社交体验、不用收拾" },
+                            { en: "Balance between both", zh: "两者之间的平衡" }
+                        ],
+                        sample_en: "I think it depends on my mood and schedule. During the week, I prefer eating at home because it's quicker and I can control what goes into my meals. But on weekends, I love trying new restaurants with friends—it's a great way to socialize and explore different cuisines. So I'd say I enjoy both, but for different reasons.",
+                        sample_zh: "我觉得这取决于我的心情和日程安排。工作日我更喜欢在家吃饭,因为更快捷,我可以控制食材。但周末,我喜欢和朋友一起尝试新餐厅——这是社交和探索不同菜系的好方法。所以我会说我两者都喜欢,但理由不同。"
+                    },
+                    {
+                        question_en: "Is there any food from your culture that you would recommend to foreigners?",
+                        question_zh: "你会向外国人推荐你们文化中的哪种食物？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Traditional dish (e.g., dumplings, bibimbap)", zh: "传统菜肴（如饺子、石锅拌饭）" },
+                            { en: "Why it's special or unique", zh: "为什么特别或独特" },
+                            { en: "Cultural significance", zh: "文化意义" },
+                            { en: "How to eat it properly", zh: "如何正确食用" }
+                        ],
+                        sample_en: "I'd definitely recommend hotpot, especially Sichuan-style hotpot. It's a very social meal where everyone sits around a boiling pot of spicy broth and cooks their own ingredients—meat, vegetables, tofu, noodles. The spice level can be adjusted, so even people who don't like very spicy food can enjoy it. It's not just about the food; it's about the experience of sharing a meal together. I think foreigners would love both the flavors and the communal atmosphere.",
+                        sample_zh: "我绝对会推荐火锅,特别是四川火锅。这是一种非常社交化的餐食,大家围坐在一锅沸腾的辣汤周围,自己煮食材——肉、蔬菜、豆腐、面条。辣度可以调整,所以即使不太能吃辣的人也能享受。这不仅仅是食物;而是一起分享一顿饭的体验。我认为外国人会喜欢这种风味和集体氛围。"
+                    }
+                ]
+            },
+            // 主题 3: Travel & Transport
+            {
+                title: "旅行",
+                titleEn: "Travel & Transport",
+                part: "Part 2",
+                levels: [
+                    {
+                        question_en: "Describe a memorable trip you have taken.",
+                        question_zh: "描述一次你经历过的难忘旅行。",
+                        type: "Part2",
+                        ideas: [
+                            { en: "Where & when you went", zh: "去了哪里、什么时候" },
+                            { en: "Who you went with", zh: "和谁一起去" },
+                            { en: "What you did there", zh: "在那里做了什么" },
+                            { en: "Why it was memorable", zh: "为什么难忘" },
+                            { en: "How you felt about the experience", zh: "对这次经历的感受" }
+                        ],
+                        sample_en: "I'd like to talk about a trip I took to Kyoto, Japan, last spring. I went with two of my close friends. We spent five days exploring temples, gardens, and traditional neighborhoods. One highlight was visiting Fushimi Inari Shrine early in the morning—the thousands of red torii gates were absolutely stunning. We also tried authentic kaiseki cuisine and stayed in a traditional ryokan with tatami floors. What made it memorable was the perfect blend of culture, nature, and delicious food. We took so many photos and made wonderful memories. I felt deeply relaxed and inspired by the beauty and tranquility of Kyoto. It's a trip I'll never forget.",
+                        sample_zh: "我想谈谈去年春天我去日本京都的一次旅行。我和两个好朋友一起去的。我们花了五天时间探索寺庙、花园和传统街区。其中一个亮点是清晨参观伏见稻荷大社——成千上万的红色鸟居绝对令人惊叹。我们还品尝了正宗的怀石料理,住在有榻榻米地板的传统旅馆里。让这次旅行难忘的是文化、自然和美食的完美融合。我们拍了很多照片,留下了美好的回忆。我感到非常放松,并被京都的美丽和宁静所启发。这是一次我永远不会忘记的旅行。"
+                    },
+                    {
+                        question_en: "Describe a place you would like to visit in the future.",
+                        question_zh: "描述一个你未来想去的地方。",
+                        type: "Part2",
+                        ideas: [
+                            { en: "Where it is", zh: "在哪里" },
+                            { en: "Why you want to go there", zh: "为什么想去" },
+                            { en: "What you plan to do there", zh: "计划在那里做什么" },
+                            { en: "Who you'd like to go with", zh: "想和谁一起去" },
+                            { en: "How you imagine the experience", zh: "你如何想象这次经历" }
+                        ],
+                        sample_en: "A place I've always wanted to visit is New Zealand. It's located in the South Pacific and is famous for its breathtaking landscapes—mountains, fjords, beaches, and forests. I want to go there because I'm a huge fan of nature and outdoor activities. I'd love to do some hiking, maybe explore Milford Sound, and try bungee jumping in Queenstown. Ideally, I'd go with a few adventurous friends who share my love for travel. I imagine it would be an incredible experience—waking up to stunning views, feeling the fresh air, and challenging myself physically. New Zealand seems like a dream destination for anyone who loves the outdoors.",
+                        sample_zh: "我一直想去的地方是新西兰。它位于南太平洋,以令人惊叹的风景而闻名——山脉、峡湾、海滩和森林。我想去那里是因为我非常喜欢大自然和户外活动。我想去徒步旅行,也许探索米尔福德峡湾,在皇后镇尝试蹦极。理想情况下,我会和几个喜欢冒险、热爱旅行的朋友一起去。我想象那将是一次不可思议的体验——醒来就能看到令人惊叹的景色,呼吸新鲜空气,挑战自己的体能。新西兰似乎是所有热爱户外活动的人的梦想目的地。"
+                    },
+                    {
+                        question_en: "Describe your favorite mode of transportation.",
+                        question_zh: "描述你最喜欢的交通方式。",
+                        type: "Part2",
+                        ideas: [
+                            { en: "What it is (subway, bike, car, etc.)", zh: "是什么（地铁、自行车、汽车等）" },
+                            { en: "How often you use it", zh: "多久使用一次" },
+                            { en: "Why you prefer it (speed, comfort, eco-friendly)", zh: "为什么喜欢（速度、舒适、环保）" },
+                            { en: "A specific experience using it", zh: "使用它的具体经历" }
+                        ],
+                        sample_en: "My favorite mode of transportation is the subway. I use it almost every day to get to work and move around the city. What I love most about the subway is its efficiency—it's fast, punctual, and avoids traffic jams. It's also quite affordable and eco-friendly compared to driving. I remember one time during rush hour, the subway was packed, but I still managed to get to an important meeting on time, which wouldn't have been possible if I'd taken a taxi in heavy traffic. The subway network in my city is extensive and well-connected, so I can reach almost anywhere without hassle. Overall, it's the most practical choice for urban life.",
+                        sample_zh: "我最喜欢的交通方式是地铁。我几乎每天都用它去上班和在城市里移动。我最喜欢地铁的地方是它的效率——快速、准时,避免交通堵塞。与开车相比,它也相当实惠和环保。我记得有一次在高峰时段,地铁挤满了人,但我仍然准时到达了一个重要的会议,如果我在繁忙的交通中打车,这是不可能的。我所在城市的地铁网络广泛且连接良好,所以我可以毫不费力地到达几乎任何地方。总的来说,这是城市生活最实用的选择。"
+                    },
+                    {
+                        question_en: "Describe a long journey you have experienced.",
+                        question_zh: "描述一次你经历过的长途旅行。",
+                        type: "Part2",
+                        ideas: [
+                            { en: "Where you went & how long it took", zh: "去哪里、花了多长时间" },
+                            { en: "Mode of transport", zh: "交通方式" },
+                            { en: "What you did during the journey", zh: "旅途中做了什么" },
+                            { en: "Challenges or interesting moments", zh: "挑战或有趣的时刻" },
+                            { en: "How you felt overall", zh: "总体感受" }
+                        ],
+                        sample_en: "The longest journey I've ever taken was a train ride from Beijing to Lhasa, Tibet. It took about 40 hours! The train climbed to incredibly high altitudes, passing through stunning mountain scenery and vast grasslands. During the journey, I read books, chatted with fellow passengers, and watched the changing landscapes through the window. One challenge was dealing with altitude sickness as we got higher, but the train had oxygen supplies to help. There was also a moment when we stopped at a small station in the middle of nowhere, and I stepped out to breathe the crisp, thin air—it felt surreal. Overall, despite being exhausting, it was a fascinating experience. The slow pace allowed me to truly appreciate the journey, not just the destination.",
+                        sample_zh: "我经历过的最长旅程是从北京到拉萨的火车旅行。大约花了40个小时！火车爬升到令人难以置信的高海拔,穿过令人惊叹的山景和广阔的草原。旅途中,我读书、和其他乘客聊天,透过窗户观看不断变化的风景。一个挑战是随着海拔升高要应对高原反应,但火车有供氧设备帮助。还有一刻,我们停在一个偏僻的小站,我下车呼吸清新稀薄的空气——感觉很超现实。总的来说,尽管很累,但这是一次迷人的体验。缓慢的节奏让我真正欣赏旅程,而不仅仅是目的地。"
+                    }
+                ]
+            },
+            // 主题 4: Work & Study
+            {
+                title: "工作学习",
+                titleEn: "Work & Study",
+                part: "Part 1",
+                levels: [
+                    {
+                        question_en: "What do you do for work or study?",
+                        question_zh: "你从事什么工作或学习？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Job title or field of study", zh: "职位名称或学习领域" },
+                            { en: "Main responsibilities or subjects", zh: "主要职责或科目" },
+                            { en: "How long you've been doing it", zh: "做了多久" },
+                            { en: "What you enjoy about it", zh: "喜欢的方面" }
+                        ],
+                        sample_en: "I'm an English teacher, and I've been teaching for about five years now. My main job is to help students improve their speaking, listening, reading, and writing skills. I teach both kids and adults, so every day is quite varied. What I enjoy most is seeing my students make progress and gain confidence. It's really rewarding when someone who was shy at first starts speaking fluently.",
+                        sample_zh: "我是一名英语老师,已经教了大约五年了。我的主要工作是帮助学生提高口语、听力、阅读和写作技能。我既教孩子也教成人,所以每天都很多样化。我最享受的是看到学生取得进步并建立信心。当一个一开始很害羞的人开始流利地说话时,真的很有成就感。"
+                    },
+                    {
+                        question_en: "Do you have any plans for the future regarding your career or studies?",
+                        question_zh: "关于你的职业或学习,你有什么未来计划吗？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Short-term goals (next 1-2 years)", zh: "短期目标（未来1-2年）" },
+                            { en: "Long-term aspirations", zh: "长期抱负" },
+                            { en: "Further education or certifications", zh: "继续教育或认证" },
+                            { en: "Career change or promotion", zh: "职业转变或晋升" }
+                        ],
+                        sample_en: "In the short term, I'm planning to get a TESOL certification to improve my teaching methods and make myself more competitive. Long term, I'd love to open my own language school or maybe work internationally for a few years. I'm also considering taking some online courses in educational technology, since digital learning is becoming so important. I think staying flexible and continuing to learn is key to a successful career.",
+                        sample_zh: "短期内,我计划获得TESOL认证以改进我的教学方法并提高竞争力。长期来看,我想开办自己的语言学校,或者在国外工作几年。我也在考虑参加一些教育技术的在线课程,因为数字化学习变得如此重要。我认为保持灵活并持续学习是成功职业生涯的关键。"
+                    },
+                    {
+                        question_en: "Is there a skill you would like to learn? Why?",
+                        question_zh: "有什么技能你想学吗？为什么？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "What skill (language, instrument, coding, etc.)", zh: "什么技能（语言、乐器、编程等）" },
+                            { en: "Why it interests you", zh: "为什么感兴趣" },
+                            { en: "How it would benefit you", zh: "如何使你受益" },
+                            { en: "Any plans to start learning it", zh: "有开始学习的计划吗" }
+                        ],
+                        sample_en: "I'd really like to learn coding, specifically Python. I'm interested in it because technology is everywhere these days, and I think understanding how software works would open up new opportunities. It would also help me create educational tools or apps for my students. I haven't started yet, but I'm planning to enroll in an online course soon. I know it'll be challenging, but I'm excited about the possibilities.",
+                        sample_zh: "我真的很想学习编程,特别是Python。我对它感兴趣是因为现在技术无处不在,我认为了解软件如何工作会带来新的机会。这也能帮助我为学生创建教育工具或应用程序。我还没开始,但计划很快报名参加在线课程。我知道会有挑战,但我对这些可能性感到兴奋。"
+                    },
+                    {
+                        question_en: "How do you balance work and personal life?",
+                        question_zh: "你如何平衡工作和个人生活？",
+                        type: "Part1",
+                        ideas: [
+                            { en: "Setting boundaries (work hours)", zh: "设定界限（工作时间）" },
+                            { en: "Time management strategies", zh: "时间管理策略" },
+                            { en: "Hobbies or relaxation activities", zh: "爱好或放松活动" },
+                            { en: "Challenges you face", zh: "面临的挑战" }
+                        ],
+                        sample_en: "Balancing work and personal life can be tricky, but I try to set clear boundaries. I avoid checking work emails after 7 p.m., and I make sure to schedule time for exercise and hobbies. On weekends, I focus on recharging—whether that's reading, hiking, or spending time with friends. Of course, it's not always perfect; sometimes work gets busy and spills over. But overall, I believe that maintaining balance is essential for long-term well-being and productivity.",
+                        sample_zh: "平衡工作和个人生活可能很棘手,但我尽量设定明确的界限。我避免在晚上7点后查看工作邮件,并确保为锻炼和爱好安排时间。周末,我专注于充电——无论是阅读、徒步还是与朋友共度时光。当然,这并不总是完美的;有时工作很忙会溢出来。但总的来说,我相信保持平衡对长期福祉和生产力至关重要。"
+                    }
+                ]
+            },
+            // 主题 5: Technology & Internet
+            {
+                title: "科技网络",
+                titleEn: "Technology & Internet",
+                part: "Part 3",
+                levels: [
+                    {
+                        question_en: "How has technology changed the way people communicate?",
+                        question_zh: "科技如何改变了人们的交流方式？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Instant messaging vs. traditional letters/calls", zh: "即时消息 vs. 传统信件/电话" },
+                            { en: "Social media platforms", zh: "社交媒体平台" },
+                            { en: "Video calls for long-distance relationships", zh: "视频通话用于远距离关系" },
+                            { en: "Pros: convenience, speed; Cons: less face-to-face", zh: "优点：方便、快速；缺点：面对面减少" }
+                        ],
+                        sample_en: "Technology has revolutionized communication. In the past, people relied on letters or landline phones, which were slow and sometimes expensive. Now, with apps like WhatsApp and WeChat, we can send messages, photos, or videos instantly, often for free. Video calls make it easy to stay connected with loved ones across the globe. However, there's a downside—some argue that we've become less skilled at face-to-face communication and more dependent on screens. Overall, though, I think the convenience and speed of modern technology have greatly improved how we connect with each other.",
+                        sample_zh: "科技彻底改变了交流方式。过去,人们依赖信件或座机电话,这些方式缓慢且有时昂贵。现在,有了WhatsApp和微信等应用程序,我们可以即时发送消息、照片或视频,通常是免费的。视频通话让我们很容易与全球各地的亲人保持联系。然而,也有缺点——有人认为我们面对面交流的技能下降了,更依赖屏幕。但总的来说,我认为现代科技的便利性和速度大大改善了我们彼此联系的方式。"
+                    },
+                    {
+                        question_en: "What are the positive and negative effects of social media?",
+                        question_zh: "社交媒体有哪些积极和消极影响？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Positive: connection, information sharing, business", zh: "积极：连接、信息共享、商业" },
+                            { en: "Negative: addiction, misinformation, mental health", zh: "消极：成瘾、错误信息、心理健康" },
+                            { en: "Impact on privacy", zh: "对隐私的影响" },
+                            { en: "Need for balance and regulation", zh: "需要平衡和监管" }
+                        ],
+                        sample_en: "Social media has both positive and negative effects. On the positive side, it allows people to stay connected with friends and family, share experiences, and even build businesses or careers. It's also a powerful tool for spreading information and raising awareness about important issues. On the negative side, social media can be addictive and lead to mental health problems like anxiety or low self-esteem, especially when people compare themselves to others. There's also the issue of misinformation spreading rapidly. I believe the key is to use social media mindfully and for platforms to implement better regulations to protect users.",
+                        sample_zh: "社交媒体有积极和消极的影响。积极方面,它允许人们与朋友和家人保持联系,分享经验,甚至建立业务或职业。它也是传播信息和提高对重要问题认识的强大工具。消极方面,社交媒体可能会上瘾,导致焦虑或自尊心低等心理健康问题,特别是当人们与他人比较时。还有错误信息快速传播的问题。我认为关键是有意识地使用社交媒体,平台也要实施更好的监管来保护用户。"
+                    },
+                    {
+                        question_en: "Do you think technology will replace human workers in the future?",
+                        question_zh: "你认为科技未来会取代人类工作者吗？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Automation in manufacturing, transport, service", zh: "制造、运输、服务中的自动化" },
+                            { en: "Jobs that require creativity/empathy are safer", zh: "需要创造力/同理心的工作更安全" },
+                            { en: "Need for retraining and adaptation", zh: "需要再培训和适应" },
+                            { en: "Technology as a tool, not a replacement", zh: "科技作为工具,而非替代" }
+                        ],
+                        sample_en: "I think technology will certainly replace some human workers, especially in jobs that involve repetitive tasks, like factory work or data entry. Self-driving cars could also replace drivers in the future. However, jobs that require creativity, critical thinking, or emotional intelligence—such as teaching, healthcare, or the arts—are much harder to automate. The key is for society to invest in retraining programs so that people can transition into new roles. Rather than seeing technology as a threat, I believe it should be viewed as a tool that can enhance human capabilities, not entirely replace them.",
+                        sample_zh: "我认为科技肯定会取代一些人类工作者,特别是涉及重复性任务的工作,如工厂工作或数据录入。自动驾驶汽车未来也可能取代司机。然而,需要创造力、批判性思维或情商的工作——如教学、医疗保健或艺术——则更难自动化。关键是社会要投资再培训项目,以便人们能够过渡到新角色。我认为,与其将科技视为威胁,不如将其视为可以增强人类能力的工具,而非完全取代。"
+                    },
+                    {
+                        question_en: "How can technology improve education?",
+                        question_zh: "科技如何改善教育？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Online learning platforms (accessibility)", zh: "在线学习平台（可及性）" },
+                            { en: "Interactive tools (apps, VR)", zh: "互动工具（应用程序、VR）" },
+                            { en: "Personalized learning paths", zh: "个性化学习路径" },
+                            { en: "Challenges: digital divide, screen time", zh: "挑战：数字鸿沟、屏幕时间" }
+                        ],
+                        sample_en: "Technology has enormous potential to improve education. Online platforms like Coursera or Khan Academy make high-quality education accessible to people everywhere, regardless of location or financial situation. Interactive tools, such as educational apps and virtual reality, can make learning more engaging and effective. Technology also allows for personalized learning—students can progress at their own pace. However, there are challenges, such as the digital divide, where not everyone has access to devices or the internet. Additionally, too much screen time can be harmful. Overall, if used wisely, technology can democratize education and make it more effective.",
+                        sample_zh: "科技在改善教育方面有巨大潜力。像Coursera或可汗学院这样的在线平台使高质量教育可供世界各地的人使用,无论地点或经济状况如何。教育应用程序和虚拟现实等互动工具可以使学习更具吸引力和有效性。科技还允许个性化学习——学生可以按自己的节奏进步。然而,也存在挑战,如数字鸿沟,并非每个人都能使用设备或互联网。此外,过多的屏幕时间可能有害。总的来说,如果明智使用,科技可以使教育民主化并更有效。"
+                    }
+                ]
+            },
+            // 主题 6: Opinions & Society
+            {
+                title: "观点与社会",
+                titleEn: "Opinions & Society",
+                part: "Part 3",
+                levels: [
+                    {
+                        question_en: "What do you think are the biggest environmental challenges today?",
+                        question_zh: "你认为当今最大的环境挑战是什么？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Climate change & global warming", zh: "气候变化与全球变暖" },
+                            { en: "Pollution (air, water, plastic)", zh: "污染（空气、水、塑料）" },
+                            { en: "Deforestation & loss of biodiversity", zh: "森林砍伐与生物多样性丧失" },
+                            { en: "Solutions: renewable energy, policy, individual action", zh: "解决方案：可再生能源、政策、个人行动" }
+                        ],
+                        sample_en: "I believe the biggest environmental challenges are climate change and pollution. Rising global temperatures are causing extreme weather events, melting ice caps, and threatening ecosystems. Pollution, especially plastic waste in oceans and air pollution in cities, is harming both wildlife and human health. Deforestation is another critical issue, as it reduces biodiversity and contributes to carbon emissions. To tackle these problems, we need a combination of government policies, such as investing in renewable energy, and individual actions, like reducing waste and using public transport. It's a complex issue, but collective effort is essential.",
+                        sample_zh: "我认为最大的环境挑战是气候变化和污染。全球气温上升导致极端天气事件、冰盖融化和生态系统受威胁。污染,特别是海洋中的塑料废物和城市中的空气污染,正在危害野生动物和人类健康。森林砍伐是另一个关键问题,因为它减少了生物多样性并导致碳排放。要解决这些问题,我们需要政府政策(如投资可再生能源)和个人行动(如减少废物和使用公共交通)相结合。这是一个复杂的问题,但集体努力至关重要。"
+                    },
+                    {
+                        question_en: "Do you think the education system in your country is effective? Why or why not?",
+                        question_zh: "你认为你们国家的教育系统有效吗？为什么？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Strengths (e.g., strong foundation, discipline)", zh: "优势（如扎实基础、纪律）" },
+                            { en: "Weaknesses (e.g., too exam-focused, lack of creativity)", zh: "弱点（如过于注重考试、缺乏创造力）" },
+                            { en: "Comparison with other systems", zh: "与其他系统的比较" },
+                            { en: "Suggestions for improvement", zh: "改进建议" }
+                        ],
+                        sample_en: "The education system in my country has both strengths and weaknesses. On the positive side, it provides a strong academic foundation, especially in subjects like math and science, and students are generally disciplined and hardworking. However, the system is very exam-oriented, which puts enormous pressure on students and often stifles creativity and critical thinking. There's less emphasis on soft skills, such as communication or teamwork. Compared to some Western systems, which encourage more independent thinking and project-based learning, ours feels quite rigid. I think we need to strike a better balance—keeping academic rigor while fostering creativity and holistic development.",
+                        sample_zh: "我们国家的教育系统既有优势也有弱点。积极方面,它提供了扎实的学术基础,特别是在数学和科学等科目上,学生通常很守纪律和勤奋。然而,系统过于注重考试,这给学生带来巨大压力,往往扼杀了创造力和批判性思维。对沟通或团队合作等软技能的重视较少。与一些鼓励更多独立思考和基于项目的学习的西方系统相比,我们的系统感觉相当僵化。我认为我们需要更好的平衡——在保持学术严谨的同时培养创造力和全面发展。"
+                    },
+                    {
+                        question_en: "Why do you think cultural differences exist between countries?",
+                        question_zh: "你认为为什么国家之间存在文化差异？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Geography & climate", zh: "地理与气候" },
+                            { en: "History & traditions", zh: "历史与传统" },
+                            { en: "Religion & philosophy", zh: "宗教与哲学" },
+                            { en: "Language and communication styles", zh: "语言和交流方式" },
+                            { en: "Benefits of cultural diversity", zh: "文化多样性的好处" }
+                        ],
+                        sample_en: "Cultural differences arise from a variety of factors. Geography and climate play a role—for example, food and clothing traditions often reflect the local environment. History is another major factor; countries with different historical events, such as colonization or revolutions, develop distinct identities. Religion and philosophy also shape values and social norms. Even language influences how people think and communicate. These differences are valuable because they enrich the world with diverse perspectives, art, and traditions. In today's globalized society, understanding and respecting cultural differences is more important than ever for peaceful coexistence.",
+                        sample_zh: "文化差异源于多种因素。地理和气候起作用——例如,食物和服装传统通常反映当地环境。历史是另一个主要因素;经历过不同历史事件(如殖民或革命)的国家会发展出独特的身份。宗教和哲学也塑造价值观和社会规范。甚至语言也影响人们的思考和交流方式。这些差异很有价值,因为它们用多样的观点、艺术和传统丰富了世界。在当今全球化社会中,理解和尊重文化差异对和平共处比以往任何时候都更重要。"
+                    },
+                    {
+                        question_en: "How do you think society has changed in the last 20 years?",
+                        question_zh: "你认为过去20年社会发生了怎样的变化？",
+                        type: "Part3",
+                        ideas: [
+                            { en: "Technological advancement (smartphones, internet)", zh: "技术进步（智能手机、互联网）" },
+                            { en: "Globalization & cultural exchange", zh: "全球化与文化交流" },
+                            { en: "Changes in work culture (remote work, gig economy)", zh: "工作文化变化（远程工作、零工经济）" },
+                            { en: "Social attitudes (diversity, equality)", zh: "社会态度（多样性、平等）" },
+                            { en: "Challenges (inequality, mental health)", zh: "挑战（不平等、心理健康）" }
+                        ],
+                        sample_en: "Society has changed dramatically in the last 20 years, largely due to technology. Smartphones and the internet have transformed how we communicate, work, and access information. Globalization has increased cultural exchange, making the world feel smaller and more connected. Work culture has also evolved—remote work and the gig economy are now common, offering more flexibility but also less job security. Social attitudes have shifted too; there's greater awareness and acceptance of diversity and equality. However, challenges remain, such as rising inequality and mental health issues linked to modern lifestyles. Overall, it's been a period of rapid change with both benefits and drawbacks.",
+                        sample_zh: "过去20年社会发生了巨大变化,主要是由于科技。智能手机和互联网改变了我们的交流、工作和获取信息的方式。全球化增加了文化交流,使世界感觉更小、联系更紧密。工作文化也发生了变化——远程工作和零工经济现在很普遍,提供了更多灵活性但也减少了工作保障。社会态度也发生了转变;对多样性和平等的认识和接受度更高了。然而,挑战依然存在,如不平等加剧和与现代生活方式相关的心理健康问题。总的来说,这是一个快速变化的时期,既有好处也有缺点。"
+                    }
+                ]
+            }
+        ];
+
+        // ========== 状态管理 ==========
+        const STORAGE_KEY = 'ielts_speaking_quest_v1';
+        let completedQuests = loadProgress();
+        let currentQuestId = null;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let timerMode = 'prep'; // 'prep' or 'answer'
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let audioBlob = null;
+
+        // ========== 进度存取 ==========
+        function loadProgress() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveProgress() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(completedQuests));
+        }
+
+        // ========== 关卡解锁逻辑 ==========
+        function isQuestUnlocked(topicIndex, levelIndex) {
+            // 第一关默认解锁
+            if (topicIndex === 0 && levelIndex === 0) return true;
+
+            // 同主题内：前一关通过才解锁
+            if (levelIndex > 0) {
+                const prevId = `${topicIndex}-${levelIndex - 1}`;
+                return completedQuests.includes(prevId);
+            }
+
+            // 新主题：前一主题最后一关必须通过
+            if (topicIndex > 0) {
+                const prevTopicLastLevel = questData[topicIndex - 1].levels.length - 1;
+                const prevId = `${topicIndex - 1}-${prevTopicLastLevel}`;
+                return completedQuests.includes(prevId);
+            }
+
+            return false;
+        }
+
+        function isQuestCompleted(topicIndex, levelIndex) {
+            const id = `${topicIndex}-${levelIndex}`;
+            return completedQuests.includes(id);
+        }
+
+        function isCurrentQuest(topicIndex, levelIndex) {
+            // 未完成 + 已解锁 = 当前可打的关
+            return !isQuestCompleted(topicIndex, levelIndex) && isQuestUnlocked(topicIndex, levelIndex);
+        }
+
+        // ========== 渲染地图 ==========
+        function renderMap() {
+            const mapView = document.getElementById('mapView');
+            mapView.innerHTML = '';
+
+            questData.forEach((topic, topicIndex) => {
+                const section = document.createElement('div');
+                section.className = 'topic-section';
+
+                const title = document.createElement('div');
+                title.className = 'topic-title';
+                title.innerHTML = `
+                    ${topic.titleEn}
+                    <span class="topic-badge">${topic.part}</span>
+                `;
+                section.appendChild(title);
+
+                const grid = document.createElement('div');
+                grid.className = 'levels-grid';
+
+                topic.levels.forEach((level, levelIndex) => {
+                    const card = document.createElement('div');
+                    card.className = 'level-card';
+
+                    const unlocked = isQuestUnlocked(topicIndex, levelIndex);
+                    const completed = isQuestCompleted(topicIndex, levelIndex);
+                    const current = isCurrentQuest(topicIndex, levelIndex);
+
+                    if (!unlocked) {
+                        card.classList.add('locked');
+                    } else if (completed) {
+                        card.classList.add('completed');
+                    } else if (current) {
+                        card.classList.add('current');
+                    }
+
+                    let statusIcon = '🔒';
+                    if (completed) statusIcon = '✅';
+                    else if (current) statusIcon = '⭐';
+                    else if (unlocked) statusIcon = '🎯';
+
+                    card.innerHTML = `
+                        <div class="level-header">
+                            <div class="level-number">Level ${levelIndex + 1}</div>
+                            <div class="level-status">${statusIcon}</div>
+                        </div>
+                        <div class="level-title">${level.question_en.substring(0, 50)}${level.question_en.length > 50 ? '...' : ''}</div>
+                        <div class="level-subtitle">${level.question_zh.substring(0, 40)}${level.question_zh.length > 40 ? '...' : ''}</div>
+                    `;
+
+                    if (unlocked) {
+                        card.onclick = () => openQuest(topicIndex, levelIndex);
+                    }
+
+                    grid.appendChild(card);
+                });
+
+                section.appendChild(grid);
+                mapView.appendChild(section);
+            });
+
+            updateProgressBar();
+        }
+
+        // ========== 更新进度条 ==========
+        function updateProgressBar() {
+            const totalQuests = questData.reduce((sum, topic) => sum + topic.levels.length, 0);
+            const completedCount = completedQuests.length;
+            const percentage = Math.round((completedCount / totalQuests) * 100);
+
+            document.getElementById('progressText').textContent = `已通过 ${completedCount} / ${totalQuests} 关`;
+            const fill = document.getElementById('progressFill');
+            fill.style.width = `${percentage}%`;
+            fill.textContent = `${percentage}%`;
+        }
+
+        // ========== 打开关卡 ==========
+        function openQuest(topicIndex, levelIndex) {
+            currentQuestId = `${topicIndex}-${levelIndex}`;
+            const quest = questData[topicIndex].levels[levelIndex];
+
+            document.getElementById('questPartBadge').textContent = quest.type;
+            document.getElementById('questQuestionEn').textContent = quest.question_en;
+            document.getElementById('questQuestionZh').textContent = quest.question_zh;
+
+            // 渲染思路
+            const ideasList = document.getElementById('ideasList');
+            ideasList.innerHTML = '';
+            quest.ideas.forEach(idea => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="bullet">•</div>
+                    <div class="idea-content">
+                        <div class="idea-en">${idea.en}</div>
+                        <div class="idea-zh">${idea.zh}</div>
+                    </div>
+                `;
+                ideasList.appendChild(li);
+            });
+
+            // 渲染示范答案
+            document.getElementById('sampleEn').textContent = quest.sample_en;
+            document.getElementById('sampleZh').textContent = quest.sample_zh;
+
+            // 重置折叠区
+            document.getElementById('ideasSection').classList.remove('open');
+            document.getElementById('sampleSection').classList.remove('open');
+
+            // 重置计时器
+            resetTimer();
+
+            // 重置录音
+            resetRecording();
+
+            // 切换视图
+            document.getElementById('mapView').style.display = 'none';
+            document.getElementById('questView').classList.add('active');
+        }
+
+        // ========== 返回地图 ==========
+        function showMap() {
+            document.getElementById('mapView').style.display = 'block';
+            document.getElementById('questView').classList.remove('active');
+            currentQuestId = null;
+            resetTimer();
+            resetRecording();
+        }
+
+        // ========== 折叠区控制 ==========
+        function toggleCollapsible(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('open');
+        }
+
+        // ========== 计时器 ==========
+        function startTimer() {
+            if (timerInterval) return; // 已在运行
+
+            const [topicIndex, levelIndex] = currentQuestId.split('-').map(Number);
+            const quest = questData[topicIndex].levels[levelIndex];
+
+            if (timerMode === 'prep') {
+                // 准备时间
+                if (quest.type === 'Part2') {
+                    timerSeconds = 60;
+                } else {
+                    timerSeconds = 30;
+                }
+                document.getElementById('timerLabel').textContent = '准备时间';
+            } else {
+                // 回答时间
+                if (quest.type === 'Part1') {
+                    timerSeconds = 30;
+                } else if (quest.type === 'Part2') {
+                    timerSeconds = 120;
+                } else {
+                    timerSeconds = 60;
+                }
+                document.getElementById('timerLabel').textContent = '回答时间';
+            }
+
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+
+                    if (timerMode === 'prep') {
+                        // 准备结束，自动切换到回答计时
+                        timerMode = 'answer';
+                        startTimer();
+                    } else {
+                        // 回答时间结束
+                        alert('时间到！');
+                    }
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            timerMode = 'prep';
+            timerSeconds = 30;
+            document.getElementById('timerLabel').textContent = '准备时间';
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = display;
+
+            if (timerSeconds <= 10) {
+                timerDisplay.classList.add('warning');
+            } else {
+                timerDisplay.classList.remove('warning');
+            }
+        }
+
+        // ========== 录音功能 ==========
+        async function toggleRecording() {
+            const btn = document.getElementById('recordBtn');
+            const label = document.getElementById('recordLabel');
+
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                // 停止录音
+                mediaRecorder.stop();
+                btn.classList.remove('recording');
+                label.textContent = '正在保存录音...';
+            } else {
+                // 开始录音
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioChunks = [];
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = (event) => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = () => {
+                        audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+
+                        const playerContainer = document.getElementById('audioPlayerContainer');
+                        playerContainer.innerHTML = `
+                            <audio controls src="${audioUrl}"></audio>
+                            <button class="timer-button secondary" onclick="resetRecording()" style="margin-top: 12px;">重新录音</button>
+                        `;
+                        label.textContent = '录音完成，可回放';
+
+                        // 停止所有音轨
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    mediaRecorder.start();
+                    btn.classList.add('recording');
+                    label.textContent = '录音中... (点击停止)';
+                } catch (err) {
+                    alert('无法访问麦克风：' + err.message);
+                }
+            }
+        }
+
+        function resetRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+            mediaRecorder = null;
+            audioChunks = [];
+            audioBlob = null;
+            document.getElementById('recordBtn').classList.remove('recording');
+            document.getElementById('recordLabel').textContent = '点击开始录音';
+            document.getElementById('audioPlayerContainer').innerHTML = '';
+        }
+
+        // ========== 完成关卡 ==========
+        function completeQuest() {
+            if (!currentQuestId) return;
+
+            if (!completedQuests.includes(currentQuestId)) {
+                completedQuests.push(currentQuestId);
+                saveProgress();
+            }
+
+            alert('🎉 恭喜过关！下一关已解锁。');
+            showMap();
+            renderMap();
+        }
+
+        // ========== 初始化 ==========
+        renderMap();
+    </script>
+</body>
+</html>
