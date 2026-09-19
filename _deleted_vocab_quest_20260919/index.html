@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>词汇闯关 🌈 Vocab Quest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FFF9F0 0%, #FFE4E1 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* 开场弹窗 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal h2 {
+            font-size: 28px;
+            color: #FF6B9D;
+            margin-bottom: 24px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .topic-selection {
+            margin-bottom: 24px;
+        }
+
+        .topic-selection h3 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .topic-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .topic-card {
+            background: #F8F9FA;
+            border: 3px solid #E0E0E0;
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .topic-card:hover {
+            transform: scale(1.05);
+        }
+
+        .topic-card.selected {
+            border-color: #FF6B9D;
+            background: linear-gradient(135deg, #FFE4E1, #FFF0F5);
+            transform: scale(1.05);
+        }
+
+        .topic-card .emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .goal-selection {
+            margin-bottom: 24px;
+        }
+
+        .goal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .goal-btn {
+            background: #F8F9FA;
+            border: 3px solid #E0E0E0;
+            border-radius: 16px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .goal-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .goal-btn.selected {
+            border-color: #9D7EFF;
+            background: linear-gradient(135deg, #E5D4FF, #F0E6FF);
+            transform: scale(1.1);
+        }
+
+        .start-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #FF6B9D, #FF8FAB);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 107, 157, 0.3);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(255, 107, 157, 0.4);
+        }
+
+        .start-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 主界面 */
+        .main-view {
+            display: none;
+        }
+
+        .main-view.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FF6B9D;
+        }
+
+        .streak {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+
+        .progress-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #F0F0F0;
+            border-radius: 12px;
+            height: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #FFD4E5, #FF6B9D, #9D7EFF);
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .reset-btn {
+            background: #F0F0F0;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #E0E0E0;
+            transform: scale(1.05);
+        }
+
+        /* 主题分区 */
+        .topic-section {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .level-path {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            position: relative;
+        }
+
+        .level-bubble {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 4px solid;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .level-bubble:hover {
+            transform: scale(1.15);
+        }
+
+        .level-bubble.locked {
+            background: #E0E0E0;
+            border-color: #C0C0C0;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .level-bubble.locked:hover {
+            transform: none;
+        }
+
+        .level-bubble.passed {
+            animation: none;
+        }
+
+        .level-bubble.current {
+            animation: bounce 1s infinite;
+            box-shadow: 0 0 0 8px rgba(255, 107, 157, 0.2);
+        }
+
+        .level-word {
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* 学习页面 */
+        .learn-view {
+            display: none;
+        }
+
+        .learn-view.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .learn-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .learn-step {
+            display: none;
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .learn-step.show {
+            display: block;
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD4E5, #FF6B9D);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .word-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FF6B9D;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .speak-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #9D7EFF, #B8A4FF);
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 6px 16px rgba(157, 126, 255, 0.3);
+        }
+
+        .speak-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .speak-btn:active {
+            transform: scale(0.9);
+        }
+
+        .phonetic {
+            font-size: 20px;
+            color: #9D7EFF;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .meaning-section {
+            background: #F8F9FA;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .meaning-section h3 {
+            color: #FF6B9D;
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .meaning-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .example {
+            font-style: italic;
+            color: #666;
+            margin-top: 8px;
+            padding-left: 12px;
+            border-left: 3px solid #FFD4E5;
+        }
+
+        .pos-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #B4E7CE, #98D8BB);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .collocation-list {
+            margin-bottom: 20px;
+        }
+
+        .collocation-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-left: 4px solid #9D7EFF;
+        }
+
+        .collocation-en {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .collocation-zh {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .example-list {
+            margin-top: 16px;
+        }
+
+        .example-item {
+            background: #FFF9F0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .example-en {
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .example-zh {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #9D7EFF, #B8A4FF);
+            color: white;
+            box-shadow: 0 8px 24px rgba(157, 126, 255, 0.3);
+        }
+
+        .btn-next:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(157, 126, 255, 0.4);
+        }
+
+        .btn-complete {
+            background: linear-gradient(135deg, #B4E7CE, #98D8BB);
+            color: white;
+            box-shadow: 0 8px 24px rgba(180, 231, 206, 0.3);
+        }
+
+        .btn-complete:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(180, 231, 206, 0.4);
+        }
+
+        .btn-back {
+            background: #F0F0F0;
+            color: #666;
+        }
+
+        .btn-back:hover {
+            background: #E0E0E0;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 星星动效 */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .star {
+            position: absolute;
+            animation: fall 2s ease-out forwards;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1.1) translateY(0);
+            }
+            50% {
+                transform: scale(1.1) translateY(-8px);
+            }
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .topic-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .goal-buttons {
+                flex-direction: column;
+            }
+
+            .word-display {
+                font-size: 36px;
+            }
+
+            .level-bubble {
+                width: 64px;
+                height: 64px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        /* 主题颜色 */
+        .topic-daily {
+            background: linear-gradient(135deg, #B4E7CE, #D4F4E7);
+            border-color: #98D8BB;
+            color: #2D5F4C;
+        }
+
+        .topic-food {
+            background: linear-gradient(135deg, #FFD4E5, #FFE6EE);
+            border-color: #FFB4D4;
+            color: #D14B7F;
+        }
+
+        .topic-travel {
+            background: linear-gradient(135deg, #C1E1EC, #D9EDF5);
+            border-color: #A0CDD9;
+            color: #3D7F8F;
+        }
+
+        .topic-work {
+            background: linear-gradient(135deg, #E5D4FF, #F0E6FF);
+            border-color: #D4B8FF;
+            color: #7D5BA6;
+        }
+
+        .topic-tech {
+            background: linear-gradient(135deg, #FFE4B5, #FFF0D4);
+            border-color: #FFDA99;
+            color: #CC9544;
+        }
+
+        .topic-opinion {
+            background: linear-gradient(135deg, #FFC4DD, #FFD9E8);
+            border-color: #FFA8CC;
+            color: #D1568A;
+        }
+    </style>
+</head>
+<body>
+    <!-- 开场弹窗 -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal">
+            <h2>今天想练点什么？🌤️</h2>
+
+            <div class="topic-selection">
+                <h3>选择主题（可多选）</h3>
+                <div class="topic-cards" id="topicCards"></div>
+            </div>
+
+            <div class="goal-selection">
+                <h3>今日目标</h3>
+                <div class="goal-buttons">
+                    <button class="goal-btn" data-goal="3">3关</button>
+                    <button class="goal-btn" data-goal="5">5关</button>
+                    <button class="goal-btn" data-goal="10">10关</button>
+                </div>
+            </div>
+
+            <button class="start-btn" onclick="startLearning()">开始今天的学习 🚀</button>
+        </div>
+    </div>
+
+    <!-- 主界面 -->
+    <div class="container">
+        <div class="main-view" id="mainView">
+            <div class="header">
+                <div class="header-top">
+                    <div class="header-title">词汇闯关 🌈</div>
+                    <div class="streak" id="streakDisplay">🔥 0天</div>
+                </div>
+                <div class="progress-text" id="progressText">今日进度：0/5 关</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <button class="reset-btn" onclick="showWelcomeModal()">重新设定今日任务</button>
+            </div>
+
+            <div id="topicSections"></div>
+        </div>
+
+        <!-- 学习页面 -->
+        <div class="learn-view" id="learnView">
+            <div class="learn-card">
+                <div id="learnContent"></div>
+                <div class="button-group" id="learnButtons"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据定义 ====================
+        // 如何添加新词：在 LEVELS 数组末尾添加新对象，包含以下字段：
+        // id: 唯一编号，topic: 主题key，word: 单词，phonetic: 音标
+        // meaning_en: 英英释义，meaning_example_en: 释义例句
+        // pos: 词性，collocations: 搭配数组[{en, zh}]，examples: 例句数组[{en, zh}]
+
+        const TOPICS = [
+            {key: 'daily', name: '🌱 Daily Life', emoji: '🌱', color: 'daily'},
+            {key: 'food', name: '🍰 Food & Eating', emoji: '🍰', color: 'food'},
+            {key: 'travel', name: '✈️ Travel', emoji: '✈️', color: 'travel'},
+            {key: 'work', name: '💼 Work & Study', emoji: '💼', color: 'work'},
+            {key: 'tech', name: '💻 Technology', emoji: '💻', color: 'tech'},
+            {key: 'opinion', name: '🗣️ Opinions & Society', emoji: '🗣️', color: 'opinion'}
+        ];
+
+        const LEVELS = [
+            // Daily Life
+            {
+                id: 1, topic: 'daily', word: 'cozy', phonetic: '/ˈkoʊzi/',
+                meaning_en: 'Warm, comfortable, and pleasant, making you feel relaxed.',
+                meaning_example_en: 'The cafe had a cozy atmosphere with soft lighting.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'cozy atmosphere', zh: '温馨的氛围'},
+                    {en: 'feel cozy', zh: '感觉舒适'},
+                    {en: 'cozy up', zh: '依偎/舒服地坐着'}
+                ],
+                examples: [
+                    {en: 'I love to cozy up on the sofa with a good book.', zh: '我喜欢舒服地窝在沙发上看本好书。'},
+                    {en: 'Their apartment is small but cozy.', zh: '他们的公寓虽小但很温馨。'}
+                ]
+            },
+            {
+                id: 2, topic: 'daily', word: 'run errands', phonetic: '/rʌn ˈerəndz/',
+                meaning_en: 'To go out to buy or do various small tasks, such as shopping or going to the bank.',
+                meaning_example_en: 'I need to run errands this afternoon.',
+                pos: 'phrase',
+                collocations: [
+                    {en: 'run a few errands', zh: '办几件事'},
+                    {en: 'spend time running errands', zh: '花时间跑腿'},
+                    {en: 'errands to do', zh: '要办的事'}
+                ],
+                examples: [
+                    {en: 'Can you run some errands for me while you\'re out?', zh: '你出门时能帮我办点事吗？'},
+                    {en: 'She spent the whole morning running errands around town.', zh: '她整个上午都在城里跑腿办事。'}
+                ]
+            },
+            {
+                id: 3, topic: 'daily', word: 'tidy', phonetic: '/ˈtaɪdi/',
+                meaning_en: 'To arrange things in a neat and organized way; or already neat and well-organized.',
+                meaning_example_en: 'Please tidy your room before you go out.',
+                pos: 'v./adj.',
+                collocations: [
+                    {en: 'tidy up', zh: '收拾整理'},
+                    {en: 'keep things tidy', zh: '保持整洁'},
+                    {en: 'neat and tidy', zh: '整整齐齐'}
+                ],
+                examples: [
+                    {en: 'I need to tidy the kitchen after cooking.', zh: '做完饭我得收拾厨房。'},
+                    {en: 'He always keeps his desk tidy.', zh: '他总是保持桌面整洁。'}
+                ]
+            },
+            {
+                id: 4, topic: 'daily', word: 'commute', phonetic: '/kəˈmjuːt/',
+                meaning_en: 'The regular journey between your home and workplace, or to travel this way.',
+                meaning_example_en: 'Her daily commute takes about an hour.',
+                pos: 'n./v.',
+                collocations: [
+                    {en: 'daily commute', zh: '日常通勤'},
+                    {en: 'long commute', zh: '长距离通勤'},
+                    {en: 'commute to work', zh: '上下班通勤'}
+                ],
+                examples: [
+                    {en: 'I commute by train every day.', zh: '我每天乘火车通勤。'},
+                    {en: 'The commute is exhausting during rush hour.', zh: '高峰期的通勤很累人。'}
+                ]
+            },
+            {
+                id: 5, topic: 'daily', word: 'chore', phonetic: '/tʃɔːr/',
+                meaning_en: 'A routine task, especially a household one, that is often boring or unpleasant.',
+                meaning_example_en: 'Doing the dishes is my least favorite chore.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'household chores', zh: '家务活'},
+                    {en: 'do chores', zh: '做家务'},
+                    {en: 'daily chores', zh: '日常琐事'}
+                ],
+                examples: [
+                    {en: 'The kids help with chores like vacuuming and laundry.', zh: '孩子们帮忙做吸尘和洗衣这类家务。'},
+                    {en: 'Grocery shopping can feel like such a chore.', zh: '买菜有时候感觉就像个苦差事。'}
+                ]
+            },
+            {
+                id: 6, topic: 'daily', word: 'leisure', phonetic: '/ˈliːʒər/',
+                meaning_en: 'Free time when you are not working, when you can relax and do things you enjoy.',
+                meaning_example_en: 'What do you like to do in your leisure time?',
+                pos: 'n.',
+                collocations: [
+                    {en: 'leisure time', zh: '空闲时间'},
+                    {en: 'leisure activities', zh: '休闲活动'},
+                    {en: 'at your leisure', zh: '有空的时候/从容地'}
+                ],
+                examples: [
+                    {en: 'Reading is my favorite leisure activity.', zh: '阅读是我最喜欢的休闲活动。'},
+                    {en: 'You can complete the form at your leisure.', zh: '你可以有空的时候填这个表格。'}
+                ]
+            },
+
+            // Food & Eating
+            {
+                id: 7, topic: 'food', word: 'crave', phonetic: '/kreɪv/',
+                meaning_en: 'To have a very strong desire for something, especially food.',
+                meaning_example_en: 'I\'m craving chocolate right now.',
+                pos: 'v.',
+                collocations: [
+                    {en: 'crave for', zh: '渴望'},
+                    {en: 'crave something sweet', zh: '想吃甜的'},
+                    {en: 'food craving', zh: '对食物的渴望'}
+                ],
+                examples: [
+                    {en: 'Pregnant women often crave unusual foods.', zh: '孕妇常常想吃些不寻常的食物。'},
+                    {en: 'After exercising, I always crave something salty.', zh: '运动后我总想吃点咸的。'}
+                ]
+            },
+            {
+                id: 8, topic: 'food', word: 'savory', phonetic: '/ˈseɪvəri/',
+                meaning_en: 'Having a pleasant, salty or spicy taste rather than sweet; delicious and appetizing.',
+                meaning_example_en: 'She prefers savory snacks to sweet ones.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'savory dishes', zh: '咸味菜肴'},
+                    {en: 'savory snacks', zh: '咸味小吃'},
+                    {en: 'sweet and savory', zh: '甜味和咸味'}
+                ],
+                examples: [
+                    {en: 'The restaurant is famous for its savory pies.', zh: '这家餐厅以其美味的咸派闻名。'},
+                    {en: 'I made a savory pancake with cheese and herbs.', zh: '我做了一个加奶酪和香草的咸味煎饼。'}
+                ]
+            },
+            {
+                id: 9, topic: 'food', word: 'leftovers', phonetic: '/ˈleftˌoʊvərz/',
+                meaning_en: 'Food that remains uneaten after a meal and is kept to be eaten later.',
+                meaning_example_en: 'We had leftovers from last night\'s dinner.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'eat leftovers', zh: '吃剩菜'},
+                    {en: 'save leftovers', zh: '保存剩菜'},
+                    {en: 'yesterday\'s leftovers', zh: '昨天的剩菜'}
+                ],
+                examples: [
+                    {en: 'I packed the leftovers in containers for lunch tomorrow.', zh: '我把剩菜装进盒子里当明天的午餐。'},
+                    {en: 'Leftovers taste even better the next day.', zh: '剩菜第二天吃起来更香。'}
+                ]
+            },
+            {
+                id: 10, topic: 'food', word: 'appetizing', phonetic: '/ˈæpɪtaɪzɪŋ/',
+                meaning_en: 'Looking or smelling delicious and making you want to eat.',
+                meaning_example_en: 'The appetizing aroma made everyone hungry.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'appetizing smell', zh: '诱人的香味'},
+                    {en: 'look appetizing', zh: '看起来很开胃'},
+                    {en: 'not very appetizing', zh: '不太开胃'}
+                ],
+                examples: [
+                    {en: 'The display of fresh pastries looked very appetizing.', zh: '新鲜糕点的陈列看起来非常诱人。'},
+                    {en: 'The gray color made the food less appetizing.', zh: '灰色让食物看起来不太开胃。'}
+                ]
+            },
+            {
+                id: 11, topic: 'food', word: 'portion', phonetic: '/ˈpɔːrʃn/',
+                meaning_en: 'An amount of food served to one person; a share or part of something.',
+                meaning_example_en: 'The portions at this restaurant are huge.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'large portion', zh: '大份'},
+                    {en: 'portion size', zh: '份量大小'},
+                    {en: 'generous portion', zh: '慷慨的份量'}
+                ],
+                examples: [
+                    {en: 'I ordered a small portion because I wasn\'t very hungry.', zh: '我点了小份,因为不太饿。'},
+                    {en: 'Try to control your portion sizes when dieting.', zh: '节食时要控制食物份量。'}
+                ]
+            },
+            {
+                id: 12, topic: 'food', word: 'dine out', phonetic: '/daɪn aʊt/',
+                meaning_en: 'To eat a meal at a restaurant rather than at home.',
+                meaning_example_en: 'We dine out every Friday evening.',
+                pos: 'phrase',
+                collocations: [
+                    {en: 'dine out at', zh: '在…外出就餐'},
+                    {en: 'prefer to dine out', zh: '更喜欢外出就餐'},
+                    {en: 'dine out frequently', zh: '经常外出就餐'}
+                ],
+                examples: [
+                    {en: 'It\'s too hot to cook, let\'s dine out tonight.', zh: '太热了不想做饭,今晚咱们出去吃吧。'},
+                    {en: 'They enjoy dining out at different restaurants on weekends.', zh: '他们喜欢周末去不同的餐厅吃饭。'}
+                ]
+            },
+
+            // Travel
+            {
+                id: 13, topic: 'travel', word: 'itinerary', phonetic: '/aɪˈtɪnəreri/',
+                meaning_en: 'A detailed plan or route for a journey, showing places to visit and activities.',
+                meaning_example_en: 'Have you planned your itinerary for the trip?',
+                pos: 'n.',
+                collocations: [
+                    {en: 'travel itinerary', zh: '旅行行程'},
+                    {en: 'plan an itinerary', zh: '规划行程'},
+                    {en: 'flexible itinerary', zh: '灵活的行程'}
+                ],
+                examples: [
+                    {en: 'Our itinerary includes Paris, Rome, and Barcelona.', zh: '我们的行程包括巴黎、罗马和巴塞罗那。'},
+                    {en: 'I prefer a flexible itinerary when traveling.', zh: '旅行时我更喜欢灵活的行程。'}
+                ]
+            },
+            {
+                id: 14, topic: 'travel', word: 'wander', phonetic: '/ˈwɑːndər/',
+                meaning_en: 'To walk around slowly in a relaxed way, without a specific purpose or direction.',
+                meaning_example_en: 'We wandered through the old town for hours.',
+                pos: 'v.',
+                collocations: [
+                    {en: 'wander around', zh: '四处闲逛'},
+                    {en: 'wander through', zh: '漫步穿过'},
+                    {en: 'wander aimlessly', zh: '漫无目的地闲逛'}
+                ],
+                examples: [
+                    {en: 'I love wandering around local markets when traveling.', zh: '旅行时我喜欢在当地市场闲逛。'},
+                    {en: 'They wandered along the beach at sunset.', zh: '他们在日落时分沿着海滩漫步。'}
+                ]
+            },
+            {
+                id: 15, topic: 'travel', word: 'breathtaking', phonetic: '/ˈbreθteɪkɪŋ/',
+                meaning_en: 'Extremely beautiful or amazing in a way that surprises you.',
+                meaning_example_en: 'The view from the mountain was breathtaking.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'breathtaking view', zh: '令人惊叹的景色'},
+                    {en: 'breathtaking scenery', zh: '惊艳的风景'},
+                    {en: 'absolutely breathtaking', zh: '绝对令人惊叹'}
+                ],
+                examples: [
+                    {en: 'The sunset over the ocean was absolutely breathtaking.', zh: '海上的日落绝对令人惊叹。'},
+                    {en: 'We hiked to a breathtaking viewpoint.', zh: '我们徒步到了一个令人惊叹的观景点。'}
+                ]
+            },
+            {
+                id: 16, topic: 'travel', word: 'layover', phonetic: '/ˈleɪoʊvər/',
+                meaning_en: 'A short stop between parts of a journey, especially a plane journey.',
+                meaning_example_en: 'We had a three-hour layover in Dubai.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'short layover', zh: '短暂停留'},
+                    {en: 'long layover', zh: '长时间停留'},
+                    {en: 'layover time', zh: '中转时间'}
+                ],
+                examples: [
+                    {en: 'During the layover, we explored the airport shops.', zh: '中转期间,我们逛了逛机场的商店。'},
+                    {en: 'A long layover can be tiring, but sometimes useful for rest.', zh: '长时间中转可能很累人,但有时也可以休息。'}
+                ]
+            },
+            {
+                id: 17, topic: 'travel', word: 'off the beaten track', phonetic: '/ɔːf ðə ˈbiːtn træk/',
+                meaning_en: 'In or to a place that is remote, not frequently visited by tourists.',
+                meaning_example_en: 'We prefer destinations off the beaten track.',
+                pos: 'phrase',
+                collocations: [
+                    {en: 'go off the beaten track', zh: '去人迹罕至的地方'},
+                    {en: 'well off the beaten track', zh: '非常偏僻'},
+                    {en: 'explore off the beaten track', zh: '探索冷门地方'}
+                ],
+                examples: [
+                    {en: 'The village is off the beaten track, perfect for a quiet retreat.', zh: '这个村庄很偏僻,非常适合安静休养。'},
+                    {en: 'Adventure travelers love going off the beaten track.', zh: '探险旅行者喜欢去人迹罕至的地方。'}
+                ]
+            },
+            {
+                id: 18, topic: 'travel', word: 'getaway', phonetic: '/ˈɡetəweɪ/',
+                meaning_en: 'A short vacation or trip away from home to relax.',
+                meaning_example_en: 'We planned a weekend getaway to the mountains.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'weekend getaway', zh: '周末短途旅行'},
+                    {en: 'romantic getaway', zh: '浪漫之旅'},
+                    {en: 'quick getaway', zh: '快速度假'}
+                ],
+                examples: [
+                    {en: 'A beach getaway is exactly what I need right now.', zh: '海滨短途旅行正是我现在需要的。'},
+                    {en: 'They booked a romantic getaway for their anniversary.', zh: '他们为周年纪念订了一次浪漫之旅。'}
+                ]
+            },
+
+            // Work & Study
+            {
+                id: 19, topic: 'work', word: 'deadline', phonetic: '/ˈdedlaɪn/',
+                meaning_en: 'A time or date by which something must be finished or submitted.',
+                meaning_example_en: 'The deadline for this project is next Friday.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'meet a deadline', zh: '赶上截止日期'},
+                    {en: 'tight deadline', zh: '紧迫的截止日期'},
+                    {en: 'miss the deadline', zh: '错过截止日期'}
+                ],
+                examples: [
+                    {en: 'I always try to finish work before the deadline.', zh: '我总是尽量在截止日期前完成工作。'},
+                    {en: 'We\'re working under a very tight deadline this week.', zh: '我们这周的截止日期非常紧。'}
+                ]
+            },
+            {
+                id: 20, topic: 'work', word: 'productive', phonetic: '/prəˈdʌktɪv/',
+                meaning_en: 'Achieving a lot, working efficiently and getting good results.',
+                meaning_example_en: 'It was a very productive meeting.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'productive day', zh: '高效的一天'},
+                    {en: 'be productive', zh: '高效'},
+                    {en: 'productive work', zh: '富有成效的工作'}
+                ],
+                examples: [
+                    {en: 'I feel most productive in the morning.', zh: '我早上最高效。'},
+                    {en: 'Working from home can be very productive if you stay focused.', zh: '如果保持专注,在家工作会非常高效。'}
+                ]
+            },
+            {
+                id: 21, topic: 'work', word: 'collaborate', phonetic: '/kəˈlæbəreɪt/',
+                meaning_en: 'To work together with others on a project or task.',
+                meaning_example_en: 'Our team collaborates closely on every project.',
+                pos: 'v.',
+                collocations: [
+                    {en: 'collaborate with', zh: '与…合作'},
+                    {en: 'collaborate on', zh: '在…上合作'},
+                    {en: 'closely collaborate', zh: '密切合作'}
+                ],
+                examples: [
+                    {en: 'Scientists from different countries collaborated on the research.', zh: '来自不同国家的科学家合作开展研究。'},
+                    {en: 'We need to collaborate more effectively as a team.', zh: '我们需要作为团队更有效地合作。'}
+                ]
+            },
+            {
+                id: 22, topic: 'work', word: 'workload', phonetic: '/ˈwɜːrkloʊd/',
+                meaning_en: 'The amount of work that a person or organization has to do.',
+                meaning_example_en: 'My workload has increased significantly this month.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'heavy workload', zh: '繁重的工作量'},
+                    {en: 'manage workload', zh: '管理工作量'},
+                    {en: 'workload distribution', zh: '工作量分配'}
+                ],
+                examples: [
+                    {en: 'The team is struggling with an excessive workload.', zh: '团队正在应对过重的工作量。'},
+                    {en: 'I need to better manage my workload to avoid burnout.', zh: '我需要更好地管理工作量以避免倦怠。'}
+                ]
+            },
+            {
+                id: 23, topic: 'work', word: 'procrastinate', phonetic: '/proʊˈkræstɪneɪt/',
+                meaning_en: 'To delay doing something, especially because you do not want to do it.',
+                meaning_example_en: 'Stop procrastinating and start your homework!',
+                pos: 'v.',
+                collocations: [
+                    {en: 'procrastinate on', zh: '拖延…'},
+                    {en: 'tend to procrastinate', zh: '倾向于拖延'},
+                    {en: 'stop procrastinating', zh: '停止拖延'}
+                ],
+                examples: [
+                    {en: 'I often procrastinate on tasks I find boring.', zh: '我经常拖延我觉得无聊的任务。'},
+                    {en: 'Procrastinating only makes things more stressful later.', zh: '拖延只会让之后的事情更有压力。'}
+                ]
+            },
+            {
+                id: 24, topic: 'work', word: 'skill set', phonetic: '/skɪl set/',
+                meaning_en: 'A person\'s range of skills or abilities, especially those needed for a job.',
+                meaning_example_en: 'Her skill set makes her perfect for this role.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'diverse skill set', zh: '多样化的技能'},
+                    {en: 'develop skill set', zh: '发展技能'},
+                    {en: 'valuable skill set', zh: '有价值的技能组合'}
+                ],
+                examples: [
+                    {en: 'The job requires a strong technical skill set.', zh: '这份工作需要强大的技术技能。'},
+                    {en: 'I\'m working to expand my skill set through online courses.', zh: '我正在通过在线课程扩展我的技能。'}
+                ]
+            },
+
+            // Technology
+            {
+                id: 25, topic: 'tech', word: 'gadget', phonetic: '/ˈɡædʒɪt/',
+                meaning_en: 'A small, useful device or tool, especially a clever or novel one.',
+                meaning_example_en: 'He loves buying the latest tech gadgets.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'electronic gadget', zh: '电子小设备'},
+                    {en: 'kitchen gadget', zh: '厨房小工具'},
+                    {en: 'latest gadget', zh: '最新设备'}
+                ],
+                examples: [
+                    {en: 'This gadget makes cooking so much easier.', zh: '这个小工具让做饭轻松多了。'},
+                    {en: 'Tech enthusiasts love collecting new gadgets.', zh: '技术爱好者喜欢收集新设备。'}
+                ]
+            },
+            {
+                id: 26, topic: 'tech', word: 'seamless', phonetic: '/ˈsiːmləs/',
+                meaning_en: 'Smooth and continuous, with no problems or interruptions.',
+                meaning_example_en: 'The app provides a seamless user experience.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'seamless integration', zh: '无缝集成'},
+                    {en: 'seamless experience', zh: '流畅的体验'},
+                    {en: 'seamless transition', zh: '平滑过渡'}
+                ],
+                examples: [
+                    {en: 'The software update was seamless and took only seconds.', zh: '软件更新非常流畅,只用了几秒钟。'},
+                    {en: 'We aim for seamless integration between all our systems.', zh: '我们致力于所有系统之间的无缝集成。'}
+                ]
+            },
+            {
+                id: 27, topic: 'tech', word: 'glitch', phonetic: '/ɡlɪtʃ/',
+                meaning_en: 'A small technical problem or fault that causes something to fail temporarily.',
+                meaning_example_en: 'There was a glitch in the system this morning.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'technical glitch', zh: '技术故障'},
+                    {en: 'minor glitch', zh: '小故障'},
+                    {en: 'fix a glitch', zh: '修复故障'}
+                ],
+                examples: [
+                    {en: 'The video call had a few glitches but overall worked fine.', zh: '视频通话有些小故障,但总体还不错。'},
+                    {en: 'We discovered a glitch that was causing the app to crash.', zh: '我们发现了一个导致应用崩溃的故障。'}
+                ]
+            },
+            {
+                id: 28, topic: 'tech', word: 'user-friendly', phonetic: '/ˈjuːzər ˈfrendli/',
+                meaning_en: 'Easy to use and understand, especially for people without technical knowledge.',
+                meaning_example_en: 'The interface is very user-friendly.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'user-friendly design', zh: '用户友好的设计'},
+                    {en: 'user-friendly interface', zh: '易用界面'},
+                    {en: 'make it user-friendly', zh: '使其易于使用'}
+                ],
+                examples: [
+                    {en: 'This software is user-friendly even for beginners.', zh: '这个软件即使对初学者也很友好。'},
+                    {en: 'We redesigned the website to make it more user-friendly.', zh: '我们重新设计了网站,使其更易于使用。'}
+                ]
+            },
+            {
+                id: 29, topic: 'tech', word: 'upgrade', phonetic: '/ˈʌpɡreɪd/',
+                meaning_en: 'To improve something by replacing it with a better version, or the improved version itself.',
+                meaning_example_en: 'I need to upgrade my phone soon.',
+                pos: 'v./n.',
+                collocations: [
+                    {en: 'system upgrade', zh: '系统升级'},
+                    {en: 'upgrade to', zh: '升级到'},
+                    {en: 'free upgrade', zh: '免费升级'}
+                ],
+                examples: [
+                    {en: 'We upgraded our software to the latest version.', zh: '我们把软件升级到了最新版本。'},
+                    {en: 'The hotel offered us a free upgrade to a suite.', zh: '酒店为我们免费升级到套房。'}
+                ]
+            },
+            {
+                id: 30, topic: 'tech', word: 'cutting-edge', phonetic: '/ˈkʌtɪŋ edʒ/',
+                meaning_en: 'Very modern and advanced; at the forefront of development.',
+                meaning_example_en: 'They use cutting-edge technology in their products.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'cutting-edge technology', zh: '尖端技术'},
+                    {en: 'cutting-edge research', zh: '前沿研究'},
+                    {en: 'cutting-edge design', zh: '前卫设计'}
+                ],
+                examples: [
+                    {en: 'The company is known for its cutting-edge innovations.', zh: '这家公司以其尖端创新而闻名。'},
+                    {en: 'This phone features cutting-edge camera technology.', zh: '这款手机采用了尖端的相机技术。'}
+                ]
+            },
+
+            // Opinions & Society
+            {
+                id: 31, topic: 'opinion', word: 'controversial', phonetic: '/ˌkɑːntrəˈvɜːrʃl/',
+                meaning_en: 'Causing disagreement or discussion because people have different opinions about it.',
+                meaning_example_en: 'The politician made a controversial statement.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'controversial issue', zh: '有争议的问题'},
+                    {en: 'highly controversial', zh: '高度争议的'},
+                    {en: 'controversial decision', zh: '有争议的决定'}
+                ],
+                examples: [
+                    {en: 'The new law is highly controversial among citizens.', zh: '这项新法律在公民中引起了很大争议。'},
+                    {en: 'His views on education are quite controversial.', zh: '他对教育的看法颇具争议。'}
+                ]
+            },
+            {
+                id: 32, topic: 'opinion', word: 'advocate', phonetic: '/ˈædvəkeɪt/',
+                meaning_en: 'To publicly support or recommend a particular cause or policy; a person who does this.',
+                meaning_example_en: 'She advocates for environmental protection.',
+                pos: 'v./n.',
+                collocations: [
+                    {en: 'advocate for', zh: '倡导/支持'},
+                    {en: 'strong advocate', zh: '坚定的倡导者'},
+                    {en: 'advocate change', zh: '倡导变革'}
+                ],
+                examples: [
+                    {en: 'He has been a long-time advocate of equal rights.', zh: '他长期以来一直是平等权利的倡导者。'},
+                    {en: 'Many scientists advocate for stricter climate policies.', zh: '许多科学家倡导更严格的气候政策。'}
+                ]
+            },
+            {
+                id: 33, topic: 'opinion', word: 'mainstream', phonetic: '/ˈmeɪnstriːm/',
+                meaning_en: 'The ideas, attitudes, or activities that are shared by most people and regarded as normal.',
+                meaning_example_en: 'His views differ from mainstream opinion.',
+                pos: 'adj./n.',
+                collocations: [
+                    {en: 'mainstream media', zh: '主流媒体'},
+                    {en: 'mainstream culture', zh: '主流文化'},
+                    {en: 'enter the mainstream', zh: '进入主流'}
+                ],
+                examples: [
+                    {en: 'The idea has now become mainstream.', zh: '这个想法现在已经成为主流。'},
+                    {en: 'Mainstream media often overlooks smaller communities.', zh: '主流媒体常常忽视较小的群体。'}
+                ]
+            },
+            {
+                id: 34, topic: 'opinion', word: 'biased', phonetic: '/ˈbaɪəst/',
+                meaning_en: 'Unfairly influenced by personal opinions, showing favoritism or prejudice.',
+                meaning_example_en: 'The article seemed biased toward one political party.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'biased opinion', zh: '有偏见的观点'},
+                    {en: 'heavily biased', zh: '严重偏颇'},
+                    {en: 'biased against', zh: '对…有偏见'}
+                ],
+                examples: [
+                    {en: 'The judge was accused of being biased.', zh: '法官被指控有偏见。'},
+                    {en: 'We should try to get news from unbiased sources.', zh: '我们应该尝试从无偏见的来源获取新闻。'}
+                ]
+            },
+            {
+                id: 35, topic: 'opinion', word: 'sustainable', phonetic: '/səˈsteɪnəbl/',
+                meaning_en: 'Able to continue over time without harming the environment or depleting resources.',
+                meaning_example_en: 'We need more sustainable energy sources.',
+                pos: 'adj.',
+                collocations: [
+                    {en: 'sustainable development', zh: '可持续发展'},
+                    {en: 'sustainable practices', zh: '可持续做法'},
+                    {en: 'environmentally sustainable', zh: '环境可持续的'}
+                ],
+                examples: [
+                    {en: 'The company is committed to sustainable business practices.', zh: '公司致力于可持续的商业做法。'},
+                    {en: 'Sustainable agriculture protects the land for future generations.', zh: '可持续农业为后代保护土地。'}
+                ]
+            },
+            {
+                id: 36, topic: 'opinion', word: 'perspective', phonetic: '/pərˈspektɪv/',
+                meaning_en: 'A particular way of thinking about or viewing something; a point of view.',
+                meaning_example_en: 'Try to see things from her perspective.',
+                pos: 'n.',
+                collocations: [
+                    {en: 'different perspective', zh: '不同的视角'},
+                    {en: 'gain perspective', zh: '获得视角/洞察'},
+                    {en: 'from this perspective', zh: '从这个角度'}
+                ],
+                examples: [
+                    {en: 'Traveling gives you a new perspective on life.', zh: '旅行让你对生活有了新的视角。'},
+                    {en: 'We need to consider the issue from multiple perspectives.', zh: '我们需要从多个角度考虑这个问题。'}
+                ]
+            }
+        ];
+
+        // ==================== 状态管理 ====================
+        let state = {
+            passedLevelIds: [],
+            streak: 0,
+            lastStudyDate: null,
+            todayGoal: 5,
+            selectedTopics: ['daily', 'food', 'travel', 'work', 'tech', 'opinion'],
+            todayCompleted: 0,
+            currentLevelId: null,
+            currentStep: 1
+        };
+
+        const STORAGE_KEY = 'vocab_quest_v1';
+
+        function loadState() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                state = { ...state, ...JSON.parse(saved) };
+                updateStreak();
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            const last = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
+
+            if (last === today) {
+                return;
+            }
+
+            if (last) {
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (yesterday.toDateString() === last) {
+                    state.streak += 1;
+                } else {
+                    state.streak = 1;
+                }
+            } else {
+                state.streak = 1;
+            }
+
+            state.lastStudyDate = new Date().toISOString();
+            saveState();
+        }
+
+        function resetTodayProgress() {
+            const today = new Date().toDateString();
+            const last = state.lastStudyDate ? new Date(state.lastStudyDate).toDateString() : null;
+            if (last !== today) {
+                state.todayCompleted = 0;
+            }
+        }
+
+        // ==================== 开场弹窗 ====================
+        function initWelcomeModal() {
+            const cardsContainer = document.getElementById('topicCards');
+            cardsContainer.innerHTML = TOPICS.map(topic => `
+                <div class="topic-card ${state.selectedTopics.includes(topic.key) ? 'selected' : ''}"
+                     data-topic="${topic.key}" onclick="toggleTopic('${topic.key}')">
+                    <div class="emoji">${topic.emoji}</div>
+                    <div>${topic.name.split(' ').slice(1).join(' ')}</div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.goal-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    state.todayGoal = parseInt(this.dataset.goal);
+                });
+            });
+
+            const goalBtn = document.querySelector(`.goal-btn[data-goal="${state.todayGoal}"]`);
+            if (goalBtn) goalBtn.classList.add('selected');
+        }
+
+        function toggleTopic(topicKey) {
+            const index = state.selectedTopics.indexOf(topicKey);
+            if (index > -1) {
+                state.selectedTopics.splice(index, 1);
+            } else {
+                state.selectedTopics.push(topicKey);
+            }
+
+            const card = document.querySelector(`[data-topic="${topicKey}"]`);
+            card.classList.toggle('selected');
+        }
+
+        function showWelcomeModal() {
+            document.getElementById('welcomeModal').classList.add('show');
+            initWelcomeModal();
+        }
+
+        function startLearning() {
+            if (state.selectedTopics.length === 0) {
+                alert('请至少选择一个主题！');
+                return;
+            }
+
+            saveState();
+            document.getElementById('welcomeModal').classList.remove('show');
+            document.getElementById('mainView').classList.add('show');
+            renderMainView();
+        }
+
+        // ==================== 主界面 ====================
+        function renderMainView() {
+            resetTodayProgress();
+
+            document.getElementById('streakDisplay').textContent = `🔥 ${state.streak}天`;
+            document.getElementById('progressText').textContent = `今日进度：${state.todayCompleted}/${state.todayGoal} 关`;
+
+            const progress = state.todayGoal > 0 ? (state.todayCompleted / state.todayGoal) * 100 : 0;
+            document.getElementById('progressFill').style.width = `${Math.min(progress, 100)}%`;
+
+            const sectionsContainer = document.getElementById('topicSections');
+            sectionsContainer.innerHTML = state.selectedTopics.map(topicKey => {
+                const topic = TOPICS.find(t => t.key === topicKey);
+                const levels = LEVELS.filter(l => l.topic === topicKey);
+
+                return `
+                    <div class="topic-section">
+                        <div class="topic-header">${topic.name}</div>
+                        <div class="level-path">
+                            ${levels.map((level, index) => {
+                                const isPassed = state.passedLevelIds.includes(level.id);
+                                const prevPassed = index === 0 || state.passedLevelIds.includes(levels[index - 1].id);
+                                const isLocked = !prevPassed;
+                                const isCurrent = !isPassed && prevPassed;
+
+                                return `
+                                    <div class="level-bubble topic-${topic.color} ${isPassed ? 'passed' : ''} ${isLocked ? 'locked' : ''} ${isCurrent ? 'current' : ''}"
+                                         onclick="${isLocked ? '' : `startLevel(${level.id})`}">
+                                        <div style="font-size: 20px;">${isPassed ? '⭐' : isLocked ? '🔒' : index + 1}</div>
+                                        <div class="level-word">${level.word.split(' ')[0].substring(0, 6)}</div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== 学习页面 ====================
+        function startLevel(levelId) {
+            state.currentLevelId = levelId;
+            state.currentStep = 1;
+
+            document.getElementById('mainView').classList.remove('show');
+            document.getElementById('learnView').classList.add('show');
+
+            renderLearnView();
+        }
+
+        function renderLearnView() {
+            const level = LEVELS.find(l => l.id === state.currentLevelId);
+            const topic = TOPICS.find(t => t.key === level.topic);
+
+            const contentDiv = document.getElementById('learnContent');
+
+            contentDiv.innerHTML = `
+                <div class="learn-step ${state.currentStep >= 1 ? 'show' : ''}">
+                    <div class="step-badge">Step 1: 学词 📖</div>
+                    <div class="word-display">
+                        ${level.word}
+                        <button class="speak-btn" onclick="speakWord('${level.word}')">🔊</button>
+                    </div>
+                    <div class="phonetic">${level.phonetic}</div>
+                </div>
+
+                <div class="learn-step ${state.currentStep >= 2 ? 'show' : ''}">
+                    <div class="step-badge">Step 2: 英英释义 💡</div>
+                    <div class="meaning-section">
+                        <h3>Meaning</h3>
+                        <div class="meaning-text">${level.meaning_en}</div>
+                        <div class="example">${level.meaning_example_en}</div>
+                    </div>
+                </div>
+
+                <div class="learn-step ${state.currentStep >= 3 ? 'show' : ''}">
+                    <div class="step-badge">Step 3: 用法与词性 ✨</div>
+                    <div class="meaning-section">
+                        <span class="pos-tag">${level.pos}</span>
+                        <h3>常用搭配</h3>
+                        <div class="collocation-list">
+                            ${level.collocations.map(c => `
+                                <div class="collocation-item">
+                                    <div class="collocation-en">${c.en}</div>
+                                    <div class="collocation-zh">${c.zh}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <h3>例句</h3>
+                        <div class="example-list">
+                            ${level.examples.map(e => `
+                                <div class="example-item">
+                                    <div class="example-en">${e.en}</div>
+                                    <div class="example-zh">${e.zh}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            renderButtons();
+        }
+
+        function renderButtons() {
+            const buttonsDiv = document.getElementById('learnButtons');
+
+            if (state.currentStep < 3) {
+                buttonsDiv.innerHTML = `
+                    <button class="btn btn-back" onclick="backToMap()">← 返回</button>
+                    <button class="btn btn-next" onclick="nextStep()">下一步 →</button>
+                `;
+            } else {
+                buttonsDiv.innerHTML = `
+                    <button class="btn btn-back" onclick="backToMap()">← 返回</button>
+                    <button class="btn btn-complete" onclick="completeLevel()">✅ 学会啦,过关!</button>
+                `;
+            }
+        }
+
+        function nextStep() {
+            if (state.currentStep < 3) {
+                state.currentStep++;
+                renderLearnView();
+            }
+        }
+
+        function completeLevel() {
+            if (!state.passedLevelIds.includes(state.currentLevelId)) {
+                state.passedLevelIds.push(state.currentLevelId);
+                state.todayCompleted++;
+                updateStreak();
+                saveState();
+
+                playConfetti();
+
+                setTimeout(() => {
+                    backToMap();
+                }, 1500);
+            } else {
+                backToMap();
+            }
+        }
+
+        function backToMap() {
+            document.getElementById('learnView').classList.remove('show');
+            document.getElementById('mainView').classList.add('show');
+            renderMainView();
+        }
+
+        function speakWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playConfetti() {
+            const container = document.createElement('div');
+            container.className = 'confetti';
+            document.body.appendChild(container);
+
+            const stars = ['⭐', '✨', '🌟', '💫', '🎉'];
+
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.textContent = stars[Math.floor(Math.random() * stars.length)];
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    star.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(star);
+                }, i * 50);
+            }
+
+            setTimeout(() => {
+                document.body.removeChild(container);
+            }, 2500);
+        }
+
+        // ==================== 初始化 ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            showWelcomeModal();
+        });
+    </script>
+</body>
+</html>
