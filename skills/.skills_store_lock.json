@@ -33,6 +33,51 @@
       "source": "community",
       "version": "1.0.2",
       "installedAt": "2026-07-19T03:43:30Z"
+    },
+    "@clawhub_sharkwind/ai-news-briefing": {
+      "name": "AI News Briefing",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=ai-news-briefing&namespace=clawhub_sharkwind",
+      "source": "clawhub",
+      "version": "1.0.1",
+      "namespace": {
+        "canonicalName": "@clawhub_sharkwind/ai-news-briefing",
+        "displayName": "sharkwind",
+        "handle": "clawhub_sharkwind",
+        "publicSlug": "ai-news-briefing"
+      },
+      "internalSlug": "ai-news-briefing",
+      "publicSlug": "ai-news-briefing",
+      "installDir": "/root/.openclaw/workspace/skills/@clawhub_sharkwind/ai-news-briefing"
+    },
+    "@user_aee8f51d/mathmodel-pipeline": {
+      "name": "数学建模全流程",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=mathmodel-pipeline&namespace=user_aee8f51d",
+      "source": "community",
+      "version": "1.0.0",
+      "namespace": {
+        "canonicalName": "@user_aee8f51d/mathmodel-pipeline",
+        "displayName": "user_aee8f51d",
+        "handle": "user_aee8f51d",
+        "publicSlug": "mathmodel-pipeline"
+      },
+      "internalSlug": "mathmodel-pipeline",
+      "publicSlug": "mathmodel-pipeline",
+      "installDir": "/root/.openclaw/workspace/skills/@user_aee8f51d/mathmodel-pipeline"
+    },
+    "@user_c6124052/math-modeling-contest-review": {
+      "name": "数学建模论文指导",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=math-modeling-contest-review&namespace=user_c6124052",
+      "source": "community",
+      "version": "1.0.0",
+      "namespace": {
+        "canonicalName": "@user_c6124052/math-modeling-contest-review",
+        "displayName": "user_c6124052",
+        "handle": "user_c6124052",
+        "publicSlug": "math-modeling-contest-review"
+      },
+      "internalSlug": "math-modeling-contest-review",
+      "publicSlug": "math-modeling-contest-review",
+      "installDir": "/root/.openclaw/workspace/skills/@user_c6124052/math-modeling-contest-review"
     }
   }
 }
