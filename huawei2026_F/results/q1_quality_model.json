@@ -1,0 +1,110 @@
+{
+  "direction": {
+    "fineweb_edu": 1,
+    "fluency_en": 1,
+    "modernbert_cleanliness": 1,
+    "modernbert_readability": 1,
+    "modernbert_reasoning": 1,
+    "modernbert_professionalism": 1,
+    "dsir_books": 1,
+    "dsir_wiki": 1,
+    "dsir_math": 1,
+    "qurater": 1,
+    "ad_en": -1,
+    "rps_doc_word_count": 1,
+    "rps_doc_num_sentences": 1,
+    "rps_doc_unigram_entropy": 1,
+    "rps_doc_frac_unique_words": -1,
+    "rps_doc_frac_no_alph_words": -1,
+    "rps_doc_frac_chars_top_2gram": -1,
+    "rps_doc_frac_chars_top_3gram": -1,
+    "rps_lines_uppercase_letter_fraction": -1,
+    "rps_lines_ending_with_terminal_punctution_mark": -1,
+    "rps_lines_numerical_chars_fraction": -1,
+    "rps_doc_mean_word_length": 1
+  },
+  "Q_stats": {
+    "mean": 0.6020600456262858,
+    "std": 0.022349434129433226,
+    "min": 0.47484958402519184,
+    "max": 0.7151784859896192
+  },
+  "conflict": {
+    "definition": "内容质量类均值>0.6 且 形式质量类均值<0.4",
+    "rate": 0.0,
+    "n": 0,
+    "corr_content_form": -0.06008685751001251,
+    "trap_note": "数据说明伪称冲突率约0%、不存在矛盾；实测见 rate"
+  },
+  "domain_quality": [
+    {
+      "_domain": "A2_arxiv",
+      "n": 17523,
+      "Q_mean": 0.6049384801095632,
+      "Q_median": 0.6048605964864827,
+      "Q_std": 0.015745751530022892
+    },
+    {
+      "_domain": "A3_github",
+      "n": 203752,
+      "Q_mean": 0.603609998269399,
+      "Q_median": 0.6058675835859337,
+      "Q_std": 0.02041736069480268
+    },
+    {
+      "_domain": "arxiv",
+      "n": 1419,
+      "Q_mean": 0.6042683507282415,
+      "Q_median": 0.6034768158102285,
+      "Q_std": 0.015865868836512784
+    },
+    {
+      "_domain": "book",
+      "n": 171,
+      "Q_mean": 0.6360019309044087,
+      "Q_median": 0.635394481067382,
+      "Q_std": 0.02034069733226848
+    },
+    {
+      "_domain": "c4",
+      "n": 10000,
+      "Q_mean": 0.5770725510873189,
+      "Q_median": 0.5767990672408021,
+      "Q_std": 0.02933463051667085
+    },
+    {
+      "_domain": "commoncrawl",
+      "n": 9640,
+      "Q_mean": 0.6160139030684794,
+      "Q_median": 0.6183083455091245,
+      "Q_std": 0.029925776953906823
+    },
+    {
+      "_domain": "github",
+      "n": 10000,
+      "Q_mean": 0.6039941448551038,
+      "Q_median": 0.6060618720599962,
+      "Q_std": 0.020205069961971953
+    },
+    {
+      "_domain": "stackexchange",
+      "n": 10000,
+      "Q_mean": 0.5955662340693947,
+      "Q_median": 0.597646348728968,
+      "Q_std": 0.02303748489825384
+    },
+    {
+      "_domain": "wikipedia",
+      "n": 10000,
+      "Q_mean": 0.5806374933478191,
+      "Q_median": 0.5829191042630508,
+      "Q_std": 0.024028384023311186
+    }
+  ],
+  "decision_1_2": {
+    "r2_base": 0.22932841818986993,
+    "r2_quality_weighted": 0.25757426464630306,
+    "delta_r2": 0.028245846456433132,
+    "adopt": false
+  }
+}

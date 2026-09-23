@@ -1,0 +1,36 @@
+{
+  "overlap_points": 160,
+  "scale_ratio_median_B8_over_B6": 0.5049654818683029,
+  "q_loss_direction_check": {},
+  "calibrated_eval": {
+    "原始": {
+      "n": 1704,
+      "rmse": 1.349445229906465,
+      "r2": -2.745025793852976,
+      "pearson_r": 0.043809051650896574
+    },
+    "仅calibrated": {
+      "n": 984,
+      "rmse": 1.3838413648685477,
+      "r2": -2.798976764272483,
+      "pearson_r": 0.013272707982417562
+    },
+    "仅extrapolated": {
+      "n": 720,
+      "rmse": 1.300967314177648,
+      "r2": -3.175150109630632,
+      "pearson_r": -0.2999405598159741
+    }
+  },
+  "loss_floor": {
+    "value": 0.5,
+    "n_at_floor": 362,
+    "rate": 0.21244131455399062
+  },
+  "data_type_split": {
+    "calibrated": 984,
+    "extrapolated": 720
+  },
+  "conclusion": "B8 与 B6/B7 在同一配方下的 Loss 尺度不一致（比值非1），且低 Q 区存在 0.5 的 Loss 下限截断。因此 B8 不适合用于绝对 Loss 的验证，但可用于检验「Q↑ → Loss↓」的方向性结论。",
+  "decision_2_3": "B8 报告 RMSE 并标注为外推一致性检查；因尺度不一致，绝对 Loss 验证不成立，仅验证方向性"
+}

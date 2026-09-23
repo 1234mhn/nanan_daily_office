@@ -1,0 +1,92 @@
+{
+  "decision_1_4": "仅用 13 个有 Loss 的域（剔除 nih_exporter/enron_emails/europarl/philpapers）",
+  "n_domains_used": 13,
+  "domains_used": [
+    "arxiv",
+    "freelaw",
+    "pubmed_central",
+    "wikipedia_en",
+    "dm_mathematics",
+    "github",
+    "stackexchange",
+    "gutenberg_pg_19",
+    "pile_cc",
+    "ubuntu_irc",
+    "hackernews",
+    "pubmed_abstracts",
+    "uspto_backgrounds"
+  ],
+  "train": {
+    "n": 512,
+    "R2": 0.22932841818986993,
+    "RMSE": 0.28485006393337836,
+    "coefs": {
+      "arxiv": 0.4385638838865459,
+      "freelaw": 0.524658182968406,
+      "pubmed_central": 0.39007828216745216,
+      "wikipedia_en": 0.201768181931327,
+      "dm_mathematics": -0.6328346947482018,
+      "github": 0.49003227547935585,
+      "stackexchange": 0.12839367108482203,
+      "gutenberg_pg_19": -0.07520426163406982,
+      "pile_cc": 0.31117575641526823,
+      "ubuntu_irc": -0.8631101985860269,
+      "hackernews": -0.43211237221498905,
+      "pubmed_abstracts": 0.0746604825001986,
+      "uspto_backgrounds": 0.23779983502457744
+    },
+    "intercept": 5.099292237646266
+  },
+  "validation": [
+    {
+      "scale": "1M",
+      "n": 256,
+      "R2": 0.28081086857816473,
+      "RMSE": 0.2355001488505108,
+      "MAPE": 0.03599184956649229,
+      "R2_drop_vs_train": -0.0514824503882948,
+      "need_scale_model": false
+    },
+    {
+      "scale": "60M",
+      "n": 256,
+      "R2": -47.35239367988456,
+      "RMSE": 1.521999714375726,
+      "MAPE": 0.3987118025822014,
+      "R2_drop_vs_train": 47.58172209807443,
+      "need_scale_model": true
+    },
+    {
+      "scale": "1B",
+      "n": 64,
+      "R2": -3708.860688203637,
+      "RMSE": 3.1636106221152254,
+      "MAPE": 1.421992544618216,
+      "R2_drop_vs_train": 3709.0900166218266,
+      "need_scale_model": true
+    }
+  ],
+  "extrapolation": [
+    {
+      "scale": "10B",
+      "n": 63,
+      "R2": -1377.6436304491574,
+      "RMSE": 3.568750838050596,
+      "note": "外推数据（非直接观测）"
+    },
+    {
+      "scale": "70B",
+      "n": 63,
+      "R2": -1438.4066088196284,
+      "RMSE": 3.951650300625548,
+      "note": "外推数据（非直接观测）"
+    }
+  ],
+  "residual": {
+    "shapiro_W": 0.9691317785931894,
+    "shapiro_p": 6.616854124954463e-09,
+    "mean": -1.942890293094024e-16,
+    "std": 0.28485006393337836
+  },
+  "decision_1_3_threshold": 0.05
+}
