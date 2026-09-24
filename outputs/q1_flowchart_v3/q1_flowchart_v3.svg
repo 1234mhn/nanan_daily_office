@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1342" viewBox="0 0 1000 1342">
+<rect x="0" y="0" width="1000" height="1342" fill="#FFFFFF"/>
+<rect x="410.0" y="40.0" width="180.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="64.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">开始</text>
+<line x1="500.0" y1="78.0" x2="500.0" y2="112.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,112.0 495.0,102.0 505.0,102.0" fill="#3D3D3D"/>
+<rect x="85.0" y="112.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="136.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">读取A1-A3质量数据 &amp; A4-A15配比Loss数据</text>
+<line x1="500.0" y1="150.0" x2="500.0" y2="184.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,184.0 495.0,174.0 505.0,174.0" fill="#3D3D3D"/>
+<rect x="85.0" y="184.0" width="830.0" height="58.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="208.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">数据预处理：去重、指标变换、缺失异常处理、</text>
+<text x="500.0" y="228.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">22指标分为6语义组</text>
+<line x1="500.0" y1="242.0" x2="500.0" y2="276.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,276.0 495.0,266.0 505.0,266.0" fill="#3D3D3D"/>
+<rect x="85.0" y="276.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="300.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">组内取中位数得到6组组得分 G_sg</text>
+<line x1="500.0" y1="314.0" x2="500.0" y2="348.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,348.0 495.0,338.0 505.0,338.0" fill="#3D3D3D"/>
+<rect x="85.0" y="348.0" width="830.0" height="58.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="372.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">熵权法计算各组权重 w_g → 计算文本综合质量 S_s、</text>
+<text x="500.0" y="392.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">领域平均分 S_d</text>
+<line x1="500.0" y1="406.0" x2="500.0" y2="440.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,440.0 495.0,430.0 505.0,430.0" fill="#3D3D3D"/>
+<rect x="85.0" y="440.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="464.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">同域计算各指标百分位秩，计算冲突强度 c_s</text>
+<line x1="500.0" y1="478.0" x2="500.0" y2="512.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,512.0 495.0,502.0 505.0,502.0" fill="#3D3D3D"/>
+<polygon points="500.0,512.0 800.0,574.0 500.0,636.0 200.0,574.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="579.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">c_s ≥ δ</text>
+<text x="500.0" y="599.2" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">( 90%分位数 )</text>
+<line x1="285.0" y1="666.0" x2="285.0" y2="676.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="715.0" y1="666.0" x2="715.0" y2="676.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="666.0" x2="500.0" y2="666.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="500.0" y1="666.0" x2="715.0" y2="666.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="666.0" x2="285.0" y2="684.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="285.0,684.0 280.0,674.0 290.0,674.0" fill="#3D3D3D"/>
+<line x1="285.0" y1="666.0" x2="285.0" y2="684.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="715.0" y1="666.0" x2="715.0" y2="684.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="715.0,684.0 710.0,674.0 720.0,674.0" fill="#3D3D3D"/>
+<rect x="85.0" y="684.0" width="400.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="285.0" y="708.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">否  →  直接使用综合评分 S_s</text>
+<rect x="515.0" y="684.0" width="400.0" height="58.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="715.0" y="708.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">是  →  计算稳健秩评分 S_s*，</text>
+<text x="715.0" y="728.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">标记冲突样本</text>
+<line x1="715.0" y1="742.0" x2="715.0" y2="772.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="722.0" x2="285.0" y2="772.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="772.0" x2="715.0" y2="772.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="500.0" y1="772.0" x2="500.0" y2="806.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,806.0 495.0,796.0 505.0,796.0" fill="#3D3D3D"/>
+<rect x="85.0" y="806.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="830.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">输出质量评分、冲突标记结果</text>
+<line x1="500.0" y1="844.0" x2="500.0" y2="878.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,878.0 495.0,868.0 505.0,868.0" fill="#3D3D3D"/>
+<rect x="85.0" y="878.0" width="830.0" height="58.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="902.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">配比预处理：归一化配比满足和为1；</text>
+<text x="500.0" y="922.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">划分训练集/测试集/外推集</text>
+<line x1="500.0" y1="936.0" x2="500.0" y2="970.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,970.0 495.0,960.0 505.0,960.0" fill="#3D3D3D"/>
+<line x1="285.0" y1="970.0" x2="715.0" y2="970.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="970.0" x2="285.0" y2="988.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="715.0" y1="970.0" x2="715.0" y2="988.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="970.0" x2="285.0" y2="988.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="285.0,988.0 280.0,978.0 290.0,978.0" fill="#3D3D3D"/>
+<line x1="715.0" y1="970.0" x2="715.0" y2="988.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="715.0,988.0 710.0,978.0 720.0,978.0" fill="#3D3D3D"/>
+<rect x="85.0" y="988.0" width="400.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="285.0" y="1012.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">和约束线性岭回归</text>
+<rect x="515.0" y="988.0" width="400.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="715.0" y="1012.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">二阶交互岭回归</text>
+<line x1="285.0" y1="1026.0" x2="285.0" y2="1056.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="715.0" y1="1026.0" x2="715.0" y2="1056.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="285.0" y1="1056.0" x2="715.0" y2="1056.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<line x1="500.0" y1="1056.0" x2="500.0" y2="1090.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,1090.0 495.0,1080.0 505.0,1080.0" fill="#3D3D3D"/>
+<rect x="85.0" y="1090.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="1114.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">独立集测试、配对Bootstrap显著性检验、跨尺度检验</text>
+<line x1="500.0" y1="1128.0" x2="500.0" y2="1162.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,1162.0 495.0,1152.0 505.0,1152.0" fill="#3D3D3D"/>
+<rect x="85.0" y="1162.0" width="830.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="1186.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">输出模型指标，确定模型适用边界（仅1M尺度有效）</text>
+<line x1="500.0" y1="1200.0" x2="500.0" y2="1234.0" stroke="#3D3D3D" stroke-width="1.6"/>
+<polygon points="500.0,1234.0 495.0,1224.0 505.0,1224.0" fill="#3D3D3D"/>
+<rect x="410.0" y="1234.0" width="180.0" height="38.0" fill="#FFFFFF" stroke="#3D3D3D" stroke-width="1.6"/>
+<text x="500.0" y="1258.5" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="14.5" fill="#000000" text-anchor="middle">结束</text>
+<text x="500.0" y="1312.0" font-family="'Noto Sans CJK SC','DejaVu Sans',sans-serif" font-size="16" fill="#000000" text-anchor="middle">图 X  问题一解题思路流程图</text>
+</svg>
