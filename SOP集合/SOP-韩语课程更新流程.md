@@ -93,16 +93,48 @@
 # 生成签名URL（7200秒有效期）
 node cos_node.mjs sign-url --key "原片路径" --expires 7200
 
-# 直接从COS截取，不下载全片
-ffmpeg -ss 起止时间 -to 结束时间 -i "签名URL" \
-  -map 0:v -map 0:a:0 \
-  -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,format=yuv420p,scale=1920:1080" \
-  -c:v libx264 -crf 22 -preset fast -c:a aac -b:a 192k \
-  /tmp/ep2_lXX.mp4 -y
+# 🔴 HDR→SDR 标准转码（唯一正解，逐字照抄）
+ffmpeg -v error -ss 起 -to 止 -i "签名URL" \
+  -map 0:v:0 -map 0:a:0 \
+  -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709:r=tv,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,scale=1920:1080,format=yuv420p" \
+  -c:v libx264 -crf 20 -preset medium \
+  -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+  -c:a aac -b:a 192k -ac 2 -movflags +faststart \
+  "爱情怎么翻译 03-52.mp4" -y   # 文件名按命名规范
+
+# 🔴 出厂校验闸（上传COS前必跑，不过关禁止上传）
+bash /www/korean_course/_脚本工具/verify_sdr.sh "爱情怎么翻译 03-52.mp4"
+# 必须退出码0 + 元数据 bt709/bt709/bt709，否则重转
 ```
+
+**为什么这样才对（三个必须点，漏一个必坏）：**
+1. **`zscale` 色域链**＝真正做 HDR→SDR 转换（`tonemap=hable:desat=0` 保饱和）；漏这条＝HDR原样透传＝偏暗偏绿
+2. **`-colorspace/-color_primaries/-color_trc` 三个标签**＝给成品贴对元数据；像素转对但没写标签→浏览器仍按HDR显示。**最易漏的一步**
+3. **`-ac 2`**＝原片5.1六声道，不降轨直接报错转不出
 
 **🔴 HDR→SDR色调映射（必做，否则视频黢黑）**
 **🔴 绝不在服务器上下载9GB原片——视频全程在COS上操作**
+
+---
+
+### 📛 视频文件命名规范（2026.10.02 用户定稿 · 新建视频一律遵守）
+
+> 🔴 **格式：`剧名 集-课.mp4`**，例：`爱情怎么翻译 03-52.mp4` = 第3集第52课
+
+| 要求 | 说明 |
+|:--|:--|
+| 剧名 | 中文剧名，与集号之间**一个空格** |
+| 集-课 | 两位数字 + **短横线** + 两位数字（`03-52`） |
+| 时间戳 | ❌ 不写进文件名（截取起止秒另记档即可） |
+| 扩展名 | `.mp4` |
+
+- ✅ 正确：`爱情怎么翻译 03-52.mp4`、`爱情怎么翻译 05-41.mp4`、`爱情怎么翻译 01-09.mp4`
+- ❌ 错误：`ep5_lesson41_0444-0558.mp4`、`scene04_lesson31_285-326.mp4`
+
+**执行要点：**
+- **只对以后新建的视频生效**；2026.10.02 之前已上线的旧名视频**不重命名**（用户明确「先别改」）
+- 若需给旧视频改名：COS 上必须**复制成新名 + 删旧名**，且**同步改线上页面里的引用** + 回归检查（属改核心内容，须先问用户）
+- 同一集同一课有多个版本时，主版本用标准名，备选版加后缀（如 `爱情怎么翻译 05-45 备选.mp4`）
 
 ---
 

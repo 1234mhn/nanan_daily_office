@@ -26,8 +26,42 @@ trigger: 加第X课 | 第X课起:止 | 做第X课复利笔记
 
 ## 加课流程
 
-**Step 1：截视频** — COS桶`korean-video-1433876150`找`S01E{nn}...mkv` → 数据万象CI精密切片(H264+AAC 1080p) → 命名`scene{集}_{课}_{开始}-{结束}.mp4` → 存回COS拿链接。禁用ffmpeg远程seek和本地下载。
-  - 🔴 **HDR原片(2160p HDR10)必须正确转SDR**（第51课教训：参数错→画面偏暗发灰+人物肤色发绿，被用户打回返工）。CI参数若默认无法转对，务确保成品**色彩元数据为 bt709/bt709/bt709**；用ffmpeg流截时显式带色域链：`-vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,scale=1920:1080"`。**转完抽查像素**（亮度avg<100或绿色明显高于红=没转对），别抓完就交。
+**Step 1：截视频** — COS桶`korean-video-1433876150`找`S01E{nn}...mkv` → 数据万象CI精密切片(H264+AAC 1080p) → 命名**`剧名 集-课.mp4`**（如`爱情怎么翻译 03-52.mp4`，2026.10.02定，格式见SOP） → 存回COS拿链接。禁用ffmpeg远程seek和本地下载。
+
+  ---
+  ### 🔴🔴 HDR→SDR 转码标准（2026.10.02 定稿 · 唯一正解，必背）
+
+  > **根因复盘**：2026.10.02 全量检查46个线上视频，**37个元数据仍是 HDR（bt2020nc/smpte2084或linear）**→浏览器按SDR播→偏暗/发灰/发绿。第4集31-40课全灭、第5集41-49课全灭、只有9.8后做了校验的50-54课全对。**根因=SOP少了转码标准+出厂校验闸。**
+
+  **✅ 唯一正确命令（逐字照抄，别改）：**
+  ```bash
+  ffmpeg -v error -ss 起 -to 止 -i "原片签名URL" \
+    -map 0:v:0 -map 0:a:0 \
+    -vf "zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709:r=tv,tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,scale=1920:1080,format=yuv420p" \
+    -c:v libx264 -crf 20 -preset medium \
+    -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+    -c:a aac -b:a 192k -ac 2 -movflags +faststart \
+    "输出.mp4" -y
+  ```
+
+  **🔑 三个必须点（漏一个必坏）：**
+  1. **`zscale` 色域链**＝真正做HDR→SDR转换。`tonemap=hable:desat=0` 保饱和；漏这条链＝HDR原样透传＝偏暗偏绿。
+  2. **`-colorspace bt709 -color_primaries bt709 -color_trc bt709`**＝给成品**贴对元数据标签**。像素转对但标签没写→浏览器仍按HDR显示。**最容易被漏的一步。**
+  3. **`-ac 2`**＝原片是5.1六声道，不降轨直接报错转不出（`Unsupported channel layout "6 channels"`）。
+
+  **🔴 出厂校验闸（转完必做，不过关禁止上传COS）：**
+  ```bash
+  # 方法1：跑校验脚本（推荐）
+  bash /www/korean_course/_脚本工具/verify_sdr.sh "成品.mp4"
+  # 方法2：手动
+  ffprobe -v error -select_streams v:0 -show_entries stream=color_space,color_transfer,color_primaries -of default=nw=1 "成品.mp4"
+  # 必须输出：color_space=bt709 / color_transfer=bt709 / color_primaries=bt709
+  ```
+  - 只要**任一不是bt709**，就是坏片，**重转，不许上传**。
+  - 已转好但坏的历史片批量修：读COS签名URL→同命令转→`sliceUploadFile`覆盖同名KEY（**别下原片、别删对象、别改页面**）。
+
+  ---
+  - 🔴 **暖色观感定稿（2026.9.9 第50课，用户认可，以后一律照此）**：若转SDR后暖色(肤色/红橙)仍**过于饱和/太亮**(冷色正常) → 用**全局降饱和 saturation≈0.88、不动亮度**即可收敛，用户认可此观感，**别去搞复杂HDR调参/压高光**。人眼验收优先，勿只信统计(易漏判暖色过艳)。只改出问题那课对应视频对象(同URL覆盖上传勿动页面)，覆盖前备份live版。
   - 🔴 **暖色观感定稿（2026.9.9 第50课，用户认可，以后一律照此）**：若转SDR后暖色(肤色/红橙)仍**过于饱和/太亮**(冷色正常) → 用**全局降饱和 saturation≈0.88、不动亮度**即可收敛，用户认可此观感，**别去搞复杂HDR调参/压高光**。人眼验收优先，勿只信统计(易漏判暖色过艳)。只改出问题那课对应视频对象(同URL覆盖上传勿动页面)，覆盖前备份live版。
 
 **Step 2：提字幕** — `mkvextract tracks source.mkv {轨道}:subtitles.srt` 提取韩语SRT
@@ -57,12 +91,15 @@ trigger: 加第X课 | 第X课起:止 | 做第X课复利笔记
 5. **注入后必查**：单词汇总+语法总结板块不能缺（第29课教训）、toggleSec折叠函数必须存在（第29课教训）
 
 **Step 5：自检**
+- [ ] 🔴 **视频出厂校验通过**（转完上传COS前先跑 `bash /www/korean_course/_脚本工具/verify_sdr.sh <成品>`，必须退出码0；元数据bt709/bt709/bt709）
 - [ ] 台词数=时间戳数
 - [ ] 6件套完整、翻译无误
 - [ ] 视频高亮同步、点击跳转正常
 - [ ] 折叠板块、底部三块（小贴士/单词/语法→笔记→口语）正常
 - [ ] 回归检查第1课和第13课没被改坏
 - [ ] 首页正常、无404
+
+> 🔴 **校验闸是硬门禁**：`verify_sdr.sh` 返回非0 = 坏片 = 禁止上传，必须重转。这是2026.10.02查出“视频总出问题”后加的强制关卡，勿跳过。
 
 **Step 6：通知** — 「第X课注入完成，去 nannan2026.cn/korean/lesson{XX}.html 看看」
 
@@ -84,6 +121,9 @@ trigger: 加第X课 | 第X课起:止 | 做第X课复利笔记
 | 9.10 | 52-54 | **HDR源的MP4丢字幕流，必须从源MKV远程提字幕**：`-map 0:s:N` 的 N 是**字幕流序**（含forced/HI），不是全局stream index！全局序号韩语=#0:4、中文=#0:6、英文=#0:18（用`ffprobe -show_entries stream=index,codec_type:stream_tags=language`确认后，用 `-map 0:4` 这种**全局序号**才准）。提字幕需走全片demux，一次把韩语轨(0:4)整条提成srt最省事（本机 ~10-12min），别开3个并行（抢带宽反更慢）；窗口化 `-ss/-to` 对纯字幕输出限制不可靠。**本机只有2核**：视频转码+多路COS读并行会互相拖慢到 0.1x，务必串行。 |
 | 9.10 | 52-54 | **crf18 出片偏大**：93s→116MB、120s→126MB（约10Mbps）；已有第50/51课用 crf22 仅61-74MB。若非用户明确要 crf18，建议 crf22 控体积。另：`-ss 起 -t N` 的 N 要按课长算准（53课错算多4s，事后裁剪回）。HDR片头常有OST过场(♪)段，台词从真正的对白开始、歌词/音效/纯语气词不计入。 |
 | 9.10 | 52-54 | **暖色过饱和批量修复已验证**：对已bt709成品直接读COS签名URL→ `-vf "zscale=t=bt709:m=bt709:p=bt709:r=tv,format=yuv420p,hue=s=0.88" -c:v libx264 -crf 18 -c:a copy` → sliceUploadFile 覆盖同名KEY（**别下原片、别删对象、别改页面**）。实测luma几乎不变(128→129)、暖色区饱和约-10%、整体-7%，亮度未变。前后对比帧存 `preview_misc/desat_check_54_*.jpg`。2核机串行处理，每课下载+编码+上传约10-15min。 |
+| 10.02 | 全部 | 🔴🔴 **视频“总出问题”根因查明=转码标准不统一+无出厂校验**：全量46片，37片元数据仍为HDR(bt2020nc/smpte2084或linear)→浏览器按SDR播→偏暗/发灰/发绿。第4集31-40、第5集41-49全灭；只有9.8后做了校验的50-54全对。**已定唯一正解命令**（zscale色域链 + 三个colorspace标签 + -ac 2）写进Step1；新增 `_脚本工具/verify_sdr.sh` 校验闸（元数据bt709+分辨率+抽帧像素），**转完必跑、不过不许上传**。 |
+| 10.02 | 全部 | 命名新规：**`剧名 集-课.mp4`**（如`爱情怎么翻译 03-52.mp4`），不带时间戳；仅新视频适用，旧片不重命名。 |
+
 
 ## 复利笔记PDF流程
 
