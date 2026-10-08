@@ -62,6 +62,17 @@
 - 已有编号到 KC-BOOK-011，下张从 KC-BOOK-012 起。
 - 触发词：锻造 / 炼一张卡 / 知识卡片 / 造卡 / KC。
 
+## 📝 韩语「精讲笔记」固定工作流（2026.10.08 用户定稿）
+- 触发词：用户说「**生成第X课精讲笔记**」/「第X课笔记」→ 按 `korean_notes_template/README_笔记模板说明.md` 模板做（基准样板第53课，现改以**第55课**为准）。
+- **流程（每次必走）**：①我做 Word 版发用户 → ②用户修改 → ③用户把改好的 Word 发回 → ④我按改版重生成 HTML(+PDF) 并部署 → 发用户。**Word 是内容母版，HTML/PDF 从母版派生。**
+- 输出三件套：HTML页面（右下角 📄下载Word / 📕下载PDF，**必须服务器直链**）+ Word（python-docx原生生成）+ PDF（HTML转）。
+- 命名：`第X课韩剧精讲笔记.docx/.pdf`；页面 `lessonXX.html`；部署 `/www/korean_notes/` → https://nannan2026.cn/korean-notes/lessonXX.html
+- 🔴 铁律：单词汇总不混语法词尾 / 不重复加序号 / 严禁PDF→docx转换 / 下载按钮用直链 / 例句连排1./2. / 改线上文件先备份。
+- 目前线上只留 **第55课**（极光下的独白）+ 模板；旧的53课已清理（回收目录 `.trash_韩语笔记清理_20261008/`）。
+- ⏳ 待办：第55课抖音视频链接待用户发抖音后补进 lesson55.html 头部。
+
+---
+
 ## 🔴 AI/ML 专属 portfolio 铁律（2026.7.30）
 - AI/ML 学习笔记（卡片/代码/理论）只放 `nanan_profile`（知识卡片→📚理论知识/、代码→🔬实操/、GitHub=1234mhn/nanan_profile）。绝不放进复利知识库或主工作区GitHub。
 
