@@ -1,0 +1,204 @@
+{
+  "cards": [
+    {
+      "topic": "初识大语言模型（第1讲）",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/生成式AI提示工程/第01讲_初识大语言模型.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-10-13",
+      "nextReview": "2026-10-16",
+      "lastTest": "教",
+      "keyInsight": "大语言模型 = 参数量巨大的带参函数；核心是 next-token 预测（自回归）；训练在出厂前一次性完成，使用时只是推理",
+      "blindSpots": [
+        "训练 vs 推理的区分",
+        "术语：next-token prediction / autoregressive / attention / embedding"
+      ]
+    },
+    {
+      "topic": "KNN k-近邻算法",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/KNN-K近邻算法.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-16",
+      "nextReview": "2026-07-19",
+      "lastTest": "说",
+      "keyInsight": "看离你最近的K个邻居，多数是什么类你就是什么类",
+      "blindSpots": [
+        "K值怎么选",
+        "距离度量方式"
+      ]
+    },
+    {
+      "topic": "逻辑回归",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/逻辑回归.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-25",
+      "nextReview": "2026-07-28",
+      "lastTest": "说",
+      "keyInsight": "用Sigmoid把线性结果压到0-1之间，输出概率",
+      "blindSpots": [
+        "为什么不用MSE当损失函数"
+      ]
+    },
+    {
+      "topic": "SVM支持向量机",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/SVM支持向量机.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-25",
+      "nextReview": "2026-07-28",
+      "lastTest": "说",
+      "keyInsight": "找最大间隔的分隔线，核技巧处理非线性",
+      "blindSpots": [
+        "核函数怎么选"
+      ]
+    },
+    {
+      "topic": "决策树",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/决策树.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-25",
+      "nextReview": "2026-07-28",
+      "lastTest": "说",
+      "keyInsight": "按特征不断二分，信息增益/基尼系数选特征",
+      "blindSpots": [
+        "过拟合怎么防"
+      ]
+    },
+    {
+      "topic": "朴素贝叶斯",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/朴素贝叶斯.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-25",
+      "nextReview": "2026-07-28",
+      "lastTest": "说",
+      "keyInsight": "贝叶斯公式+特征独立假设，垃圾邮件分类经典",
+      "blindSpots": [
+        "特征独立假设的局限"
+      ]
+    },
+    {
+      "topic": "集成学习 Ensemble",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/分类算法/集成学习-EnsembleLearning.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-29",
+      "nextReview": "2026-08-01",
+      "lastTest": "说",
+      "keyInsight": "多个弱学习器合起来变强，Boosting逐个纠错",
+      "blindSpots": [
+        "Bagging和Boosting区别"
+      ]
+    },
+    {
+      "topic": "线性回归",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/监督学习/回归算法/线性回归.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-25",
+      "nextReview": "2026-07-28",
+      "lastTest": "说",
+      "keyInsight": "找一条直线让所有数据点总距离最近 y=ax+b",
+      "blindSpots": [
+        "最小二乘法推导"
+      ]
+    },
+    {
+      "topic": "K-Means聚类",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/无监督学习/聚类/K-Means聚类.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-30",
+      "nextReview": "2026-08-02",
+      "lastTest": "说",
+      "keyInsight": "先定K个中心点，把点归到最近的中心，反复迭代",
+      "blindSpots": [
+        "K值怎么定"
+      ]
+    },
+    {
+      "topic": "DBSCAN聚类",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/无监督学习/聚类/DBSCAN聚类.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-30",
+      "nextReview": "2026-08-02",
+      "lastTest": "说",
+      "keyInsight": "密度相连成簇，能识别噪声点，不用预设K",
+      "blindSpots": [
+        "eps和min_samples怎么调"
+      ]
+    },
+    {
+      "topic": "PCA主成分分析",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/无监督学习/降维/PCA主成分分析.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-07-30",
+      "nextReview": "2026-08-02",
+      "lastTest": "说",
+      "keyInsight": "找方差最大的方向降维，保留主要信息",
+      "blindSpots": [
+        "主成分怎么解释"
+      ]
+    },
+    {
+      "topic": "机器学习的本质",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/机器学习的本质理解.md",
+      "level": "L3",
+      "reviewCount": 1,
+      "lastReview": "2026-08-03",
+      "nextReview": "2026-08-10",
+      "lastTest": "教",
+      "keyInsight": "让计算机从数据中自己悟出规律做预测，不是人写规则",
+      "blindSpots": []
+    },
+    {
+      "topic": "CLIP图文分类（对比派）",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/多模态/图像文本分类理解.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-08-03",
+      "nextReview": "2026-08-06",
+      "lastTest": "说",
+      "keyInsight": "双编码器把图文映射到同一空间，量距离选最近；对比派vs融合派",
+      "blindSpots": [
+        "余弦相似度计算细节"
+      ]
+    },
+    {
+      "topic": "医学视觉语言预训练（Medical VLP）",
+      "domain": "AI/ML",
+      "path": "（未落库，仅对话讲解；待补建卡片）",
+      "level": "L1",
+      "reviewCount": 0,
+      "lastReview": "2026-10-14",
+      "nextReview": "2026-10-17",
+      "lastTest": "说",
+      "keyInsight": "用图文自监督预训练缓解医学标注稀缺；模型搭建=分词器→编码器→融合→预测头",
+      "blindSpots": [
+        "融合方式（四种工位大白话后仍算模糊）",
+        "表征概念"
+      ]
+    }
+  ],
+  "lastReviewTime": "2026-10-14T22:00:00+08:00",
+  "totalReviews": 2,
+  "pendingEntry": false
+}

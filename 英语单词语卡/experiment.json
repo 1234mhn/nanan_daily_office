@@ -1,0 +1,14 @@
+{
+  "no": 1,
+  "word": "experiment",
+  "phonetic": "/ɪkˈsperɪmənt/ (n.)    /ɪkˈsperɪment/ (v.)",
+  "definition_en": "a scientific test done to find out what happens or to prove an idea",
+  "definition_zh": "为了弄清楚会发生什么、或验证某个想法而做的科学试验",
+  "roots": [["ex-", "向外"], ["peri-", "尝试（与 experience 经验同源）"], ["-ment", "名词后缀"], ["合起来", "向外反复去试 → 实验"]],
+  "memory": "experience（经验）与 experiment（实验）同源，经验就是反复试验得来的。",
+  "pos": "n. 名词（实验；试验）　v. 动词（做实验；尝试）",
+  "forms": "experiments / experimented / experimental (adj. 实验性的) / experimentally (adv.)",
+  "collocations": [["do / carry out an experiment", "做实验"], ["experiment with sth.", "用某物做实验；尝试"], ["experiment on sb./sth.", "在某人/某物身上做实验"]],
+  "examples": [["We did an experiment to test the idea.", "我们做了个实验来验证这个想法。"], ["Scientists experiment with new materials.", "科学家用新材料做实验。"]],
+  "warning": "不要和 experience（经验 / 经历）混。实验是做出来的，经验是经历出来的。"
+}

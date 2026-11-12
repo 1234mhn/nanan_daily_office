@@ -1,0 +1,6 @@
+<slide>
+<style><fill><fillColor color="rgb(255,255,255)"/></fill></style>
+<data>
+<shape type="rect" topLeftX="80" topLeftY="196" width="44" height="4"><fill><fillColor color="rgb(200,125,20)"/></fill></shape><shape type="text" topLeftX="80" topLeftY="226" width="800" height="80"><content textAlign="left" fontSize="42" color="rgb(36,49,65)" bold="true" lineSpacing="1.25"><p>医学影像中的 CLIP 方法综述 与 M3GCD 定位</p></content></shape><shape type="text" topLeftX="80" topLeftY="372" width="700" height="60"><content textAlign="left" fontSize="18" color="rgb(139,148,158)" lineSpacing="1.35"><p>从图文对比学习的起点，到类别语义建模的一步</p></content></shape><shape type="text" topLeftX="80" topLeftY="460" width="700" height="40"><content textAlign="left" fontSize="13" color="rgb(139,148,158)" lineSpacing="1.35"><p>汇报人：楠楠 &nbsp;|&nbsp; 课题小组会</p></content></shape>
+</data>
+</slide>

@@ -1,0 +1,90 @@
+{
+  "presentation_goal": "向课题组汇报 CheXmix 论文：讲清医学影像多模态预训练为何不能靠投影层翻译，CheXmix 用早期融合+两阶段训练解决了什么，证据有多硬，边界在哪。",
+  "audience": "课题组导师与同门，具备多模态/深度学习基础，但不熟悉该论文细节；关注方法原创性、实验严谨性与可复现性。",
+  "theme_style": "学术汇报风格，浅色底，深蓝为主色结构，橙色只用于强调原创贡献与关键数字；留白充足，信息密度克制。",
+  "visual_system": {
+    "background_strategy": "封面深色学术风，内容页统一浅灰白底(#F7F9FB)，末页回到深色形成闭环。",
+    "motif": "左侧细竖色条 + 页脚论文出处行，全篇复用。",
+    "color_roles": {
+      "primary": "深蓝 #2C4A73 承担标题、结构条、页脚，约60-70%视觉权重。",
+      "secondary": "浅蓝灰 #E8F0FA / 灰 #5A6572 用于卡片底与辅助说明。",
+      "accent": "橙 #B9770E 仅用于 S2 原创、关键数字与结论标记。"
+    },
+    "cover_content_relationship": "封面深蓝渐变背景，内容页浅底但沿用同一深蓝主色与左侧色条。",
+    "closing_relationship": "末页用与封面相同的深蓝背景与色条，形成首尾呼应。"
+  },
+  "typography_constraints": {
+    "title_max_lines": 2,
+    "body_max_lines_per_box": 3,
+    "footer_max_lines": 1,
+    "long_text_handling": "长句拆成短标签或移入演讲者备注，不用缩字号硬塞。"
+  },
+  "verification_plan": {
+    "check_background_consistency": true,
+    "check_text_fit": true,
+    "check_visual_focus": true,
+    "check_asset_rendering": true
+  },
+  "slides": [
+    {
+      "page": 1,
+      "title": "CheXmix: Unified Generative Pretraining for Vision Language Models in Medical Imaging",
+      "key_message": "这是一篇关于医学影像多模态预训练新范式的论文。",
+      "layout_type": "title-cover",
+      "visual_focus": "大标题 + 一句中文副标题，右下角论文出处。",
+      "asset_need": {"asset_type": "none", "purpose": "封面保持纯文字留白。", "suggested_query": "", "fallback_if_missing": "纯文字排版。"},
+      "text_density": "low",
+      "speaker_intent": "30秒交代论文出处与一句话定位，不展开。"
+    },
+    {
+      "page": 2,
+      "title": "背景：主流做法是两段拼接",
+      "key_message": "CLIP 输出连续向量，靠投影层翻译给 LLM，翻译是有损的，医学判读容不得细节丢失。",
+      "layout_type": "process-flow",
+      "visual_focus": "三步流程：视觉编码器 → 投影层(红色高亮) → 语言模型，下方一行红线警示。",
+      "asset_need": {"asset_type": "flow_diagram", "purpose": "让听众一眼看出问题出在中间的翻译环节。", "suggested_query": "LLaVA projection layer pipeline", "fallback_if_missing": "用三个圆角矩形+箭头组成横向流程，中间框描红。"},
+      "text_density": "medium",
+      "speaker_intent": "只讲一件事：翻译必然失真。重音落在赌不起。"
+    },
+    {
+      "page": 3,
+      "title": "方法：早期融合 + 两阶段训练",
+      "key_message": "架构上取消投影层（借自 Chameleon），训练上多了掩码重建阶段（CheXmix 原创）。",
+      "layout_type": "architecture-diagram",
+      "visual_focus": "整张架构对比图占页面主体，左右对照。",
+      "asset_need": {"asset_type": "architecture_diagram", "purpose": "一图同时呈现旧方法的问题和新方法的解法，形成对照。", "suggested_query": "CheXmix architecture", "fallback_if_missing": "用左右两栏方框+箭头重绘对照结构。"},
+      "text_density": "low",
+      "speaker_intent": "核心页，5分钟。蓝=借的，橙=原创，必须讲清这一点。"
+    },
+    {
+      "page": 4,
+      "title": "消融实验：效果来自 S2，不是数据或算力",
+      "key_message": "S1+S2 比只用 S1 高 6.7%，且全面优于 M3AE/MAE/Chameleon。",
+      "layout_type": "big-number",
+      "visual_focus": "四个大数字卡片：+6.7% / +6.2% / +9.4% / +8.7%，配一条 Chameleon 数据大 8000 倍的说明。",
+      "asset_need": {"asset_type": "chart", "purpose": "用数字对比证明增益来自训练阶段而非规模。", "suggested_query": "ablation bar chart", "fallback_if_missing": "四个色块卡片并列，每个含大号百分比与下方一行小字说明。"},
+      "text_density": "medium",
+      "speaker_intent": "3分钟。回答一个质疑：这效果是不是靠数据和算力堆出来的。"
+    },
+    {
+      "page": 5,
+      "title": "结果：赢在哪，输在哪",
+      "key_message": "高掩码分类补图报告生成全面领先，但低掩码率输给 SigLIP，检索也没赢。",
+      "layout_type": "comparison",
+      "visual_focus": "左右并列：绿色赢区三个数字，灰色输区两条，中间一条竖分隔线。",
+      "asset_need": {"asset_type": "infographic", "purpose": "诚实呈现强弱边界，体现真的读了论文。", "suggested_query": "win lose comparison layout", "fallback_if_missing": "左绿右灰两个面板，各放条目；中间竖线分隔。"},
+      "text_density": "medium",
+      "speaker_intent": "3分钟。主动交代失败点，是最加分的地方。"
+    },
+    {
+      "page": 6,
+      "title": "我的判断与后续方向",
+      "key_message": "方法逻辑站得住，但算力门槛高、只在胸片验证，下一步可做跨模态与自适应掩码率。",
+      "layout_type": "conclusion",
+      "visual_focus": "三列：可信之处 / 存疑之处 / 可做的方向。",
+      "asset_need": {"asset_type": "none", "purpose": "纯结构分区，保持收尾干净。", "suggested_query": "", "fallback_if_missing": "三列卡片式分区，标题加短条。"},
+      "text_density": "medium",
+      "speaker_intent": "2分钟。老师必问你怎么看，这页就是答案。"
+    }
+  ]
+}

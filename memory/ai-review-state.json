@@ -1,6 +1,21 @@
 {
   "cards": [
     {
+      "topic": "初识大语言模型（第1讲）",
+      "domain": "AI/ML",
+      "path": "nanan_profile/📚 理论知识/生成式AI提示工程/第01讲_初识大语言模型.md",
+      "level": "L2",
+      "reviewCount": 0,
+      "lastReview": "2026-10-13",
+      "nextReview": "2026-10-16",
+      "lastTest": "教",
+      "keyInsight": "大语言模型 = 参数量巨大的带参函数；核心是 next-token 预测（自回归）；训练在出厂前一次性完成，使用时只是推理",
+      "blindSpots": [
+        "训练 vs 推理的区分",
+        "术语：next-token prediction / autoregressive / attention / embedding"
+      ]
+    },
+    {
       "topic": "KNN k-近邻算法",
       "domain": "AI/ML",
       "path": "nanan_profile/📚 理论知识/监督学习/分类算法/KNN-K近邻算法.md",
@@ -166,9 +181,40 @@
       "blindSpots": [
         "余弦相似度计算细节"
       ]
+    },
+    {
+      "topic": "医学视觉语言预训练（Medical VLP）",
+      "domain": "AI/ML",
+      "path": "（未落库，仅对话讲解；待补建卡片）",
+      "level": "L1",
+      "reviewCount": 0,
+      "lastReview": "2026-10-14",
+      "nextReview": "2026-10-17",
+      "lastTest": "说",
+      "keyInsight": "用图文自监督预训练缓解医学标注稀缺；模型搭建=分词器→编码器→融合→预测头",
+      "blindSpots": [
+        "融合方式（四种工位大白话后仍算模糊）",
+        "表征概念"
+      ]
+    },
+    {
+      "topic": "MedFILIP：用大模型把报告变成视觉语义监督",
+      "domain": "AI/ML",
+      "path": "memory/2026-10-26.md",
+      "level": "L1",
+      "reviewCount": 0,
+      "lastReview": "2026-10-26",
+      "nextReview": "2026-10-27",
+      "lastTest": "说",
+      "keyInsight": "三模块把报告拆成结构化实体、把疾病名翻成视觉特征描述、把0/1标签换成语义相似度，让模型学\"有多像\"而不是\"对不对\"；本质是修图文的假阴性问题",
+      "blindSpots": [
+        "GPT-IE/IKI/SSM 三者因果关系与顺序",
+        "为什么ChestX-ray14上反而输给MedKLIP"
+      ]
     }
   ],
-  "lastReviewTime": "2026-08-03T22:41:00+08:00",
-  "totalReviews": 1,
-  "pendingEntry": false
+  "lastReviewTime": "2026-10-14T22:00:00+08:00",
+  "totalReviews": 2,
+  "pendingEntry": false,
+  "lastEntryTime": "2026-10-26T22:05:00+08:00"
 }

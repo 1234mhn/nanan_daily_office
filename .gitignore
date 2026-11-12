@@ -53,3 +53,22 @@ daily_clips/
 .cos_credentials.json
 obsidian_nanan_portfolio/
 ML_notebook/
+
+# 运行时状态与会话（体积大、含隐私，不同步）
+state/
+chroma_memory/
+media/inbound/
+media/outbound/
+scratch_需优化（不进库）/
+.trash_*/
+
+# 超大第三方 skill 资产
+skills/tencent-cos-skill/
+skills/drawio-reconstruction/
+
+# 临时与导出产物
+ppt_export/
+ppt_asset/
+pdfs_to_send/
+*.sqlite3
+*.bin

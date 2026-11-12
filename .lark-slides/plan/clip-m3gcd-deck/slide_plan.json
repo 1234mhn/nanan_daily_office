@@ -1,0 +1,82 @@
+{
+  "deck_id": "A97csQWvmlu9k9dvr8jcvicJnvf",
+  "title": "医学影像中的 CLIP 方法综述与 M3GCD 定位",
+  "audience": "导师 / 课题小组会",
+  "size": { "width": 960, "height": 540 },
+  "theme": {
+    "background": "white",
+    "primary": "#243141",
+    "secondary": "#3d6fa8",
+    "accent": "#c87d14",
+    "grey": "#8b949e",
+    "green": "#2e7d5b"
+  },
+  "slides": [
+    {
+      "no": 1,
+      "type": "cover",
+      "key_message": "从 CLIP 到 M3GCD：一条图文对齐的演进线",
+      "layout_type": "title_only",
+      "visual_focus": "橙色短线 + 大标题"
+    },
+    {
+      "no": 2,
+      "type": "timeline",
+      "key_message": "近六年医学 CLIP 的发展演进",
+      "layout_type": "full_image",
+      "image": "P7IXbGE7hoZ0wMxk0xEc5d6vnhe",
+      "visual_focus": "演进时间线大图"
+    },
+    {
+      "no": 3,
+      "type": "taxonomy",
+      "key_message": "四类问题与代表方法",
+      "layout_type": "full_image",
+      "image": "BqYhbbUzWo3uNyx5YDxcIg8Xnfd",
+      "visual_focus": "问题分类大图"
+    },
+    {
+      "no": 4,
+      "type": "compare",
+      "key_message": "CP-CLIP 与 M3GCD：同一任务、两个空间的解构",
+      "layout_type": "compare_columns",
+      "visual_focus": "左右对比列"
+    },
+    {
+      "no": 5,
+      "type": "innovation",
+      "key_message": "可借鉴的三点 + CP-CLIP 未完成的一环",
+      "layout_type": "image_left_text_right",
+      "image": "BqYhbbUzWo3uNyx5YDxcIg8Xnfd",
+      "visual_focus": "分类图局部 + 借鉴点列表"
+    },
+    {
+      "no": 6,
+      "type": "pipeline",
+      "key_message": "CLIP 完整链路：预训练 → 对齐 → 下游任务",
+      "layout_type": "flow",
+      "visual_focus": "五段式流程图"
+    },
+    {
+      "no": 7,
+      "type": "experiment_placeholder",
+      "key_message": "实验结果（待补截图）",
+      "layout_type": "placeholder",
+      "fallback_if_missing": "生成带虚线边框的空图位 + 说明文字"
+    },
+    {
+      "no": 8,
+      "type": "experiment_placeholder",
+      "key_message": "实验结果（待补截图）",
+      "layout_type": "placeholder",
+      "fallback_if_missing": "生成带虚线边框的空图位 + 说明文字"
+    },
+    {
+      "no": 9,
+      "type": "experiment_placeholder",
+      "key_message": "实验结果（待补截图）",
+      "layout_type": "placeholder",
+      "fallback_if_missing": "生成带虚线边框的空图位 + 说明文字"
+    }
+  ]
+}

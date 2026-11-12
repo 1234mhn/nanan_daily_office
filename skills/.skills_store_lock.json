@@ -78,6 +78,13 @@
       "internalSlug": "math-modeling-contest-review",
       "publicSlug": "math-modeling-contest-review",
       "installDir": "/root/.openclaw/workspace/skills/@user_c6124052/math-modeling-contest-review"
+    },
+    "academic-search-pro": {
+      "name": "学术检索引擎",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=academic-search-pro",
+      "source": "community",
+      "version": "1.0.5",
+      "installedAt": "2026-11-03T06:50:44Z"
     }
   }
 }

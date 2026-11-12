@@ -23,6 +23,7 @@
 
 ## 🎓 学生/用户综合档案
 - 语言学习者（英语+韩语）+ 知识体系构建者；叫我「楠楠大管家」。
+- 🔴 **授课科目（2026.10.26 用户明确）**：刘栖伶、杨立钧等**所有学生都是上英语课**（词根词缀/语法/写作）；**韩语是用户自学**，不是教学内容。做课时费表、简报、备注时**一律不写「韩语」**，别再标错。
 - Obsidian 复利库：`/root/obsidian_nanan_compound_library`（=workspace 下同名，软链）。portfolio：`/root/.openclaw/workspace/nanan_profile`。
 - 读研方向：医学+AI（医疗大模型/多模态），软工硕士研0。就业规划存 portfolio「就业相关」。
 
@@ -66,8 +67,14 @@
 - 触发词：用户说「**生成第X课精讲笔记**」/「第X课笔记」→ 按 `korean_notes_template/README_笔记模板说明.md` 模板做（基准样板第53课，现改以**第55课**为准）。
 - **流程（每次必走）**：①我做 Word 版发用户 → ②用户修改 → ③用户把改好的 Word 发回 → ④我按改版重生成 HTML(+PDF) 并部署 → 发用户。**Word 是内容母版，HTML/PDF 从母版派生。**
 - 输出三件套：HTML页面（右下角 📄下载Word / 📕下载PDF，**必须服务器直链**）+ Word（python-docx原生生成）+ PDF（HTML转）。
+- 🔴 **发笔记只发页面链接**（2026.10.23 用户定稿）：不再往微信传 Word/PDF 附件，只发 HTML 页面 URL，用户自己在页面里下载。
 - 命名：`第X课韩剧精讲笔记.docx/.pdf`；页面 `lessonXX.html`；部署 `/www/korean_notes/` → https://nannan2026.cn/korean-notes/lessonXX.html
 - 🔴 铁律：单词汇总不混语法词尾 / 不重复加序号 / 严禁PDF→docx转换 / 下载按钮用直链 / 例句连排1./2. / 改线上文件先备份。
+- 🔴🔴 **字体内文分离（2026.10.22 用户严肃指出）**：韩语字体 NanumGothic、**中文必须用思源黑体 Source Han Sans SC**，两者不能统一成同一字体。
+  - 现状问题：`第55课韩剧精讲笔记.docx` 里 ascii 和 eastAsia 全是 NanumGothic，中韩文一样 → 错误。
+  - 技术坑：Word 里中文/韩文同属东亚字符集，`w:eastAsia` 没法分开，必须**按字符类型拆 run 分别赋值**（韩文 run→NanumGothic，中文 run→思源黑体）。
+  - README 里「韩语/中文均设 eastAsia=NanumGothic」那句是错的权宜之计，需改。
+  - 以后所有笔记（HTML 版 + Word 版）都要中韩字体分开，生成后**必须验证 run 的 ascii/eastAsia 属性**，不能只看肉眼。
 - 目前线上只留 **第55课**（极光下的独白）+ 模板；旧的53课已清理（回收目录 `.trash_韩语笔记清理_20261008/`）。
 - ⏳ 待办：第55课抖音视频链接待用户发抖音后补进 lesson55.html 头部。
 
@@ -94,7 +101,7 @@
 - 飞书学生成长日记：`.../base/DIOvb4JoLa6oTisvKHGcCCEjnvh?table=tblFsRNfrvrTncCG`
 - **飞书语言复习库**(独立Base)：`WB0VbhEupaelo7s9N33cloWAnTh`= https://ccns9ymqjve1.feishu.cn/base/WB0VbhEupaelo7s9N33cloWAnTh ；韩语复习表`tblJVehXt5dTYHKG`、英语复习表`tblIW8fmeJTvLhg2`；间隔1/3/5/7/14/30/60/90/180天；用于每天外语内容→复利库→飞书复习表→cron每日推送复习；详见 memory/2026-08-25.md
 - 加课SOP：`SOP集合/SOP-韩语课程更新流程.md`
-- 课程模板：`/www/korean_course/课程模板_lesson30.html`
+- 课程模板（韩语课程页）：**`/www/korean_course/lesson55.html`**（2026.10.11 用户改定，替换原第30课模板；2026.11.01 用户再确认）
 
 ---
 

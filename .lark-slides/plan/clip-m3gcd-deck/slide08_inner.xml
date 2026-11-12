@@ -1,0 +1,6 @@
+<slide>
+<style><fill><fillColor color="rgb(255,255,255)"/></fill></style>
+<data>
+<shape type="text" topLeftX="50" topLeftY="22" width="800" height="34"><content textType="body" textAlign="left" verticalAlign="top" fontSize="22" color="rgb(36,49,65)" bold="true" lineSpacing="1.35"><p>七、实验结果（二）：待补充截图</p></content></shape><shape type="rect" topLeftX="120" topLeftY="90" width="720" height="340" cornerRadius="12"><fill><fillColor color="rgb(245,246,247)"/></fill><border color="rgb(139,148,158)" width="1.6"/></shape><shape type="text" topLeftX="140" topLeftY="220" width="680" height="40"><content textType="body" textAlign="center" verticalAlign="top" fontSize="22" color="rgb(139,148,158)" bold="true" lineSpacing="1.35"><p>此处放置实验截图</p></content></shape><shape type="text" topLeftX="140" topLeftY="268" width="680" height="60"><content textType="body" textAlign="center" verticalAlign="top" fontSize="13" color="rgb(139,148,158)" lineSpacing="1.35"><p>（表格 / 曲线 / 消融结果 / 可视化对比，截图后替换本区域）</p></content></shape><shape type="text" topLeftX="50" topLeftY="452" width="860" height="50"><content textType="body" textAlign="left" verticalAlign="top" fontSize="13" color="rgb(36,49,65)" lineSpacing="1.4"><p>讲解要点：这一页要回答的问题是什么 → 结果说明了什么 → 与 baseline 的差距在哪。</p></content></shape>
+</data>
+</slide>
