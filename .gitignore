@@ -86,3 +86,13 @@ media/
 media/inbound/
 media/outbound/
 media/tmp_review/
+
+# ==== 2026-11-14 论文/研究类不入库（内容归 nanan_profile）====
+research/
+projects/
+*文献整理*
+CP-CLIP_*
+CP-CLIP组会*
+泛读五篇_*
+CheXmix_*.pdf
+CaMCheX_*.pdf
