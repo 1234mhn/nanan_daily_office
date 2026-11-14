@@ -100,3 +100,18 @@ CaMCheX_*.pdf
 # 独立库（nannan_profile）本地克隆，不属于办公库
 nanan_profile/
 nannan_profile/
+
+# ==== 2026-11-14 同步白名单：以下不入库 ====
+# 韩语课中间产物（PDF渲染图、一次性脚本、任务说明）
+.openclaw/tmp/
+
+# 运行时状态与向量索引
+state/
+chroma_memory/
+
+# 图片与媒体归档
+图片归档/
+
+# 临时文件
+*.bak_*
+*.backup_*
