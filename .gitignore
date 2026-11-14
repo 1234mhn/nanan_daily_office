@@ -96,3 +96,7 @@ CP-CLIP组会*
 泛读五篇_*
 CheXmix_*.pdf
 CaMCheX_*.pdf
+
+# 独立库（nannan_profile）本地克隆，不属于办公库
+nanan_profile/
+nannan_profile/
