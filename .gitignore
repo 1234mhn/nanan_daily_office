@@ -72,3 +72,17 @@ ppt_asset/
 pdfs_to_send/
 *.sqlite3
 *.bin
+
+# ==== 2026-11-14 整理：产物类与临时媒体不入库 ====
+# Word/PPT/Excel 产物（简报、笔记、申报书等）
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+
+# 媒体临时目录（收发的原始文件，含隐私）
+media/
+media/inbound/
+media/outbound/
+media/tmp_review/
