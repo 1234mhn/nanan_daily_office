@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<presentation xmlns="http://www.larkoffice.com/sml/2.0" width="960" height="540">
-<slide>
-<style><fill><fillColor color="rgb(255,255,255)"/></fill></style>
-<data>
-<shape type="text" topLeftX="50" topLeftY="22" width="700" height="34"><content textType="body" textAlign="left" verticalAlign="top" fontSize="22" color="rgb(36,49,65)" bold="true" lineSpacing="1.35"><p>一、医学 CLIP 的发展演进（2020 → 2026）</p></content></shape><img src="P7IXbGE7hoZ0wMxk0xEc5d6vnhe" topLeftX="40" topLeftY="66" width="880" height="440"/>
-</data>
-</slide>
-</presentation>
