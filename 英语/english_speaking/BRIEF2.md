@@ -2,7 +2,7 @@
 
 ## 交付物
 单文件 HTML（无外部依赖、无联网CDN、双击浏览器可开、手机可用）
-文件：/root/.openclaw/workspace/english_speaking/vocab_quest.html
+文件：/root/.openclaw/workspace/英语/english_speaking/vocab_quest.html
 （保留旧文件 ielts_speaking_quest.html 不要动）
 
 ## 用户

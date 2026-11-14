@@ -2,7 +2,7 @@
 
 ## 交付物
 单文件 HTML（不需要服务器、不依赖联网 CDN，双击浏览器打开即可用；手机浏览器也能用）
-文件：/root/.openclaw/workspace/english_speaking/ielts_speaking_quest.html
+文件：/root/.openclaw/workspace/英语/english_speaking/ielts_speaking_quest.html
 
 ## 用户是谁
 韩语/英语老师，自己练英语口语。要求：审美高、务实省力。
